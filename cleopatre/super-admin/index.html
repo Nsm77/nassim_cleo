@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Super Admin — Command Center | Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide">
+      <div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div>
+      <nav class="admin-nav" id="sideNav">
+        <a href="index.html" class="is-on"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav>
+    </aside>
+    <div style="min-width:0">
+      <header class="admin-top">
+        <div style="display:flex;gap:10px;align-items:center">
+          <!-- desktop-only: mobile toggle removed -->
+          <div>
+            <h1>Command Center</h1>
+            <small id="topInfo">Chargement…</small>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;flex:1;justify-content:flex-end">
+          <div class="global-search" id="globalSearch">
+            <span class="gs-icon">?</span>
+            <input type="search" id="gsInput" placeholder="Recherche globale : Avène, CMD-10452, client@email.com, SKU…">
+            <div class="gs-results" id="gsResults"></div>
+          </div>
+          <div class="filters" style="gap:6px">
+            <button class="btn btn--ghost btn--sm period-btn is-on" data-period="today">Aujourd’hui</button>
+            <button class="btn btn--ghost btn--sm period-btn" data-period="7d">7j</button>
+            <button class="btn btn--ghost btn--sm period-btn" data-period="30d">30j</button>
+            <button class="btn btn--ghost btn--sm period-btn" data-period="all">Tout</button>
+          </div>
+        </div>
+      </header>
+      <div class="admin-content">
+        <!-- KPIs -->
+        <div class="kpi-grid" id="kpiGrid">
+          <div class="kpi-card gold"><span class="kpi-label">Chiffre d’affaires</span><div class="skeleton skeleton-line" style="width:60%"></div></div>
+          <div class="kpi-card green"><span class="kpi-label">Commandes</span><div class="skeleton skeleton-line" style="width:40%"></div></div>
+          <div class="kpi-card ink"><span class="kpi-label">En attente</span><div class="skeleton skeleton-line" style="width:30%"></div></div>
+          <div class="kpi-card"><span class="kpi-label">Nouveaux clients</span><div class="skeleton skeleton-line" style="width:50%"></div></div>
+          <div class="kpi-card"><span class="kpi-label">Produits vendus</span><div class="skeleton skeleton-line" style="width:45%"></div></div>
+          <div class="kpi-card"><span class="kpi-label">Panier moyen</span><div class="skeleton skeleton-line" style="width:55%"></div></div>
+          <div class="kpi-card"><span class="kpi-label">Points fidélité</span><div class="skeleton skeleton-line" style="width:50%"></div></div>
+        </div>
+
+        <!-- Actions à faire -->
+        <div class="card" data-reveal>
+          <div class="card-head"><h2>Actions à faire</h2><small style="color:var(--admin-muted)">Cliquez pour accéder directement</small></div>
+          <div style="padding:16px"><div class="actions-grid" id="actionsGrid"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div></div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card" data-reveal>
+          <div class="card-head"><h2>Actions rapides</h2></div>
+          <div style="padding:16px"><div class="quick-actions" id="quickActions">
+            <button class="qa-btn" data-qa="product"><i>+</i><b>Ajouter produit</b><small>Catalogue</small></button>
+            <button class="qa-btn" data-qa="promo"><i>%</i><b>Créer promotion</b><small>Réduction</small></button>
+            <button class="qa-btn" data-qa="category"><i>?</i><b>Ajouter catégorie</b><small>Univers</small></button>
+            <button class="qa-btn" data-qa="brand"><i>?</i><b>Ajouter marque</b><small>Maison</small></button>
+            <a class="qa-btn" href="orders.html"><i>?</i><b>Voir commandes</b><small>Suivi</small></a>
+            <a class="qa-btn" href="customers.html"><i>?</i><b>Voir clients</b><small>CRM</small></a>
+            <a class="qa-btn" href="inventory.html"><i>?</i><b>Gérer stock</b><small>Inventaire</small></a>
+            <a class="qa-btn" href="reviews.html"><i>?</i><b>Voir avis</b><small>Modération</small></a>
+            <a class="qa-btn" href="support.html"><i>?</i><b>Voir tickets</b><small>SAV</small></a>
+          </div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.35fr .85fr;gap:16px" class="responsive-grid">
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Commandes récentes</h2><a class="link-u" style="font-size:.64rem" href="orders.html">Tout voir ?</a></div>
+            <div class="table-wrap"><table><thead><tr><th>Commande</th><th>Client</th><th>Total</th><th>Statut</th><th>Date</th></tr></thead><tbody id="recentBody"><tr><td colspan="5" style="text-align:center;padding:20px;color:var(--admin-muted)">Chargement…</td></tr></tbody></table></div>
+            <!-- desktop-only: mobile recent removed -->
+          </div>
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Répartition par statut</h2></div>
+            <div style="padding:16px" id="statusChart"></div>
+            <div style="padding:0 16px 16px;display:grid;gap:8px;font-size:.78rem;color:var(--admin-muted)" id="extraStats"></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="responsive-grid">
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Top produits</h2></div>
+            <div style="padding:16px" id="topProducts"></div>
+          </div>
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Fidélité</h2><a class="link-u" href="loyalty.html" style="font-size:.64rem">Gérer ?</a></div>
+            <div style="padding:16px" id="loyaltyStats"></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="responsive-grid">
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Centre de notifications</h2><span id="notifCount" class="badge badge--amber" style="font-size:.6rem">…</span></div>
+            <div style="padding:16px;display:grid;gap:10px" id="notifCenter"></div>
+          </div>
+          <div class="card" data-reveal>
+            <div class="card-head"><h2>Santé système</h2><span id="healthBadge"></span></div>
+            <div style="padding:16px;display:grid;gap:10px" id="healthInfo"></div>
+            <div style="padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn--ghost btn--sm" href="system.html">Détails ?</a><a class="btn btn--ghost btn--sm" href="activity.html">Activité</a><a class="btn btn--ghost btn--sm" href="admin-users.html">Équipe</a></div>
+          </div>
+        </div>
+
+        <div class="card" data-reveal>
+          <div class="card-head"><h2>Exports rapides</h2></div>
+          <div style="padding:16px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=orders" target="_blank">? Commandes CSV</a>
+            <a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=customers" target="_blank">? Clients CSV</a>
+            <a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=products" target="_blank">? Produits CSV</a>
+            <a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=inventory" target="_blank">? Stocks CSV</a>
+            <a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=loyalty" target="_blank">? Fidélité CSV</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom nav mobile -->
+  <!-- desktop-only: bottom nav removed -->
+
+  <div class="toast-zone" id="toastZone"></div>
+
+  <!-- Quick create modals -->
+  <div class="modal-admin" id="qaProduct"><div class="modal-panel">
+    <h3 style="font-family:var(--serif);font-size:1.3rem">Ajouter produit</h3>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <input id="qaPId" placeholder="ID (ex: avene-creme-40)" style="border:1px solid var(--admin-line);padding:10px;border-radius:8px">
+      <input id="qaPName" placeholder="Nom *">
+      <input id="qaPBrand" placeholder="Marque *">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><select id="qaPCat"><option value="visage">Visage</option><option value="corps">Corps</option><option value="cheveux">Cheveux</option><option value="bebe">Bébé</option><option value="bien-etre">Bien-être</option><option value="sante">Santé</option></select><input id="qaPPrice" type="number" placeholder="Prix millimes"></div>
+      <textarea id="qaPDesc" rows="2" placeholder="Description courte" style="border:1px solid var(--admin-line);padding:10px;border-radius:8px"></textarea>
+      <div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="qaPSave">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div>
+    </div>
+  </div></div>
+
+  <div class="modal-admin" id="qaPromo"><div class="modal-panel">
+    <h3 style="font-family:var(--serif)">Créer promotion</h3>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <input id="qaPromoCode" placeholder="CODE (ex: ETE15)">
+      <select id="qaPromoType"><option value="percentage">Pourcentage</option><option value="fixed">Montant fixe (millimes)</option></select>
+      <input id="qaPromoVal" type="number" placeholder="Valeur">
+      <div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="qaPromoSave">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div>
+    </div>
+  </div></div>
+
+  <div class="modal-admin" id="qaCategory"><div class="modal-panel">
+    <h3 style="font-family:var(--serif)">Ajouter catégorie</h3>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <input id="qaCatSlug" placeholder="Slug (ex: visage)">
+      <input id="qaCatName" placeholder="Nom *">
+      <input id="qaCatTagline" placeholder="Tagline">
+      <div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="qaCatSave">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div>
+    </div>
+  </div></div>
+
+  <div class="modal-admin" id="qaBrand"><div class="modal-panel">
+    <h3 style="font-family:var(--serif)">Ajouter marque</h3>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <input id="qaBrandSlug" placeholder="Slug (ex: avene)">
+      <input id="qaBrandName" placeholder="Nom *">
+      <input id="qaBrandCountry" placeholder="Pays">
+      <div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="qaBrandSave">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div>
+    </div>
+  </div></div>
+
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API;
+    const $=s=>document.querySelector(s);
+    const fmt=m=> (m/1000).toFixed(3).replace(".",",")+" DT";
+    const map={pending:"En attente",confirmed:"Confirmée",preparing:"En préparation",shipped:"Expédiée",delivered:"Livrée",cancelled:"Annulée"};
+    let currentPeriod='today';
+    function toast(msg,type='info'){ const z=$("#toastZone"); const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; z.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(8px)'; setTimeout(()=>t.remove(),300)},3000)}
+    async function guard(){
+      try{
+        const me=await API.me();
+        if(!me.authenticated) { location.replace("login.html"); return; }
+        if(me.user.role !== 'super_admin'){
+          document.body.innerHTML=`<div style="min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--admin-bg)"><div style="max-width:520px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:12px;padding:32px;text-align:center"><h2 style="font-family:var(--serif)">Accès réservé au Super Admin</h2><p style="color:var(--admin-muted);margin-top:8px">Ce compte (${me.user.email}) est <b>${me.user.role}</b>. Le Super Admin requis est <b>nssm@cleopatre.tn</b>.<br><br>Les admins produits sont redirigés vers <a href="../admin/index.html">l'espace Produits</a>.</p><a class="btn btn--ink" href="../admin/index.html" style="margin-top:16px">Aller à l'espace Produits</a> <a class="btn btn--ghost" href="login.html" style="margin-top:16px">Connexion Super Admin</a></div></div>`;
+          return;
+        }
+          document.body.innerHTML=`<div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--admin-bg)"><div style="max-width:420px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:10px;padding:32px;text-align:center"><h2 style="font-family:var(--serif)">Accès refusé</h2><p style="color:var(--admin-muted);margin-top:8px">Ce compte (${me.user.email}) n’a pas les droits d’administration. Veuillez vous connecter avec un compte administrateur.</p><a class="btn btn--ink" href="login.html" style="margin-top:16px">Connexion admin</a> <a class="btn btn--ghost" href="../pages/login.html" style="margin-top:12px">Connexion client</a></div></div>`;
+          return;
+        }
+        init(me.user);
+      } catch(e){
+        console.warn("[admin] guard failed", e);
+        // Si 401 réseau, afficher erreur au lieu de boucle
+        const isNetwork = e.status===0;
+        if(isNetwork) document.body.innerHTML=`<div style="padding:32px;text-align:center;color:#8A3A1F">Impossible de contacter le serveur. Vérifiez /api/system/health.php<hr style="margin:16px 0"><a class="btn btn--ghost" href="login.html">Réessayer</a></div>`;
+        else location.replace("login.html");
+      }
+    }
+    async function init(user){
+      $("#topInfo").textContent=`Connecté : ${user.first_name} ${user.last_name}  — ${user.email}  — ${user.role}`;
+      $("#logout").addEventListener("click", async e=>{ e.preventDefault(); try{ await API.logout(); }catch(err){ console.warn("[logout] failed",err);} location.replace("login.html"); });
+      /* desktop-only: navToggle removed */
+      /* desktop-only: mobile drawer click outside removed */ void 0; // && !e.target.closest("#navToggle")) $("#adminSide").classList.remove("is-open") });
+      document.querySelectorAll(".period-btn").forEach(b=> b.addEventListener("click", ()=>{ document.querySelectorAll(".period-btn").forEach(x=>x.classList.remove("is-on")); b.classList.add("is-on"); currentPeriod=b.dataset.period; loadDashboard(); }));
+      // global search
+      let gsTimer=null;
+      const gsInput=$("#gsInput"), gsResults=$("#gsResults"), gsBox=$("#globalSearch");
+      gsInput.addEventListener("input", ()=>{
+        clearTimeout(gsTimer);
+        const q=gsInput.value.trim();
+        if(q.length<2){ gsBox.classList.remove("is-open"); gsResults.innerHTML=""; return; }
+        gsTimer=setTimeout(async ()=>{
+          try{
+            const res=await API.admin.search(q);
+            const d=res.data;
+            let html="";
+            if(d.products.length) html+=`<div class="gs-group"><h4>Produits — ${d.counts.products}</h4>`+d.products.map(p=>`<div class="gs-item" data-go="products.html?q=${encodeURIComponent(p.id)}"><span style="width:36px;height:36px;border-radius:6px;background:var(--admin-bg);display:grid;place-items:center">?</span><span><b>${p.name}</b><br><small>${p.brand}  — ${p.id}  — ${fmt(p.price)}</small></span></div>`).join("")+"</div>";
+            if(d.orders.length) html+=`<div class="gs-group"><h4>Commandes — ${d.counts.orders}</h4>`+d.orders.map(o=>`<div class="gs-item" data-go="order.html?order_number=${encodeURIComponent(o.order_number)}"><span style="width:36px;height:36px;border-radius:50%;background:var(--admin-green);color:#fff;display:grid;place-items:center">?</span><span><b>${o.order_number}</b><br><small>${o.first_name} ${o.last_name}  — ${fmt(o.total)}</small></span></div>`).join("")+"</div>";
+            if(d.customers.length) html+=`<div class="gs-group"><h4>Clients — ${d.counts.customers}</h4>`+d.customers.map(c=>`<div class="gs-item" data-go="customer.html?id=${c.id}"><span style="width:36px;height:36px;border-radius:50%;background:var(--admin-gold);color:#fff;display:grid;place-items:center">?</span><span><b>${c.first_name} ${c.last_name}</b><br><small>${c.email}</small></span></div>`).join("")+"</div>";
+            if(!html) html=`<div class="gs-empty">Aucun résultat pour «${q}»</div>`;
+            gsResults.innerHTML=html;
+            gsBox.classList.add("is-open");
+            gsResults.querySelectorAll(".gs-item").forEach(el=> el.addEventListener("click", ()=> location.href=el.dataset.go));
+          }catch(e){ gsResults.innerHTML=`<div class="gs-empty">Erreur : ${e.message}</div>`; gsBox.classList.add("is-open")}
+        },280);
+      });
+      gsInput.addEventListener("keydown", e=>{ if(e.key==='Escape') gsBox.classList.remove("is-open")});
+      document.addEventListener("click", e=>{ if(!e.target.closest("#globalSearch")) gsBox.classList.remove("is-open")});
+      // quick actions
+      document.querySelectorAll("[data-qa]").forEach(b=> b.addEventListener("click", ()=>{
+        const qa=b.dataset.qa;
+        if(qa==='product') $("#qaProduct").classList.add("is-on");
+        if(qa==='promo') $("#qaPromo").classList.add("is-on");
+        if(qa==='category') $("#qaCategory").classList.add("is-on");
+        if(qa==='brand') $("#qaBrand").classList.add("is-on");
+      }));
+      document.querySelectorAll("[data-close]").forEach(b=> b.addEventListener("click", ()=> b.closest(".modal-admin").classList.remove("is-on")));
+      document.querySelectorAll(".modal-admin").forEach(m=> m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("is-on")}));
+      $("#qaPSave").addEventListener("click", async()=>{
+        const payload={id:$("#qaPId").value.trim()||undefined, name:$("#qaPName").value.trim(), brand:$("#qaPBrand").value.trim(), cat:$("#qaPCat").value, price:parseInt($("#qaPPrice").value)||0, description:$("#qaPDesc").value.trim()};
+        if(!payload.name||!payload.brand) return toast("Nom et marque requis","err");
+        try{ await API.admin.productCreate(payload); toast("Produit créé","ok"); $("#qaProduct").classList.remove("is-on"); loadDashboard(); }catch(e){ toast(e.message,"err")}
+      });
+      $("#qaPromoSave").addEventListener("click", async()=>{
+        const p={code:$("#qaPromoCode").value.trim(), type:$("#qaPromoType").value, value:parseInt($("#qaPromoVal").value)||0};
+        if(!p.code||!p.value) return toast("Code et valeur requis","err");
+        try{ await API.admin.promotionCreate(p); toast("Promotion créée","ok"); $("#qaPromo").classList.remove("is-on") }catch(e){ toast(e.message,"err")}
+      });
+      $("#qaCatSave").addEventListener("click", async()=>{
+        try{ await API.admin.categoryCreate({slug:$("#qaCatSlug").value.trim(), name:$("#qaCatName").value.trim(), tagline:$("#qaCatTagline").value.trim()}); toast("Catégorie créée","ok"); $("#qaCategory").classList.remove("is-on")}catch(e){ toast(e.message,"err")}
+      });
+      $("#qaBrandSave").addEventListener("click", async()=>{
+        try{ await API.admin.brandCreate({slug:$("#qaBrandSlug").value.trim(), name:$("#qaBrandName").value.trim(), country:$("#qaBrandCountry").value.trim()}); toast("Marque créée","ok"); $("#qaBrand").classList.remove("is-on")}catch(e){ toast(e.message,"err")}
+      });
+
+      loadDashboard();
+      loadHealth();
+      loadNotifications();
+      // reveal
+      const obs=new IntersectionObserver(ents=> ents.forEach(en=>{ if(en.isIntersecting) en.target.classList.add("is-in")}),{threshold:.1});
+      document.querySelectorAll("[data-reveal]").forEach(el=>obs.observe(el));
+    }
+    async function loadDashboard(){
+      try{
+        const res=await API.admin.dashboard({period:currentPeriod});
+        const d=res.data;
+        const k=d.kpis;
+        const t=r=> `<span class="trend ${r.dir==='?'?'up':r.dir==='?'?'down':'flat'}">${r.dir} ${r.pct}%</span>`;
+        $("#kpiGrid").innerHTML=`
+          <div class="kpi-card gold"><span class="kpi-label">Chiffre d’affaires total</span><b class="kpi-value">${fmt(d.revenue.total)}</b><span class="kpi-sub">Aujourd’hui ${fmt(d.revenue.today)} · 7j ${fmt(d.revenue.week)} · 30j ${fmt(d.revenue.w30)}</span></div>
+          <div class="kpi-card green"><span class="kpi-label">Chiffre d’affaires du jour</span><b class="kpi-value">${fmt(k.today_revenue)}</b><span class="kpi-sub">vs hier ${fmt(d.revenue.yesterday)} ${t(d.revenue.trend)}</span></div>
+          <div class="kpi-card ink"><span class="kpi-label">Commandes totales</span><b class="kpi-value">${d.orders.total}</b><span class="kpi-sub">Aujourd’hui ${d.orders.today} · En attente ${d.orders.pending}</span></div>
+          <div class="kpi-card"><span class="kpi-label">Commandes par statut</span><b class="kpi-value" style="font-size:1.1rem">${d.orders.pending} en attente · ${d.orders.confirmed} confirmées · ${d.orders.preparing} préparation</b><span class="kpi-sub">${d.orders.shipped} expédiées · ${d.orders.delivered} livrées · ${d.orders.cancelled} annulées</span></div>
+          <div class="kpi-card"><span class="kpi-label">Clients</span><b class="kpi-value">${d.customers.total}</b><span class="kpi-sub">${d.customers.active} actifs · ${d.customers.disabled} désactivés · ${d.customers.new_today} nouveaux ajd</span></div>
+          <div class="kpi-card"><span class="kpi-label">Produits</span><b class="kpi-value">${d.products.total} total</b><span class="kpi-sub">${d.products.active} actifs · ${d.products.inactive} inactifs · ${d.products.featured} vedettes</span></div>
+          <div class="kpi-card"><span class="kpi-label">Stocks</span><b class="kpi-value">${d.products.low_stock} faibles · ${d.products.out_stock} ruptures</b><span class="kpi-sub">${d.products.promotional} en promo · ${d.products.promotions_active} promotions actives</span></div>
+          <div class="kpi-card"><span class="kpi-label">Panier moyen</span><b class="kpi-value">${fmt(k.avg_basket)}</b><span class="kpi-sub">vs hier ${fmt(d.orders.avg_yesterday)} ${t(d.orders.avg_trend)}</span></div>
+          <div class="kpi-card"><span class="kpi-label">Fidélité — activité</span><b class="kpi-value">${d.loyalty.earned.toLocaleString('fr-FR')} émis</b><span class="kpi-sub">${d.loyalty.redeemed.toLocaleString('fr-FR')} utilisés · aujourd’hui ${k.loyalty_today.toLocaleString('fr-FR')} ${t(d.loyalty.trend)}</span></div>
+        `;
+        // actions à faire
+        const a=d.actions;
+        $("#actionsGrid").innerHTML=`
+          <div class="action-item" onclick="location.href='orders.html?status=pending'"><span class="action-dot red"></span><span><b>${a.to_confirm} commandes à confirmer</b><small>En attente de validation</small></span><span class="action-count danger">${a.to_confirm}</span></div>
+          <div class="action-item" onclick="location.href='orders.html?status=confirmed'"><span class="action-dot amber"></span><span><b>${a.to_prepare} à préparer</b><small>Confirmées, à préparer</small></span><span class="action-count warn">${a.to_prepare}</span></div>
+          <div class="action-item" onclick="location.href='orders.html?status=preparing'"><span class="action-dot amber"></span><span><b>${a.to_ship} à expédier</b><small>En préparation</small></span><span class="action-count warn">${a.to_ship}</span></div>
+          <div class="action-item" onclick="location.href='inventory.html?filter=low'"><span class="action-dot amber"></span><span><b>${a.low_stock.count} stocks faibles</b><small>=5 unités</small></span><span class="action-count warn">${a.low_stock.count}</span></div>
+          <div class="action-item" onclick="location.href='inventory.html?filter=out'"><span class="action-dot red"></span><span><b>${a.out_stock.count} ruptures</b><small>Produit épuisé</small></span><span class="action-count danger">${a.out_stock.count}</span></div>
+          <div class="action-item" onclick="location.href='reviews.html'"><span class="action-dot ${a.pending_reviews?'red':'green'}"></span><span><b>${a.pending_reviews} avis à modérer</b><small>En attente</small></span><span class="action-count ${a.pending_reviews?'danger':''}">${a.pending_reviews}</span></div>
+          <div class="action-item" onclick="location.href='support.html'"><span class="action-dot ${a.pending_tickets?'amber':'green'}"></span><span><b>${a.pending_tickets} tickets SAV</b><small>Ouverts / en attente</small></span><span class="action-count ${a.pending_tickets?'warn':''}">${a.pending_tickets}</span></div>
+          <div class="action-item" onclick="location.href='contact.html'"><span class="action-dot ${a.pending_contacts?'amber':'green'}"></span><span><b>${a.pending_contacts} demandes clients</b><small>Messages contact</small></span><span class="action-count ${a.pending_contacts?'warn':''}">${a.pending_contacts}</span></div>
+          <div class="action-item" onclick="location.href='customers.html'"><span class="action-dot ${a.recent_disabled?'amber':'green'}"></span><span><b>${a.recent_disabled} comptes désactivés (7j)</b><small>Vérifier</small></span><span class="action-count">${a.recent_disabled}</span></div>
+          <div class="action-item" onclick="location.href='promotions.html'"><span class="action-dot ${a.expiring_promos?'amber':'green'}"></span><span><b>${a.expiring_promos} promos vont expirer</b><small>7 prochains jours</small></span><span class="action-count ${a.expiring_promos?'warn':''}">${a.expiring_promos}</span></div>
+        `;
+        // extra stats — now shows full stock + featured/promo breakdown
+        document.getElementById("extraStats").innerHTML=`
+          <div style="display:flex;justify-content:space-between"><span>Clients fidèles (≥2 commandes)</span><b>${d.customers.returning}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Produits actifs / inactifs</span><b>${d.products.active} / ${d.products.inactive}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Vedettes</span><b>${d.products.featured}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>En promotion</span><b>${d.products.promotional}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Promotions actives (codes)</span><b>${d.products.promotions_active} / ${d.products.promotions_total}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Stock faible (≤5)</span><b style="color:#8A6D1A">${d.products.low_stock}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Ruptures</span><b style="color:#8A3A1F">${d.products.out_stock}</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Flash sales actives</span><b>${a.active_flash}</b></div>
+        `;
+        // top products
+        const tp=document.getElementById("topProducts");
+        if(d.top_products && d.top_products.length){
+          tp.innerHTML=d.top_products.map((p,i)=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--admin-line)"><span><b>${i+1}. ${p.product_name}</b><br><small style="color:var(--admin-muted)">${p.qty} vendus</small></span><b>${fmt(p.revenue)}</b></div>`).join("");
+        } else tp.innerHTML=`<p style="color:var(--admin-muted)">Aucune donnée</p>`;
+        // loyalty
+        const ls=document.getElementById("loyaltyStats");
+        ls.innerHTML=`<div style="display:grid;gap:10px"><div style="display:flex;justify-content:space-between"><span>Points gagnés (total)</span><b style="color:var(--admin-green)">${d.loyalty.earned.toLocaleString('fr-FR')}</b></div><div style="display:flex;justify-content:space-between"><span>Points utilisés</span><b>${d.loyalty.redeemed.toLocaleString('fr-FR')}</b></div><div style="display:flex;justify-content:space-between"><span>Émis aujourd’hui</span><b>${d.loyalty.today}</b> ${t(d.loyalty.trend)}</div><div style="margin-top:6px;display:flex;gap:8px"><a class="btn btn--ghost btn--sm" href="loyalty.html">Gérer fidélité</a><a class="btn btn--ghost btn--sm" href="customers.html">Clients</a></div></div>`;
+        // recent orders table
+        const tb=$("#recentBody");
+        const mob=null; // desktop-only removed
+        const rows=d.recent_orders||[];
+        if(!rows.length){
+          tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--admin-muted)">Aucune commande</td></tr>`;
+          /* mobile removed */
+        } else {
+          tb.innerHTML=rows.map(o=>`
+            <tr style="cursor:pointer" onclick="location.href='order.html?order_number=${encodeURIComponent(o.order_number)}'">
+              <td><b>${o.order_number}</b><br><small style="color:var(--admin-muted)">${o.payment_method}</small></td><td>${o.first_name} ${o.last_name}<br><small style="color:var(--admin-muted)">${o.email}</small></td><td>${fmt(o.total)}</td><td><span class="badge badge--neutral">${map[o.status]||o.status}</span></td><td>${new Date(o.created_at).toLocaleDateString("fr-TN")}</td>
+            </tr>
+          `).join("");
+          /* mobile removed */
+        }
+        // status chart
+        const chart=$("#statusChart");
+        const by=d.orders.by_status||{};
+        const total=d.orders.total||1;
+        chart.innerHTML=Object.entries(by).map(([k,v])=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--admin-line)">
+            <span style="font-size:.84rem">${map[k]||k}</span><b>${v}</b>
+            <div style="width:80px;height:6px;background:var(--admin-bg);border-radius:99px;overflow:hidden"><i style="display:block;height:100%;background:var(--admin-green);width:${Math.round(v/total*100)}%"></i></div>
+          </div>
+        `).join("") || `<p style="color:var(--admin-muted)">Aucune donnée</p>`;
+      }catch(e){
+        $("#kpiGrid").innerHTML=`<p style="color:#8A3A1F">Erreur : ${e.message}</p>`;
+      }
+    }
+    async function loadHealth(){
+      try{
+        const res=await API.admin.systemHealth();
+        const checks=res.data.checks||res.checks||{};
+        $("#healthBadge").innerHTML=`<span class="badge badge--green">OK</span>`;
+        $("#healthInfo").innerHTML=Object.entries(checks).slice(0,8).map(([k,v])=>`<div class="health-pill ok"><span>${k}</span><b>${v}</b></div>`).join("") + `<div style="font-size:.72rem;color:var(--admin-muted);margin-top:6px">API — Session — Storage — Configuration — Dernier check ${new Date().toLocaleString("fr-TN")}</div>`;
+      }catch(e){ $("#healthBadge").innerHTML=`<span class="badge badge--red">Erreur</span>`; $("#healthInfo").textContent=e.message; }
+    }
+    async function loadNotifications(){
+      try{
+        const res=await API.admin.notificationsCenter();
+        const c=res.data.counters;
+        $("#notifCount").textContent=`${c.new_order+c.low_stock+c.review_waiting+c.support_tickets} à traiter`;
+        $("#notifCenter").innerHTML=(res.data.recent||[]).map(n=>`
+          <div style="display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--admin-line);border-radius:10px;background:var(--admin-surface)">
+            <span style="width:36px;height:36px;border-radius:50%;background:var(--admin-bg);display:grid;place-items:center;font-size:.9rem">${n.type==='commande'?'?':n.type==='stock'?'?':n.type==='review'?'?':'?'}</span>
+            <span><b style="font-size:.86rem">${n.title}</b><br><small style="color:var(--admin-muted)">${n.body}</small></span>
+            ${n.link?`<a class="btn btn--ghost btn--sm" href="${n.link}" style="margin-left:auto">Voir</a>`:""}
+          </div>
+        `).join("") || `<p style="color:var(--admin-muted)">Aucune notification</p>`;
+        // also inject low/out counts into badges maybe
+      }catch(e){ $("#notifCenter").innerHTML=`<p style="color:#8A3A1F">${e.message}</p>`; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

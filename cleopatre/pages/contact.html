@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Contact — Écrire à la pharmacie | Cléopâtre Parapharmacie Tunis</title>
+  <meta name="description" content="Une question sur un produit, une commande, votre peau ? Les pharmaciennes de Cléopâtre répondent sous 24 h ouvrées. 12 Av. Habib Bourguiba, Tunis.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/contact.html">
+  <meta property="og:title" content="Contact — Cléopâtre Parapharmacie">
+  <meta property="og:description" content="Les pharmaciennes vous répondent sous 24 h ouvrées.">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/contact.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <header class="page-head grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Contact</span></nav>
+        <span class="eyebrow" data-reveal>Nous écrire · nous appeler · venir</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:16px">Un comptoir qui<br><em class="serif-i">répond vraiment.</em></h1>
+      </div>
+    </header>
+
+    <div class="contact-layout container">
+      <!-- Coordonnées -->
+      <aside class="cinfo" data-reveal>
+        <section class="cblock">
+          <h4>L’officine</h4>
+          <address>12 Avenue Habib Bourguiba<br>Tunis 1001, Tunisie</address>
+          <a class="link-u" href="#" onclick="return false">Voir l’itinéraire<span class="arr">?</span></a>
+        </section>
+        <section class="cblock">
+          <h4>Par téléphone</h4>
+          <p class="big-tel"><a href="tel:+21629835402">+216 29 835 402</a></p>
+          <p class="hours">Lundi – Samedi · 9h ? 19h</p>
+        </section>
+        <section class="cblock">
+          <h4>Par écrit</h4>
+          <p><a class="mail-link" href="mailto:cleopatreparapharmacie@gmail.com">cleopatreparapharmacie@gmail.com</a></p>
+          <p>Réponse d’une pharmacienne sous 24 h ouvrées.</p>
+        </section>
+        <section class="cblock">
+          <h4>Suivre la maison</h4>
+          <div class="socials">
+            <a class="chip" href="https://www.instagram.com/parapharmaciecleopatretn/" target="_blank" rel="noopener">Instagram ?</a>
+            <a class="chip" href="https://www.facebook.com/Esbcleopatre" target="_blank" rel="noopener">Facebook ?</a>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Formulaire -->
+      <section class="cform-wrap" aria-labelledby="formTitle" data-reveal style="--d:1">
+        <form id="contactForm" novalidate>
+          <h2 class="display-2" id="formTitle">Votre message, <em class="serif-i">traité par une humaine.</em></h2>
+          <div class="frow">
+            <div class="field"><label for="cfName">Nom &amp; prénom *</label><input id="cfName" name="name" type="text" autocomplete="name" required><span class="err" data-err></span></div>
+            <div class="field"><label for="cfPhone">Téléphone</label><input id="cfPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel"><span class="err" data-err></span></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label for="cfEmail">E-mail *</label><input id="cfEmail" name="email" type="email" autocomplete="email" required><span class="err" data-err></span></div>
+            <div class="field"><label for="cfSubject">Sujet</label>
+              <select id="cfSubject" name="subject">
+                <option>Conseil produit</option><option>Suivi de commande</option><option>Délai de livraison</option><option>Retour ou échange</option><option>Autre demande</option>
+              </select><span class="err" data-err></span></div>
+          </div>
+          <div class="field"><label for="cfMsg">Votre message *</label>
+            <textarea id="cfMsg" name="message" rows="6" required placeholder="Décrivez votre besoin, votre peau, votre question — plus vous êtes précise·, meilleur sera notre conseil."></textarea>
+            <span class="err" data-err></span></div>
+          <button class="btn btn--ink btn--wide" type="submit">Envoyer le message<span class="arr">?</span></button>
+          <p class="form-note">En écrivant, vous acceptez que nous vous recontactions au sujet de votre demande — rien de plus.</p>
+        </form>
+        <div class="form-done" id="formDone" hidden>
+          <span class="serif-i display-2">Bien reçu.</span>
+          <p>Votre message est entre les mains de l’équipe.<br>Une pharmacienne vous répond sous 24 h ouvrées.</p>
+          <button class="link-u" id="formAgain">Écrire un autre message<span class="arr">?</span></button>
+        </div>
+      </section>
+    </div>
+
+    <!-- FAQ livraison -->
+    <section class="section section--tight container" aria-labelledby="shipTitle">
+      <hr class="hr-fade">
+      <div class="faq-grid">
+        <div><span class="num-label" data-reveal><i>§</i>Livraison &amp; retours</span>
+          <h2 class="display-2" id="shipTitle" data-reveal style="--d:1;margin-top:16px">Les réponses<br><em class="serif-i">aux bonnes questions.</em></h2></div>
+        <div class="acc" id="shipAcc"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/contact.js"></script>
+</body>
+</html>
+

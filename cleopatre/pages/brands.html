@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Nos Marques — Répertoire A–Z | Cléopâtre Parapharmacie Tunis</title>
+  <meta name="description" content="Seize laboratoires référencés avec exigence : La Roche-Posay, Avène, Bioderma, Nuxe, Filorga… Découvrez leurs histoires et leurs collections.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/brands.html">
+  <meta property="og:title" content="Nos Marques — Cléopâtre Parapharmacie">
+  <meta property="og:description" content="Seize laboratoires référencés avec exigence.">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/brands.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <header class="page-head grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Marques</span></nav>
+        <span class="eyebrow" data-reveal>Le répertoire</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:16px">Seize maisons,<br><em class="serif-i">une seule exigence.</em></h1>
+        <p class="lead" data-reveal style="--d:2;margin-top:18px">Nous référençons peu. Nous choisissons des laboratoires
+        qui publient leurs études, dosent honnêtement et répondent de leurs formules.</p>
+      </div>
+    </header>
+
+    <!-- Mises en avant -->
+    <section class="section section--tight container" aria-label="Maisons en vedette">
+      <div class="feat-strip" id="featStrip"></div>
+    </section>
+
+    <!-- Annuaire -->
+    <section class="section container" aria-label="Annuaire alphabétique">
+      <hr class="hr-fade">
+      <div class="dir-tools">
+        <span class="num-label" data-reveal><i>A–Z</i>Annuaire complet</span>
+        <div class="search-inline">
+          <input type="search" id="brandSearch" placeholder="Rechercher une marque…" aria-label="Rechercher une marque">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg>
+        </div>
+      </div>
+      <div class="az-nav" id="azNav" role="navigation" aria-label="Filtre alphabétique"></div>
+      <div id="dirList"></div>
+      <p class="noresult" id="noBrand" hidden>Aucune maison ne correspond — essayez un autre nom.</p>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/brands.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Recherche — Cléopâtre Parapharmacie</title>
+  <meta name="description" content="Résultats de recherche dans la sélection experte de la parapharmacie Cléopâtre.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/search.html">
+  <meta name="robots" content="noindex,follow">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/search.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <header class="page-head grain">
+      <div class="container s-head">
+        <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Recherche</span></nav>
+        <form class="s-form" action="search.html" method="get" role="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg>
+          <input type="search" id="qInput" name="q" placeholder="Votre recherche…" autocomplete="off"
+                 value="" aria-label="Votre recherche">
+        </form>
+        <p class="count" id="sCount"></p>
+      </div>
+    </header>
+
+    <section class="container section section--flush-top" id="sResults" aria-label="Résultats"></section>
+
+    <!-- État vide -->
+    <section class="container section" id="sEmpty" hidden>
+      <div class="sempty" data-reveal>
+        <span class="num-label"><i>?</i>Rien trouvé — pour l’instant</span>
+        <h2 class="display-2" style="margin-top:16px">Essayons autrement.</h2>
+        <p class="lead" style="margin-top:14px">Nos rayons sont profonds : décrivez votre besoin à une pharmacienne,
+        ou explorez les univers et marques ci-dessous.</p>
+      </div>
+      <div class="s-browse" id="sBrowse"></div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/search.js"></script>
+</body>
+</html>
+

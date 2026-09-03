@@ -1,0 +1,1642 @@
+{
+  "products": [
+    {
+      "id": "bioderma-sensibio-h2o-500",
+      "brand": "Bioderma",
+      "name": "Sensibio H2O Eau Micellaire",
+      "cat": "visage",
+      "sub": "Nettoyage & démaquillage",
+      "form": "pump",
+      "tint": "#DFE7EC",
+      "price": 39900,
+      "oldPrice": 47500,
+      "size": "500 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.9,
+      "reviews": 2841,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": 1,
+      "image": "assets/products/bioderma-sensibio.webp",
+      "imageAlt": "assets/products/bioderma-sensibio.webp",
+      "imageThumb": null,
+      "short": "L’eau micellaire de référence mondiale : démaquille et apaise sans rinçage.",
+      "description": "Formulée comme une lotion physiologique, Sensibio H2O reproduit les phospholipides des membranes cutanées pour dissoudre maquillage, pollution et excès de sébum sans jamais agresser le film hydrolipidique. Une tolérance d’orfèvre, même sur les yeux les plus sensibles.",
+      "ingredients": "Aqua, PEG-6 Caprylic/Capric Glycerides, Cucumis Sativus Fruit Extract, Mannitol, Xylitol, Rhamnose, Fructooligosaccharides.",
+      "benefits": [
+        "Démaquille visage et yeux en un geste",
+        "Apaise les sensations d’échauffement",
+        "Respecte l’équilibre biologique de la peau",
+        "Sans rinçage — testé sous contrôle ophtalmologique"
+      ],
+      "usage": "Imprégner un coton et nettoyer délicatement, matin et soir. Renouveler jusqu’à coton propre."
+    },
+    {
+      "id": "bioderma-sebium-h2o",
+      "brand": "Bioderma",
+      "name": "Sébium H2O Eau Micellaire Purifiante",
+      "cat": "visage",
+      "sub": "Nettoyage & démaquillage",
+      "form": "pump",
+      "tint": "#DCE5EA",
+      "price": 20270,
+      "oldPrice": 36628,
+      "size": "100 ml",
+      "concerns": [
+        "acne"
+      ],
+      "rating": 4.8,
+      "reviews": 1932,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": "assets/products/bioderma-sebium-h2o.webp",
+      "imageAlt": "assets/products/bioderma-sebium-h2o.webp",
+      "imageThumb": null,
+      "short": "La version purifiante pour peaux mixtes à grasses, -45% ce mois-ci.",
+      "description": "Une eau micellaire qui nettoie, purifie et limite la sécrétion de sébum grâce au complexe Fluidactiv®. La peau retrouve un matité nette, sans tiraillement ni effet desséchant.",
+      "ingredients": "Aqua, PEG-6 Caprylic/Capric Glycerides, Salicylic Acid, Zinc Gluconate, Ginkgo Biloba Leaf Extract.",
+      "benefits": [
+        "Purifie sans assécher",
+        "Régule le sébum durablement",
+        "Affine le grain de peau",
+        "Élimine les impuretés en profondeur"
+      ],
+      "usage": "Matin et soir, coton imbibé, gestes doux. Sans rinçage."
+    },
+    {
+      "id": "la-roche-posay-anthelios-uvmune400",
+      "brand": "La Roche-Posay",
+      "name": "Anthelios UVMune 400 Fluide Invisible SPF50+",
+      "cat": "visage",
+      "sub": "Protection solaire",
+      "form": "tube",
+      "tint": "#E4E9EE",
+      "price": 89900,
+      "oldPrice": null,
+      "size": "50 ml",
+      "concerns": [
+        "solaire",
+        "anti-age"
+      ],
+      "rating": 4.9,
+      "reviews": 3510,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": 2,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le premier filtre Mexoryl400 : protection contre les UVA ultra-longs.",
+      "description": "Une révolution photoprotectrice : le filtre Mexoryl400 couvre la bande UVA la plus profonde jamais protégée, celle qui marque la peau durablement. Texture fluide oil-control, fini invisible, résistance eau et sueur.",
+      "ingredients": "Mexoryl400 (Methoxypropylamino Cyclohexenylidene Ethoxyethylcyanoacetate), La Roche-Posay Thermal Water, Niacinamide, Vitamin E.",
+      "benefits": [
+        "SPF50+ très haute protection UVA/UVB",
+        "Fini invisible, zéro trace blanche",
+        "Anti-brillance, idéal sous maquillage",
+        "Résistant à l’eau et à la transpiration"
+      ],
+      "usage": "Appliquer généreusement 15 minutes avant l’exposition. Renouveler toutes les deux heures."
+    },
+    {
+      "id": "lrp-cicaplast-b5",
+      "brand": "La Roche-Posay",
+      "name": "Cicaplast Baume B5+ Réparateur",
+      "cat": "corps",
+      "sub": "Soins réparateurs",
+      "form": "tube",
+      "tint": "#EDEAE2",
+      "price": 42900,
+      "oldPrice": null,
+      "size": "100 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.9,
+      "reviews": 4208,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": 4,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le baume réparation absolue : irritations, zones sèches, post-dermatologie.",
+      "description": "Panthenol 5%, Madécassoside et cuivre-zinc-manganèse : Cicaplast accélère la reconstruction de la barrière cutanée. Il apaise immédiatement, répare visiblement, et s’utilise du nourrisson à l’adulte.",
+      "ingredients": "Panthenol 5%, Madecassoside, Manganese Gluconate, Shea Butter, Glycerin 10%.",
+      "benefits": [
+        "Répare la barrière cutanée",
+        "Apaise instantanément les irritations",
+        "Convient aux bébés et enfants",
+        "Texture non collante, absorption rapide"
+      ],
+      "usage": "Deux fois par jour sur peau propre et sèche. Corps, visage, lèvres."
+    },
+    {
+      "id": "lrp-hyalu-b5-serum",
+      "brand": "La Roche-Posay",
+      "name": "Hyalu B5 Sérum Repulpant Anti-Rides",
+      "cat": "visage",
+      "sub": "Sérums & anti-âge",
+      "form": "dropper",
+      "tint": "#E7EBE4",
+      "price": 129000,
+      "oldPrice": 145000,
+      "size": "30 ml",
+      "concerns": [
+        "anti-age",
+        "hydration"
+      ],
+      "rating": 4.8,
+      "reviews": 1876,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Deux acides hyaluroniques + vitamine B5 : repulpation mesurée dès 15 jours.",
+      "description": "Un sérum concentré qui agit sur les trois étages du derme : volume, densité, élasticité. La peau est repulpée, les rides atténuées, le teint reposé. Testé après actes dermatologiques.",
+      "ingredients": "Acide Hyaluronique pur, Madécassoside, Panthénol 5%, Eau Thermale de La Roche-Posay.",
+      "benefits": [
+        "Repulpe les rides installées",
+        "Hydratation intense longue durée",
+        "Peau plus souple et lumineuse",
+        "Tolérance maximale"
+      ],
+      "usage": "Matin et/ou soir, 3 gouttes sur peau propre avant la crème."
+    },
+    {
+      "id": "lrp-effaclar-gel",
+      "brand": "La Roche-Posay",
+      "name": "Effaclar Gel Purifiant Micro-Exfoliant",
+      "cat": "visage",
+      "sub": "Nettoyage & démaquillage",
+      "form": "tube",
+      "tint": "#E3E7ED",
+      "price": 49500,
+      "oldPrice": null,
+      "size": "200 ml",
+      "concerns": [
+        "acne"
+      ],
+      "rating": 4.7,
+      "reviews": 1240,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le nettoyant quotidien des peaux à imperfections, corps et visage.",
+      "description": "Sa base lavante douce élimine l’excès de sébum et les impuretés tout en respectant le microbiome. Le zinc PCA régule ; la micro-exfoliation affine sans décaper.",
+      "ingredients": "Zinc PCA, Glycérol, base lavante douce sans savon, agent kératolytique doux.",
+      "benefits": [
+        "Nettoie sans dessécher",
+        "Réduit les imperfections",
+        "Corps et visage",
+        "Tolérance excellente en usage quotidien"
+      ],
+      "usage": "Mousse sur peau humide, rincer abondamment. Matin et soir."
+    },
+    {
+      "id": "avene-eau-thermale-300",
+      "brand": "Avène",
+      "name": "Eau Thermale Brume Apaisante",
+      "cat": "bien-etre",
+      "sub": "Eaux thermales",
+      "form": "spray",
+      "tint": "#E2E8DD",
+      "price": 32000,
+      "oldPrice": 45600,
+      "size": "300 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.9,
+      "reviews": 2987,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": 3,
+      "image": "assets/products/avene-eau.webp",
+      "imageAlt": "assets/products/avene-eau.webp",
+      "imageThumb": null,
+      "short": "Quarante ans de roche, une seule vertu : apaiser. Lot de 2 au prix spécial.",
+      "description": "Pulvérisée à toute heure, l’eau thermale d’Avène calme rougeurs, échauffements, démangeaisons. Elle fixe le maquillage, apaise après-rasage, soulage les peaux atopiques. Un geste universel, du nourrisson à l’adulte.",
+      "ingredients": "Eau Thermale d’Avène 100%, azote propulseur inerte (sans gaz nocif).",
+      "benefits": [
+        "Apaise rougeurs et irritations",
+        "Anti-démangeaison prouvé",
+        "Fixe et illumine le maquillage",
+        "Utilisable bébé comme adulte"
+      ],
+      "usage": "Brumer généreusement, laisser agir deux minutes, essuyer délicatement."
+    },
+    {
+      "id": "avene-tolerance-control",
+      "brand": "Avène",
+      "name": "Tolérance Control Crème Réactive",
+      "cat": "visage",
+      "sub": "Crèmes hydratantes",
+      "form": "tube",
+      "tint": "#E6EADF",
+      "price": 56000,
+      "oldPrice": null,
+      "size": "40 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.8,
+      "reviews": 863,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Pour les peaux allergiques : 17 ingrédients, rien d’autre.",
+      "description": "Stérile par conception, cette crème restaure la barrière cutanée en 48 heures avec une liste d’ingrédients volontairement minimale. Zéro parfum, zéro conservateur classique, zéro compromis.",
+      "ingredients": "Avene Thermal Spring Water, Glycerin, Caprylic/Capric Triglyceride, Squalane, D-Panthenol. Formule stérile.",
+      "benefits": [
+        "Calme la peau réactive en 48h",
+        "Restaure la barrière",
+        "Liste minimaliste, stérilité garantie",
+        "Sans parfum ni conservateur ajouté"
+      ],
+      "usage": "Matin et soir sur visage et cou. Se conserve 3 mois après ouverture."
+    },
+    {
+      "id": "nuxe-huile-prodigieuse-or",
+      "brand": "Nuxe",
+      "name": "Huile Prodigieuse Or Multi-Usages",
+      "cat": "corps",
+      "sub": "Huiles & rituels",
+      "form": "spray",
+      "tint": "#F0E4C8",
+      "price": 87900,
+      "oldPrice": 98500,
+      "size": "100 ml",
+      "concerns": [
+        "hydration"
+      ],
+      "rating": 4.9,
+      "reviews": 5120,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": 5,
+      "image": "assets/products/nuxe-huile-or.webp",
+      "imageAlt": "assets/products/nuxe-huile-or.webp",
+      "imageThumb": null,
+      "short": "L’icône culte : 7 huiles précieuses, nacre dorée, visage-corps-cheveux.",
+      "description": "Huile sèche mythique aux sept huiles botanique — macadamia, noisette, amande douce, camélia, argan, bourrache, onagre — illuminée de particules dorées. Elle nourrit, sublime et parfume d’un sillage de soleil et sable chaud.",
+      "ingredients": "Macadamia Ternifolia Seed Oil, Camellia Oleifera Seed Oil, Argania Spinosa Kernel Oil, Borago Officinalis Seed Oil, Oenothera Biennis Oil.",
+      "benefits": [
+        "Nourrit visage, corps et cheveux",
+        "Fini satiné scintillant non gras",
+        "Atténue les vergetures",
+        "Parfum signature envoûtant"
+      ],
+      "usage": "Quelques pulvérisations selon les zones. Sur pointes sèches, deux pressions suffisent."
+    },
+    {
+      "id": "nuxe-reve-de-miel-levres",
+      "brand": "Nuxe",
+      "name": "Rêve de Miel Baume Lèvres Nutrition",
+      "cat": "visage",
+      "sub": "Soins ciblés",
+      "form": "jar",
+      "tint": "#F2E6CF",
+      "price": 29900,
+      "oldPrice": null,
+      "size": "15 ml",
+      "concerns": [
+        "hydration"
+      ],
+      "rating": 4.8,
+      "reviews": 2314,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le baume pot culte : lèvres désaltérées huit heures durant.",
+      "description": "Miel, propolis et huiles végétales dans une texture fondante légèrement acidulée. Il restaure les lèvres gercées, tient la nuit, précède le rouge à lèvres le jour.",
+      "ingredients": "Miel, Propolis, Huile de Macadamia, Beurre de Karité, Vitamine E.",
+      "benefits": [
+        "Répare les lèvres très sèches",
+        "Confort immédiat longue durée",
+        "Texture fondante non poisseuse",
+        "97% d’ingrédients d’origine naturelle"
+      ],
+      "usage": "En fine couche, aussi souvent que nécessaire. En masque nuit épais une fois par semaine."
+    },
+    {
+      "id": "nuxe-hair-prodigieux-serum",
+      "brand": "Nuxe",
+      "name": "Hair Prodigieux Sérum Hydra-Repulpant",
+      "cat": "cheveux",
+      "sub": "Sérums & huiles capillaires",
+      "form": "dropper",
+      "tint": "#F5E8F0",
+      "price": 118000,
+      "oldPrice": 137700,
+      "size": "50 ml",
+      "concerns": [
+        "hydration"
+      ],
+      "rating": 4.7,
+      "reviews": 642,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": null,
+      "image": "assets/products/nuxe-hair-serum.webp",
+      "imageAlt": "assets/products/nuxe-hair-serum-box.webp",
+      "imageThumb": "assets/products/nuxe-hair-serum-thumb.webp",
+      "short": "Fermented camellia oil + hyaluronique : cuir chevelu revitalisé, fibre soyeuse.",
+      "description": "Plus de 8 500 micro-billes d’huile fermentée de camélia rose concentrées en un sérum enrichi d’acide hyaluronique et d’extrait d’Amla. Il gorge le cuir chevelu et les longueurs d’une hydratation racine à pointe.",
+      "ingredients": "Huile fermentée de Camélia Rose, Acide Hyaluronique, Extrait d’Amla, Vitamine E.",
+      "benefits": [
+        "Revitalise le cuir chevelu",
+        "Fortifie la fibre capillaire",
+        "Brillance éclatante immédiate",
+        "Non gras, ne nécessite pas de rinçage"
+      ],
+      "usage": "Trois pipettes sur cheveux secs ou essorés, masser le cuir chevelu, laisser poser."
+    },
+    {
+      "id": "caudalie-vinoperfect-serum",
+      "brand": "Caudalie",
+      "name": "Vinoperfect Sérum Éclat Anti-Taches",
+      "cat": "visage",
+      "sub": "Sérums & anti-âge",
+      "form": "dropper",
+      "tint": "#E9DFD4",
+      "price": 139000,
+      "oldPrice": null,
+      "size": "30 ml",
+      "concerns": [
+        "pigmentation"
+      ],
+      "rating": 4.8,
+      "reviews": 1987,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "La référence anti-taches naturelle : taches atténuées, teint unifié, 62× plus efficace que la vitamine C.",
+      "description": "Son actif breveté Viniferine issu de la sève de vigne corrige les taches pigmentaires, cicatrices d’acné et mélasma. L’éclat du teint est visible dès dix jours ; la tache s’estompe en quatre semaines.",
+      "ingredients": "Viniferine brevetée, Olive Squalane, Extrait de Menthe Poivrée bio.",
+      "benefits": [
+        "Corrige tous types de taches",
+        "Unifie et illumine le teint",
+        "Prévient leur réapparition",
+        "Actif naturel breveté, clean beauty"
+      ],
+      "usage": "Matin et soir sur visage, cou et décolleté avant sa crème. Cure de 3 mois recommandée."
+    },
+    {
+      "id": "caudalie-coffret-soleil-vignes",
+      "brand": "Caudalie",
+      "name": "Coffret Soleil des Vignes — Huile & Brume",
+      "cat": "bien-etre",
+      "sub": "Coffrets sensoriels",
+      "form": "box",
+      "tint": "#EDE2CE",
+      "price": 80950,
+      "oldPrice": null,
+      "size": "Coffret 2 pièces",
+      "concerns": [
+        "hydration"
+      ],
+      "rating": 4.9,
+      "reviews": 388,
+      "stock": 0,
+      "featured": 0,
+      "bestseller": null,
+      "image": "assets/products/caudalie-coffret.webp",
+      "imageAlt": "assets/products/caudalie-coffret.webp",
+      "imageThumb": null,
+      "short": "Huile de soin figue de Barbarie + brume parfumée : l’éclat méditerranéen en coffret.",
+      "description": "Un duo nutrition et éclat autour du parfum iconique Soleil des Vignes. L’huile nourrit intensément visage et corps ; la brume parfume la peau et le linge d’un voile solaire.",
+      "ingredients": "Huile de soin Figue de Barbarie, Brume parfumée Soleil des Vignes, étui cadeau recyclable.",
+      "benefits": [
+        "Nutrition intense visage-corps",
+        "Parfum solaire signature",
+        "Idéal cadeau",
+        "Composants recyclables"
+      ],
+      "usage": "Huile : massage circulaire sur peau légèrement humide. Brume : vaporiser à volonté."
+    },
+    {
+      "id": "vichy-mineral-89",
+      "brand": "Vichy",
+      "name": "Minéral 89 Booster Fortifiant Quotidien",
+      "cat": "visage",
+      "sub": "Crèmes hydratantes",
+      "form": "pump",
+      "tint": "#DBE2E4",
+      "price": 79000,
+      "oldPrice": null,
+      "size": "50 ml",
+      "concerns": [
+        "hydration",
+        "anti-age"
+      ],
+      "rating": 4.7,
+      "reviews": 2650,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "89% d’eau volcanique + acide hyaluronique : la force d’une barrière réparée.",
+      "description": "Un gel-booster transparent qui renforce la barrière cutanée face au stress, à la pollution et aux variations climatiques. La peau devient plus résistante, rebondie, lumineuse. Premier geste de toutes les routines.",
+      "ingredients": "Eau Volcanique de Vichy 89%, Acide Hyaluronique pur, Glycérine végétale.",
+      "benefits": [
+        "Renforce la barrière cutanée",
+        "Hydrate et repulpe",
+        "Texture fraîche universelle",
+        "Base idéale sous tout soin"
+      ],
+      "usage": "Matin et soir, seul ou avant sa crème habituelle."
+    },
+    {
+      "id": "vichy-dercos-k",
+      "brand": "Vichy",
+      "name": "Dercos K Shampoing Traitant Anti-Pelliculaire",
+      "cat": "cheveux",
+      "sub": "Shampoings traitants",
+      "form": "bottle",
+      "tint": "#E0E4DA",
+      "price": 58000,
+      "oldPrice": null,
+      "size": "200 ml",
+      "concerns": [],
+      "rating": 4.6,
+      "reviews": 734,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Pellicules tenaces et démangeaisons : éliminées dès la première semaine.",
+      "description": "Sélénium disulfure et salicylic acid éliminent les pellicules adhérentes, calment le cuir chevelu et préviennent la récidive. Usage curatif puis préventif hebdomadaire.",
+      "ingredients": "Selenium Disulfide, Salicylic Acid, base lavante douce.",
+      "benefits": [
+        "Élimine pellicules sèches et grasses",
+        "Apaise les démangeaisons",
+        "Prévient les récidives",
+        "Cheveux souples, non décolorés"
+      ],
+      "usage": "Deux lavages par semaine pendant 4 semaines, puis entretien."
+    },
+    {
+      "id": "mustela-hydra-bebe-lait",
+      "brand": "Mustela",
+      "name": "Hydra-Bébé Lait Corporel",
+      "cat": "bebe",
+      "sub": "Soins quotidiens bébé",
+      "form": "pump",
+      "tint": "#F1E9DC",
+      "price": 38500,
+      "oldPrice": null,
+      "size": "500 ml",
+      "concerns": [
+        "hydration"
+      ],
+      "rating": 4.9,
+      "reviews": 3120,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": 6,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le lait de maternité par excellence : hydratation 24h, toucher velouté.",
+      "description": "À base d’avocat périsist breveté, ce lait renforce la barrière cutanée fragile des nourrissons dès la naissance. Sa texture légère pénètre instantanément ; son parfum délicat devient le souvenir olfactif de l’enfance.",
+      "ingredients": "Persea Gratissima (avocat périsist), Huile de Jojoba, Vitamine E, sans parfum ajouté excessif.",
+      "benefits": [
+        "Hydratation 24 heures",
+        "Renforce la barrière immature",
+        "Pénètre instantanément",
+        "Dès la naissance, sorties de maternité"
+      ],
+      "usage": "Après le bain, masser sur visage et corps. Un geste de complicité."
+    },
+    {
+      "id": "mustela-stelatopia-baume",
+      "brand": "Mustela",
+      "name": "Stelatopia Baume Relipidant Atopique",
+      "cat": "bebe",
+      "sub": "Soins spécifiques bébé",
+      "form": "tube",
+      "tint": "#F2EAD8",
+      "price": 52000,
+      "oldPrice": 59000,
+      "size": "300 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.8,
+      "reviews": 987,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Eczéma atopique du nourrisson : le baume qui casse le cercle des poussées.",
+      "description": "Sunflower Oil Distillate et cire d’abeille reconstituent le film protecteur déficient des peaux atopiques. Les poussées diminuent en fréquence et intensité ; les nuits retrouvent leur calme.",
+      "ingredients": "Sunflower Oil Distillate, Beurre de Karité, Cire d’Abeille, Avocat Périsist.",
+      "benefits": [
+        "Rééquilibre la peau atopique",
+        "Réduit la fréquence des poussées",
+        "Apaise les démangeaisons",
+        "Testé sous contrôle pédiatrique"
+      ],
+      "usage": "Deux applications quotidiennes sur visage et corps, en insistant sur plis et zones sèches."
+    },
+    {
+      "id": "filorga-time-filler-5xp",
+      "brand": "Filorga",
+      "name": "Time-Filler 5XP Crème Absolue Anti-Âge",
+      "cat": "visage",
+      "sub": "Sérums & anti-âge",
+      "form": "jar",
+      "tint": "#EAE3EF",
+      "price": 189000,
+      "oldPrice": 210000,
+      "size": "50 ml",
+      "concerns": [
+        "anti-age"
+      ],
+      "rating": 4.7,
+      "reviews": 1105,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Les cinq types de rides corrigés, l’effet lifting injectable sans aiguille.",
+      "description": "Inspirée des techniques de médecine esthétique, cette texture voile associe NCEF, peptides lissants et acide hyaluronique encapsulé pour agir sur rides d’expression, rides creusées, micro-reliefs, manque de fermeté et relâchement du ovale.",
+      "ingredients": "NCEF (complexe revitalisant breveté), Peptides lissants, Acide hyaluronique encapsulé, Extrait de marron d’Inde.",
+      "benefits": [
+        "Corrige les 5 types de rides",
+        "Effet lifting progressif",
+        "Texture soyeuse base maquillage",
+        "Résultats mesurés cliniquement"
+      ],
+      "usage": "Matin et soir sur visage et cou, mouvements ascendants."
+    },
+    {
+      "id": "filorga-uv-cellular-protect",
+      "brand": "Filorga",
+      "name": "UV Cellular Protect Corps SPF50+",
+      "cat": "corps",
+      "sub": "Protection solaire",
+      "form": "tube",
+      "tint": "#E8E4EC",
+      "price": 113300,
+      "oldPrice": 124600,
+      "size": "150 ml",
+      "concerns": [
+        "solaire",
+        "anti-age"
+      ],
+      "rating": 4.8,
+      "reviews": 421,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": "assets/products/filorga-uv-cellular.webp",
+      "imageAlt": "assets/products/filorga-uv-cellular.webp",
+      "imageThumb": null,
+      "short": "Le solaire anti-âge corps : peptides, niacinamide et NCEF sous SPF50+.",
+      "description": "Une protection waterproof nouvelle génération qui protège ET corrige : peptides stimulant le collagène, niacinamide atténuant les taches, texture fluide non collante au parfum d’été addictif.",
+      "ingredients": "NCEF 2.0, Peptides, Niacinamide, Acide Hyaluronique, filtres UVA/UVB nouvelle génération.",
+      "benefits": [
+        "SPF50+ waterproof",
+        "Action anti-âge corporelle",
+        "Estompe les taches brunes",
+        "Fini sec, pénétration rapide"
+      ],
+      "usage": "Généreusement avant exposition, renouveler toutes les deux heures."
+    },
+    {
+      "id": "svr-sun-secure-blur",
+      "brand": "SVR",
+      "name": "Sun Secure Blur Mousse Floutante SPF50+",
+      "cat": "visage",
+      "sub": "Protection solaire",
+      "form": "jar",
+      "tint": "#E4EBE2",
+      "price": 61400,
+      "oldPrice": 72700,
+      "size": "50 ml",
+      "concerns": [
+        "solaire",
+        "acne"
+      ],
+      "rating": 4.8,
+      "reviews": 1532,
+      "stock": 1,
+      "featured": 1,
+      "bestseller": null,
+      "image": "assets/products/svr-blur.webp",
+      "imageAlt": "assets/products/svr-blur.webp",
+      "imageThumb": null,
+      "short": "Solaire + flouteur optique : imperfections invisibles, teint velouté.",
+      "description": "Une mousse aérienne qui combine très haute photoprotection organique-minérale et effet flouteur immédiat. Les pores sont lissés, la brillance neutralisée, la peau veloutée comme retouchée.",
+      "ingredients": "Complexe Sun Secure (filtres photostables), sphères floutantes, niacinamide, zinc PCA.",
+      "benefits": [
+        "Floute pores et imperfections",
+        "Fini poudré longue tenue",
+        "Zéro trace blanche",
+        "Idéal peaux mixtes à grasses"
+      ],
+      "usage": "Appliquer en fine couche uniforme avant le maquillage."
+    },
+    {
+      "id": "svr-topialyse-huile-lavante",
+      "brand": "SVR",
+      "name": "Topialyse Huile Lavante Protectrice",
+      "cat": "corps",
+      "sub": "Soins lavants",
+      "form": "pump",
+      "tint": "#E5EBE4",
+      "price": 54900,
+      "oldPrice": null,
+      "size": "1 L",
+      "concerns": [
+        "sensibilite",
+        "hydration"
+      ],
+      "rating": 4.8,
+      "reviews": 1204,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le bain-relaxant des peaux sèches : nettoie, relipide, apaise — visage, corps, cheveux.",
+      "description": "Sa formule trio — glycérine, beurre de karité, oméga 3-6-9 — transforme la douche en soin. Sans savon, pH physiologique, utilisable dès la naissance y compris sur le cuir chevelu.",
+      "ingredients": "Glycérine 20%, Oméga 3-6-9, Beurre de Karité, base lavante sans savon.",
+      "benefits": [
+        "Nettoie sans décaper",
+        "Relipide immédiatement",
+        "Visage, corps, cheveux",
+        "Format familial économique"
+      ],
+      "usage": "Verser sur peau mouillée, faire mousser, rincer. Sécher sans frotter."
+    },
+    {
+      "id": "uriage-eau-thermale",
+      "brand": "Uriage",
+      "name": "Eau Thermale Isotonique Brume",
+      "cat": "bien-etre",
+      "sub": "Eaux thermales",
+      "form": "spray",
+      "tint": "#DEE6E9",
+      "price": 26900,
+      "oldPrice": null,
+      "size": "300 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.7,
+      "reviews": 1420,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Isotonique : elle respecte instantanément l’équilibre des cellules.",
+      "description": "Captée au cœur des Alpes françaises, cette eau isotonique unique apaise, décongestionne et réhydrate les tissus sans perturber leur milieu intérieur. Idéale en cure d’eau quotidienne.",
+      "ingredients": "Eau Thermale d’Uriage 100%, minéraux traces isotoniques.",
+      "benefits": [
+        "Apaise et décongestionne",
+        "Réhydrate les peaux assoiffées",
+        "Fixe le maquillage",
+        "Compatible tous soins"
+      ],
+      "usage": "Brumer librement à distance de 20 cm, laisser absorber."
+    },
+    {
+      "id": "uriage-bariesun-doree",
+      "brand": "Uriage",
+      "name": "Bariésun Crème Dorée SPF50+",
+      "cat": "visage",
+      "sub": "Protection solaire",
+      "form": "tube",
+      "tint": "#EDE5D2",
+      "price": 62000,
+      "oldPrice": null,
+      "size": "50 ml",
+      "concerns": [
+        "solaire"
+      ],
+      "rating": 4.7,
+      "reviews": 689,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Haute protection et hâle doré subtil : le solaire qui donne bonne mine.",
+      "description": "Sa texture fondante intègre des pigments minéraux dorés pour un teint ensoleillé immédiat, tout en protégeant contre UVA, UVB et photo-vieillissement. Résiste à l’eau et à la transpiration.",
+      "ingredients": "Complexe filtrant photostable, Aquaspongines®, pigments minéraux dorés, vitamine E.",
+      "benefits": [
+        "Teint doré immédiat naturel",
+        "Très haute protection",
+        "Hydrate 8 heures",
+        "Anti-photo-vieillissement"
+      ],
+      "usage": "Appliquer avant exposition, renouveler régulièrement."
+    },
+    {
+      "id": "ducray-anaphase-plus",
+      "brand": "Ducray",
+      "name": "Anaphase+ Shampoing Complément Anti-Chute",
+      "cat": "cheveux",
+      "sub": "Shampoings traitants",
+      "form": "bottle",
+      "tint": "#E4E4D9",
+      "price": 59900,
+      "oldPrice": 67000,
+      "size": "200 ml",
+      "concerns": [],
+      "rating": 4.7,
+      "reviews": 956,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Le compagnon obligatoire de tout traitement anti-chute sérieux.",
+      "description": "Sa formule aux vitamines B et extrait de guarana fortifie la fibre et prépare le cuir chevelu aux traitements anticancéreux capillaires. Cheveux plus résistants, chute freinée au peigne.",
+      "ingredients": "TPN Vitamines B6/B8, Extrait de Guarana, base lavante très douce.",
+      "benefits": [
+        "Retarde la chute saisonnière",
+        "Fortifie la fibre capillaire",
+        "Prépare aux traitements antichute",
+        "Massaging pleasure, parfum frais"
+      ],
+      "usage": "Trois lavages par semaine, laisser agir deux minutes, rincer."
+    },
+    {
+      "id": "a-derma-rheacalm",
+      "brand": "A-Derma",
+      "name": "Rhéacalm Crème Soins Essentiels Apaisante",
+      "cat": "visage",
+      "sub": "Crèmes hydratantes",
+      "form": "pump",
+      "tint": "#EAEAD9",
+      "price": 48000,
+      "oldPrice": null,
+      "size": "40 ml",
+      "concerns": [
+        "sensibilite"
+      ],
+      "rating": 4.7,
+      "reviews": 512,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Jeunes pousses d’avoine Rhealba bio : le calmant absolu des rougeurs.",
+      "description": "Les saponines de l’avoine Rhealba associées au d-panthénol désensibilisent progressivement les peaux intolérantes. Les bouffées de chaleur cutanées s’espacent, la peau retrouve son confort stable.",
+      "ingredients": "Saponines d’Avoine Rhealba®, D-Panthénol, Glycérine végétale, sans parfum.",
+      "benefits": [
+        "Désensibilise les rougeurs",
+        "Rétablit le confort cutané",
+        "Airless hygiénique",
+        "Tolérance exceptionnelle"
+      ],
+      "usage": "Matin et soir sur visage et cou après nettoyage doux."
+    },
+    {
+      "id": "eucerin-sun-oil-control",
+      "brand": "Eucerin",
+      "name": "Sun Oil Control Gel-Crème Dry Touch SPF50+",
+      "cat": "visage",
+      "sub": "Protection solaire",
+      "form": "tube",
+      "tint": "#E2E4E8",
+      "price": 75000,
+      "oldPrice": null,
+      "size": "50 ml",
+      "concerns": [
+        "solaire",
+        "acne"
+      ],
+      "rating": 4.7,
+      "reviews": 1088,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Matité 8h + protection maximale : le solaire des peaux grasses exigeantes.",
+      "description": "Technologie sebo-regulatrice et pigments absorbants maintiennent une matité durable même sous climat chaud. La protection reste maximale ; la brillance, hors sujet.",
+      "ingredients": "Complexe Licochalcone A, filtres UVA/UVB haute performance, pigments matifiants, glycyrrhétinate.",
+      "benefits": [
+        "Matité jusqu’à 8 heures",
+        "Anti-imperfections intégré",
+        "Ultra-léger, invisible",
+        "Prévient l’hyperpigmentation"
+      ],
+      "usage": "Chaque matin en dernière étape de routine visage."
+    },
+    {
+      "id": "puressentiel-rituel-huiles",
+      "brand": "Puressentiel",
+      "name": "Rituel Détente — Coffret Huiles Essentielles",
+      "cat": "bien-etre",
+      "sub": "Aromathérapie",
+      "form": "box",
+      "tint": "#E6EBDD",
+      "price": 45900,
+      "oldPrice": null,
+      "size": "Coffret 3 flacons",
+      "concerns": [],
+      "rating": 4.6,
+      "reviews": 298,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Lavande vraie, petit grain, marjolaine : la trilogie du sommeil retrouvé.",
+      "description": "Trois huiles essentielles chémotypées, contrôlées lot par lot, pour diffuser ou diluer. Un rituel du soir documenté par l’aromathérapie scientifique française.",
+      "ingredients": "HE Lavandula angustifolia, HE Citrus aurantium, HE Origanum majorana — 100% pures et naturelles.",
+      "benefits": [
+        "Facilite la détente du soir",
+        "Qualité chémotypée contrôlée",
+        "Diffusion, massage, bain",
+        "Notice d’aromathérapeute incluse"
+      ],
+      "usage": "3 gouttes au diffuseur 20 minutes avant le coucher, ou diluées dans une huile végétale."
+    },
+    {
+      "id": "forte-pharma-turbodraine",
+      "brand": "Forté Pharma",
+      "name": "TurboDraine Drainant Confort Hépatique",
+      "cat": "sante",
+      "sub": "Compléments alimentaires",
+      "form": "box",
+      "tint": "#EDE6D8",
+      "price": 68000,
+      "oldPrice": 76000,
+      "size": "500 ml",
+      "concerns": [],
+      "rating": 4.6,
+      "reviews": 764,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Artichaut, radis noir, tamarin : la cure drainante printemps-toute l’année.",
+      "description": "Une formulation végétale complète qui soutient les fonctions d’élimination et redonne légèreté et éclat en trois semaines. Saveur pêche blanche agréable au quotidien.",
+      "ingredients": "Extraits titrés d’Artichaut, Radis Noir, Tamarin, Fenouil, Reine-des-prés, vitamine C.",
+      "benefits": [
+        "Soutient l’élimination rénale et hépatique",
+        "Réduis la sensation de gonflement",
+        "Teint plus clair en 21 jours",
+        "Goût pêche blanche apprécié"
+      ],
+      "usage": "Une dose-bouchon par jour diluée dans un grand verre d’eau, cure de 3 semaines."
+    },
+    {
+      "id": "roge-cavailles-stick-fraicheur",
+      "brand": "Rogé Cavaillès",
+      "name": "Stick Fraîcheur Déodorant Longue Durée",
+      "cat": "corps",
+      "sub": "Hygiène",
+      "form": "stick",
+      "tint": "#EFE3DA",
+      "price": 24900,
+      "oldPrice": null,
+      "size": "40 g",
+      "concerns": [],
+      "rating": 4.6,
+      "reviews": 843,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "Fraîcheur immédiate 48h, format nomade, sans sels d’aluminium.",
+      "description": "Sa formule sans alcool ni aluminium régule l’humidité et neutralise les odeurs sans bloquer la transpiration naturelle. Le stick glisse, laisse un voile invisible satiné.",
+      "ingredients": "Sans sels d’aluminium, agents absorbants doux, parfum frais discret, hypoallergénique.",
+      "benefits": [
+        "Efficacité 48 heures",
+        "Sans sels d’aluminium",
+        "Voile invisible, non collant",
+        "Format poche voyage"
+      ],
+      "usage": "Appliquer sur peau propre et sèche, chaque matin si besoin."
+    },
+    {
+      "id": "bielenda-recharge-serum",
+      "brand": "Bielenda",
+      "name": "ReCharge Booster Sérum Revitalisant",
+      "cat": "visage",
+      "sub": "Sérums & anti-âge",
+      "form": "dropper",
+      "tint": "#E7E0E8",
+      "price": 45000,
+      "oldPrice": null,
+      "size": "30 ml",
+      "concerns": [
+        "hydration",
+        "anti-age"
+      ],
+      "rating": 4.5,
+      "reviews": 214,
+      "stock": 1,
+      "featured": 0,
+      "bestseller": null,
+      "image": null,
+      "imageAlt": null,
+      "imageThumb": null,
+      "short": "La nouveauté polonaise qui réveille les peaux fatiguées en 7 jours.",
+      "description": "Complexe énergisant cellulaire, trésorerie d’acide hyaluronique et prébiotiques : ce booster relance l’éclat des peaux stressées par le rythme urbain. Un rapport efficacité-prix remarquable.",
+      "ingredients": "Complexe ReCharge Cell, Acide Hyaluronique triple poids moléculaire, Prébiotiques, Niacinamide.",
+      "benefits": [
+        "Réveille l’éclat en une semaine",
+        "Hydratation multicouche",
+        "Renforce le microbiome",
+        "Texture gel-crème addictive"
+      ],
+      "usage": "Matin et soir sous la crème, en cure intensive de 28 jours."
+    }
+  ],
+  "brands": [
+    {
+      "slug": "la-roche-posay",
+      "name": "La Roche-Posay",
+      "country": "France",
+      "est": "1905",
+      "letter": "L",
+      "featured": 1,
+      "tint": "#DCE3EA",
+      "tagline": "La dermatologie prescriptive",
+      "story": [
+        "Née autour d’une source thermale de la Vienne, La Roche-Posay a fait du sélenium thermal un principe actif à part entière. Ses formules sont conçues avec des dermatologues, testées sur les peaux les plus réactives et validées en usage pédiatrique.",
+        "Chez Cléopâtre, c’est la maison que nous recommandons lorsque la peau ne pardonne pas : rosacée, eczéma, post-acte. Une pharmacie dans la pharmacie."
+      ],
+      "signature": "Anthelios · Cicaplast · Effaclar",
+      "values": [
+        "Testé sous contrôle dermatologique",
+        "Formules minimalistes",
+        "Peaux réactives"
+      ]
+    },
+    {
+      "slug": "avene",
+      "name": "Avène",
+      "country": "France",
+      "est": "1990",
+      "letter": "A",
+      "featured": 1,
+      "tint": "#E3E8DE",
+      "tagline": "L’eau qui apaise, depuis 1743",
+      "story": [
+        "Au cœur des Cévennes, l’eau thermale d’Avène parcourt quarante ans de roche avant de jaillir. Sa richesse en silice et son pH quasi neutre en font un soin à part entière, pas une simple brume.",
+        "La marque Pierre Fabre accompagne depuis trente ans les peaux atopiques et intolérantes avec une obsession : la tolérance maximale au prix minimal d’ingrédients."
+      ],
+      "signature": "Eau Thermale · Tolérance Control · Cold Cream",
+      "values": [
+        "Hydrothérapie historique",
+        "Minimalisme formulé",
+        "Fabrication France"
+      ]
+    },
+    {
+      "slug": "bioderma",
+      "name": "Bioderma",
+      "country": "France",
+      "est": "1977",
+      "letter": "B",
+      "featured": 1,
+      "tint": "#DFE7EC",
+      "tagline": "La biologie au service de la peau",
+      "story": [
+        "Laboratoire indépendant devenu légendaire pour ses eaux micellaires, Bioderma raisonne en biomimétisme : imiter les mécanismes naturels de la peau plutôt que les saturer.",
+        "Sensibio, Sébium, Atoderm — chaque ligne répond à une physiologie précise. C’est cette précision que nos clientes reconnaissent dès le premier flacon."
+      ],
+      "signature": "Sensibio H2O · Sébium · Atoderm",
+      "values": [
+        "Biomimétisme",
+        "Eau micellaire d’origine",
+        "Tolérance prouvée"
+      ]
+    },
+    {
+      "slug": "nuxe",
+      "name": "Nuxe",
+      "country": "France",
+      "est": "1957",
+      "letter": "N",
+      "featured": 1,
+      "tint": "#F0E4CF",
+      "tagline": "La nature, sublimée par la science",
+      "story": [
+        "Huile Prodigieuse : sept huiles végétales, un parfum de sable chaud devenu culte mondial. Nuxe incarne une cosmétique naturelle française qui refuse l’austérité.",
+        "Des textures gourmandes, des gestes sensoriels, une efficacité documentée : le plaisir n’y est jamais un vernis, c’est la méthode."
+      ],
+      "signature": "Huile Prodigieuse · Rêve de Miel · Hair Prodigieux",
+      "values": [
+        "Actifs botaniques",
+        "Textures sensorielles",
+        "Made in France"
+      ]
+    },
+    {
+      "slug": "caudalie",
+      "name": "Caudalie",
+      "country": "France",
+      "est": "1995",
+      "letter": "C",
+      "featured": 1,
+      "tint": "#E8DED6",
+      "tagline": "Le vigneron de la beauté",
+      "story": [
+        "Des pépins de raisin aux polyphénols brevetés par Harvard, Caudalie a fait de la vigne son laboratoire. Vinoperfect reste la référence anti-taches à base naturelle.",
+        "Une maison engagée : zéro parabène, zéro phénoxyéthanol, et un arbre planté pour chaque commande. Le luxe y a un accent écologique assumé."
+      ],
+      "signature": "Vinoperfect · Eau de Beauté · Soleil des Vignes",
+      "values": [
+        "Polyphénols de raisin",
+        "Clean beauty pionnier",
+        "Écolabels certifiés"
+      ]
+    },
+    {
+      "slug": "vichy",
+      "name": "Vichy",
+      "country": "France",
+      "est": "1931",
+      "letter": "V",
+      "featured": 0,
+      "tint": "#D9E2E4",
+      "tagline": "L’eau volcanique, 15 minéraux",
+      "story": [
+        "Issue des volcans d’Auvergne, l’eau de Vichy renforce la barrière cutanée et rend la peau plus résistante au stress oxydatif. Minéral 89 en condense la promesse en un seul geste.",
+        "Un laboratoire complet visage-cheveux, où chaque formule commence par cette eau régénératrice."
+      ],
+      "signature": "Minéral 89 · Dercos · Liftactiv",
+      "values": [
+        "Eau volcanique",
+        "Barrière cutanée",
+        "Santé & beauté"
+      ]
+    },
+    {
+      "slug": "mustela",
+      "name": "Mustela",
+      "country": "France",
+      "est": "1950",
+      "letter": "M",
+      "featured": 1,
+      "tint": "#F2E8DC",
+      "tagline": "Spécialiste de la peau immature",
+      "story": [
+        "Soixante-dix ans consacrés à une seule peau : celle des bébés. Mustela travaille avec des sages-femmes et pédiatres européens pour des formules ultra-sûres, traçables, souvent bio.",
+        "Stelatopia accompagne les nourrissons atteints d’eczéma atopique ; Hydra-Bébé reste notre best-seller de maternité."
+      ],
+      "signature": "Hydra-Bébé · Stelatopia · Cicastela",
+      "values": [
+        "Contrôle pédiatrique",
+        "Actifs d’origine naturelle",
+        "Engagement durable"
+      ]
+    },
+    {
+      "slug": "filorga",
+      "name": "Filorga",
+      "country": "France",
+      "est": "1978",
+      "letter": "F",
+      "featured": 1,
+      "tint": "#E9E2EE",
+      "tagline": "La médecine esthétique en flacon",
+      "story": [
+        "Laboratoire parisien fondé par un médecin esthétique, Filorga transpose en soins quotidiens les actifs de ses injections : NCEF, acide hyaluronique fraîchement encapsulé.",
+        "Time-Filler agit comme un lifting topique ; UV Cellular Protect protège en corrigeant. L’exigence clinique, sans aiguille."
+      ],
+      "signature": "Time-Filler · Oxygen-Glow · UV Cellular",
+      "values": [
+        "NCEF breveté",
+        "Anti-âge injectable-like",
+        "Conçu à Paris"
+      ]
+    },
+    {
+      "slug": "svr",
+      "name": "SVR",
+      "country": "France",
+      "est": "1962",
+      "letter": "S",
+      "featured": 0,
+      "tint": "#E4EAE3",
+      "tagline": "La science vertigineuse du détail",
+      "story": [
+        "Deux pharmaciens, une obsession : la concentration optimale. SVR pousse ses actifs — acide hyaluronique, niacinamide — jusqu’au seuil d’efficacité maximal.",
+        "Sun Secure réinvente le solaire en mousse invisible ; Topialyse répare les peaux sèches les plus inconfortables. Des produits d’initiés, devenus cultes."
+      ],
+      "signature": "Sun Secure · Topialyse · Sebiaclear",
+      "values": [
+        "Dosages maximaux",
+        "Innovation solaire",
+        "Fabriqué en France"
+      ]
+    },
+    {
+      "slug": "uriage",
+      "name": "Uriage",
+      "country": "France",
+      "est": "1992",
+      "letter": "U",
+      "featured": 0,
+      "tint": "#DEE6E9",
+      "tagline": "L’eau isotonique des Alpes",
+      "story": [
+        "À 1 600 mètres d’altitude, l’eau thermale d’Uriage est isotonique : elle respecte instantanément l’équilibre cellulaire. Un confort unique pour les peaux fragilisées.",
+        "Sa gamme Bariésun illustre sa philosophie : protection maximale, textures plaisir, tolérance absolue."
+      ],
+      "signature": "Eau Thermale · Bariésun · Xémose",
+      "values": [
+        "Isotonique",
+        "Haute montagne",
+        "Peaux fragilisées"
+      ]
+    },
+    {
+      "slug": "ducray",
+      "name": "Ducray",
+      "country": "France",
+      "est": "1930",
+      "letter": "D",
+      "featured": 0,
+      "tint": "#E5E5DB",
+      "tagline": "Le cuir chevelu traité en dermatologie",
+      "story": [
+        "Groupe Pierre Fabre, Ducray aborde le cheveu comme un organe : anaphase contre la chute, Kelual contre les dermatites séborrhéiques, Nutriceric contre les pellicules.",
+        "Nos conseillères composent ici de véritables protocoles capillaires, shampoing après sérum."
+      ],
+      "signature": "Anaphase+ · Kelual DS · Nutriceric",
+      "values": [
+        "Diagnostic capillaire",
+        "Traitement ciblé",
+        "Expertise Pierre Fabre"
+      ]
+    },
+    {
+      "slug": "a-derma",
+      "name": "A-Derma",
+      "country": "France",
+      "est": "1990",
+      "letter": "A",
+      "featured": 0,
+      "tint": "#EAEAD9",
+      "tagline": "Le rhealba, fil d’avoine breveté",
+      "story": [
+        "Une seule plante cultivée en agriculture biologique : l’avoine Rhealba. De ses jeunes pousses, A-Derma extrait des saponines apaisantes d’une douceur rare.",
+        "Pour les peaux qui rougissent de tout, c’est souvent notre premier réflexe comptoir."
+      ],
+      "signature": "Rhéacalm · Exomega · Dermalibour",
+      "values": [
+        "Avoine bio",
+        "Apaisant naturel",
+        "Bébé & adulte"
+      ]
+    },
+    {
+      "slug": "eucerin",
+      "name": "Eucerin",
+      "country": "Allemagne",
+      "est": "1900",
+      "letter": "E",
+      "featured": 0,
+      "tint": "#E2E4E8",
+      "tagline": "La précision allemande",
+      "story": [
+        "Plus d’un siècle de recherche dermatologique allemande. Eucerin excelle là où la rigueur compte : photodermatologie avec Sun Oil Control, hyperpigmentation avec Anti-Pigment.",
+        "Des études cliniques publiées, des allégations mesurées. L’anti-promesse marketing."
+      ],
+      "signature": "Sun Oil Control · Anti-Pigment · Aquaporin",
+      "values": [
+        "Recherche clinique",
+        "Photoprotection experte",
+        "Précision dosée"
+      ]
+    },
+    {
+      "slug": "roge-cavailles",
+      "name": "Rogé Cavaillès",
+      "country": "France",
+      "est": "1937",
+      "letter": "R",
+      "featured": 0,
+      "tint": "#EFE3DA",
+      "tagline": "L’hygiène douce depuis toujours",
+      "story": [
+        "Pionnier du soin lavant doux en France, Rogé Cavaillès a imposé l’idée qu’un produit d’hygiène pouvait respecter la flore cutanée.",
+        "Ses formats nomades — sticks, mousses — accompagnent les journées les plus longues avec une fraîcheur discrète."
+      ],
+      "signature": "Stick Fraîcheur · Soin Lavant · Intime",
+      "values": [
+        "Hygiène respectueuse",
+        "Formats voyage",
+        "Flore cutanée"
+      ]
+    },
+    {
+      "slug": "puressentiel",
+      "name": "Puressentiel",
+      "country": "France",
+      "est": "2005",
+      "letter": "P",
+      "featured": 0,
+      "tint": "#E6EBDD",
+      "tagline": "L’aromathérapie scientifique",
+      "story": [
+        "Chémotypées, 100% pures et naturelles : les huiles essentielles Puressentiel sont contrôlées lot par lot et documentées par un comité scientifique.",
+        "Diffusions, massages, rituels du soir : la botanique comme hygiène de vie."
+      ],
+      "signature": "Rituels · Diffusion · Huiles chémotypées",
+      "values": [
+        "HE chémotypées",
+        "100% naturel",
+        "Comité scientifique"
+      ]
+    },
+    {
+      "slug": "forte-pharma",
+      "name": "Forté Pharma",
+      "country": "France",
+      "est": "1992",
+      "letter": "F",
+      "featured": 0,
+      "tint": "#EDE6D8",
+      "tagline": "Les compléments qui tiennent parole",
+      "story": [
+        "TurboDraine, Expert Minceur : Forté Pharma construit des compléments à dosage pharmaceutique avec des extraits titrés et des résultats mesurés en études.",
+        "Notre sélection santé privilégie cette transparence : ce qui est écrit sur l’étui se trouve dans le flacon."
+      ],
+      "signature": "TurboDraine · Slim 24 · Équilibre",
+      "values": [
+        "Dosage pharmaceutique",
+        "Extraits titrés",
+        "Études d’efficacité"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "slug": "visage",
+      "name": "Visage",
+      "eyebrow": "Univers 01",
+      "tagline": "Le protocole du teint juste",
+      "description": "Nettoyants millimétrés, sérums d’actifs, solaires invisibles : une sélection dermatologique pensée comme une consultation.",
+      "intro": "Du nettoyant au sérum, chaque geste compte. Nos pharmaciens composent des routines courtes, ciblées, tolérées par les peaux les plus exigeantes.",
+      "accent": "#8A9481",
+      "surface": "#E9E4D8",
+      "form": "dropper",
+      "keywords": [
+        "crème",
+        "sérum",
+        "nettoyant",
+        "solaire",
+        "anti-âge"
+      ]
+    },
+    {
+      "slug": "corps",
+      "name": "Corps",
+      "eyebrow": "Univers 02",
+      "tagline": "Le luxe d’une peau entretenue",
+      "description": "Huiles lavantes, baumes nourrissants, soins des mains et gommages : la discipline douce du quotidien.",
+      "intro": "L’hydratation du corps n’est pas un supplément d’âme. Nous choisissons des textures qui se fondent instantanément et des parfums qui restent discrets.",
+      "accent": "#B39B72",
+      "surface": "#EFE7D9",
+      "form": "pump",
+      "keywords": [
+        "lait",
+        "huile",
+        "baume",
+        "douche",
+        "mains"
+      ]
+    },
+    {
+      "slug": "cheveux",
+      "name": "Cheveux",
+      "eyebrow": "Univers 03",
+      "tagline": "Botanique de la fibre",
+      "description": "Shampoings traitants, sérums fortifiants, masques riches. La chevelure traitée comme une matière noble.",
+      "intro": "Cuirs chevelus sensibles, chutes saisonnières, boucles assoiffées : le diagnostic d’abord, le produit ensuite. Jamais l’inverse.",
+      "accent": "#5C6B54",
+      "surface": "#E4E6DC",
+      "form": "bottle",
+      "keywords": [
+        "shampoing",
+        "sérum",
+        "masque",
+        "anti-chute",
+        "boucles"
+      ]
+    },
+    {
+      "slug": "bebe",
+      "name": "Bébé",
+      "eyebrow": "Univers 04",
+      "tagline": "La douceur en héritage",
+      "description": "Soins lavants, laits protecteurs et baumes réparateurs formulés pour la peau immature des tout-petits.",
+      "intro": "Une peau de bébé ne se traite pas comme une peau d’adulte. Formules minimalistes, testées sous contrôle pédiatrique, parfums tenus au strict nécessaire.",
+      "accent": "#C2A683",
+      "surface": "#F1EBE0",
+      "form": "pump",
+      "keywords": [
+        "lait",
+        "baume",
+        "lavant",
+        "change",
+        "maternité"
+      ]
+    },
+    {
+      "slug": "sante",
+      "name": "Santé",
+      "eyebrow": "Univers 05",
+      "tagline": "L’essentiel, rigoureusement",
+      "description": "Compléments alimentaires, vitamines et matériel médical choisis avec la rigueur du comptoir.",
+      "intro": "Un complément ne remplace rien : il soutient. Nous ne référençons que des laboratoires documentés, des dosages lisibles, des promesses mesurables.",
+      "accent": "#46543F",
+      "surface": "#E7E7DE",
+      "form": "box",
+      "keywords": [
+        "complément",
+        "vitamines",
+        "immunité",
+        "minceur"
+      ]
+    },
+    {
+      "slug": "bien-etre",
+      "name": "Bien-être",
+      "eyebrow": "Univers 06",
+      "tagline": "Rituels, huiles & silence",
+      "description": "Huiles végétales, essences botaniques, coffrets sensoriels. Le contrepoint calme des jours pressés.",
+      "intro": "Un rituel du soir vaut dix resolutions. Huiles précieuses, eaux florales et coffrets à offrir — ou à s’offrir, c’est souvent mieux.",
+      "accent": "#A98E63",
+      "surface": "#EDE4D3",
+      "form": "spray",
+      "keywords": [
+        "huile",
+        "essentielle",
+        "coffret",
+        "massage",
+        "bio"
+      ]
+    }
+  ],
+  "concerns": [
+    {
+      "slug": "hydration",
+      "name": "Hydratation",
+      "line": "La peau tire, manque de rebond.",
+      "productIds": [
+        "vichy-mineral-89",
+        "nuxe-reve-de-miel-levres",
+        "svr-topialyse-huile-lavante"
+      ],
+      "tint": "#DCE4DE"
+    },
+    {
+      "slug": "anti-age",
+      "name": "Anti-âge",
+      "line": "Rides d’expression, fermeté qui s’éloigne.",
+      "productIds": [
+        "filorga-time-filler-5xp",
+        "lrp-hyalu-b5-serum",
+        "bielenda-recharge-serum"
+      ],
+      "tint": "#E9E2EE"
+    },
+    {
+      "slug": "acne",
+      "name": "Imperfections",
+      "line": "Pores obstrués, brillance, marques.",
+      "productIds": [
+        "bioderma-sebium-h2o",
+        "lrp-effaclar-gel",
+        "svr-sun-secure-blur"
+      ],
+      "tint": "#DFE5EA"
+    },
+    {
+      "slug": "sensibilite",
+      "name": "Sensibilité",
+      "line": "Rougeurs, échauffements, intolérances.",
+      "productIds": [
+        "avene-tolerance-control",
+        "a-derma-rheacalm",
+        "lrp-cicaplast-b5"
+      ],
+      "tint": "#EBE6DA"
+    },
+    {
+      "slug": "pigmentation",
+      "name": "Taches & éclat",
+      "line": "Teint irrégulier, taches brunes installées.",
+      "productIds": [
+        "caudalie-vinoperfect-serum",
+        "eucerin-sun-oil-control",
+        "bioderma-sensibio-h2o-500"
+      ],
+      "tint": "#EBDFD3"
+    },
+    {
+      "slug": "solaire",
+      "name": "Protection solaire",
+      "line": "Le premier geste anti-âge reste le soleil.",
+      "productIds": [
+        "la-roche-posay-anthelios-uvmune400",
+        "uriage-bariesun-doree",
+        "filorga-uv-cellular-protect"
+      ],
+      "tint": "#F0E7CF"
+    }
+  ],
+  "articles": [
+    {
+      "id": "protection-solaire-guide",
+      "rubrique": "Solaire",
+      "date": "2026-07-22",
+      "readTime": 8,
+      "title": "Protection solaire : le guide complet pour un été serein",
+      "excerpt": "Choisir son SPF, comprendre minéral et organique, doser correctement : ce que nos pharmaciens expliquent chaque matin au comptoir.",
+      "tint": "#EFE4CB",
+      "points": [
+        "SPF50+ quotidien dès avril en Tunisie",
+        "Deux doigts de crème pour visage et cou",
+        "Minéral si peau réactive, organique si texture légère recherchée"
+      ],
+      "body": [
+        "En Méditerranée, l’indice UV dépasse 8 six mois par an. La photoprotection n’y est pas un geste saisonnier : c’est le premier acte anti-âge, celui qui conditionne tous les autres.",
+        "Commençons par dissiper un malentendu : le SPF mesure uniquement la protection UVB, celle des coups de soleil. Ce qui vieillit la peau, c’est surtout l’UVA — présent même par temps nuageux, traversant les vitres. Exigez donc la mention « très haute protection UVA » et, idéalement, les nouveaux filtres large spectre comme le Mexoryl400.",
+        "Minéral ou organique ? Les filtres minéraux (oxyde de zinc) conviennent aux peaux réactives et aux enfants ; ils blanchissent parfois. Les filtres organiques nouvelle génération offrent des textures invisibles remarquables. L’essentiel : la dose. Deux doigts pleins pour visage et cou, renouvelés toutes les deux heures d’exposition effective.",
+        "Enfin, le solaire se retire : nettoyage doux le soir, jamais de produit résiduel sur peau endormie. Votre peau vous remerciera dans vingt ans."
+      ],
+      "related": [
+        "la-roche-posay-anthelios-uvmune400",
+        "svr-sun-secure-blur",
+        "uriage-bariesun-doree"
+      ]
+    },
+    {
+      "id": "routine-visage-cinq-etapes",
+      "rubrique": "Visage",
+      "date": "2026-06-30",
+      "readTime": 6,
+      "title": "La routine visage en cinq gestes essentiels",
+      "excerpt": "Nettoyer, traiter, hydrater, protéger, réparer : la méthode comptoir pour une peau éclatante sans multiplication inutile des produits.",
+      "tint": "#E4E8DC",
+      "points": [
+        "Une routine courte tenue vaut mieux qu’une routine longue abandonnée",
+        "Le sérum avant la crème, toujours",
+        "L’eau micellaire se rince : oui, vraiment"
+      ],
+      "body": [
+        "Cinq gestes. Pas un de plus. C’est la règle que nos pharmaciennes appliquent elles-mêmes, parce qu’une routine efficace est une routine que l’on tient.",
+        "Un : nettoyer. Le soir obligatoirement, avec une eau micellaire rincée ou un gel doux. Deux : traiter. Un seul actif fort à la fois — vitamine C le matin, rétinol ou acide hyaluronique le soir. Trois : hydrater, selon sa nature de peau, en fine couche.",
+        "Quatre : protéger. Le solaire n’est négociable aucune saison. Cinq : réparer, une à deux fois par semaine — masque apaisant, baume riche, nuit plus longue.",
+        "Votre peau change avec les saisons ; votre routine aussi. Revenez nous voir au changement d’heure, nous ajusterons ensemble."
+      ],
+      "related": [
+        "bioderma-sensibio-h2o-500",
+        "vichy-mineral-89",
+        "caudalie-vinoperfect-serum"
+      ]
+    },
+    {
+      "id": "chute-cheveux-comprendre-agir",
+      "rubrique": "Cheveux",
+      "date": "2026-05-18",
+      "readTime": 7,
+      "title": "Chute de cheveux : comprendre avant d’agir",
+      "excerpt": "Stress, carence, post-partum, saison : nos conseillères font le tri entre chute physiologique et signal d’alerte.",
+      "tint": "#E0E4D6",
+      "points": [
+        "Perdre 50 à 100 cheveux par jour est normal",
+        "La chute saisonnière dure rarement plus de 6 semaines",
+        "Une carence martiale se voit souvent d’abord dans le miroir"
+      ],
+      "body": [
+        "Il faut distinguer trois chutes. La chute saisonnière, brève et diffuse, typique de septembre-novembre. La chute réactionnelle, trois mois après un accouchement, une fièvre, un stress intense. Et la chute pathologique, localisée ou durable, qui impose un avis dermatologique.",
+        "Dans les deux premiers cas, le protocole comptoir fonctionne : shampoing fortifiant complémentaire, sérum ou lotion anti-chute en massage régulier, cure de compléments (fer, zinc, vitamines B) après bilan sanguin si possible.",
+        "La constance fait tout : six semaines minimum avant de juger. Photographiez vos racines aujourd’hui — c’est le meilleur témoin de progression.",
+        "Et si la chute persiste au-delà de trois mois, cessez l’automédication. Le cuir chevelu mérite une vraie consultation."
+      ],
+      "related": [
+        "ducray-anaphase-plus",
+        "nuxe-hair-prodigieux-serum",
+        "forte-pharma-turbodraine"
+      ]
+    },
+    {
+      "id": "peau-reactive-douceur",
+      "rubrique": "Visage",
+      "date": "2026-04-09",
+      "readTime": 5,
+      "title": "Peau réactive : réapprendre la douceur",
+      "excerpt": "Moins de produits, mieux choisis. Protocole de désensibilisation en quatre semaines validé au comptoir.",
+      "tint": "#EBE6DB",
+      "points": [
+        "Arrêtez tout pendant 10 jours, puis réintroduisez un produit par semaine",
+        "L’eau thermale est un soin, pas une simple brume",
+        "Le démaquillage huilé n’est pas réservé aux peaux normales"
+      ],
+      "body": [
+        "Une peau réactive ne manque pas de produits : elle en a trop changé. La première prescription est soustractive — dix jours où l’on ne fait que nettoyer au thermal, apaiser au thermal, protéger au baume minéral.",
+        "Ensuite on réintroduit, un produit par semaine, en commençant par l’hydratant minimaliste. On note tout dans un carnet : textures, réactions, météo, alimentation. Les coupables finissent toujours par se trahir.",
+        "Trois familles d’ingrédients deviennent vos alliées : l’avoine fermentée, le panthénol, la niacinamide douce. Trois familles restent suspectes jusqu’à preuve de tolérance : parfums, alcool dénat., exfoliants acides concentrés."
+      ],
+      "related": [
+        "avene-tolerance-control",
+        "a-derma-rheacalm",
+        "avene-eau-thermale-300"
+      ]
+    },
+    {
+      "id": "retinol-mode-demploi",
+      "rubrique": "Anti-âge",
+      "date": "2026-03-21",
+      "readTime": 6,
+      "title": "Le rétinol, mode d’emploi d’une nuit active",
+      "excerpt": "Progression, sandwich method, tolérance : intégrer le rétinoïde le mieux documenté de la cosmétique sans traverser la phase rouge.",
+      "tint": "#E8E1EA",
+      "points": [
+        "Commencez deux soirs par semaine",
+        "Toujours sur peau sèche, toujours suivi de crème",
+        "Solaire obligatoire le lendemain, sans exception"
+      ],
+      "body": [
+        "Aucun actif n’a autant de publications à son actif que le rétinol : rides atténuées, grain affiné, pigmentation régulée. Aucun actif n’a autant fait rougir de peaux pressées.",
+        "La méthode qui marche : commencer bas (0,1 %), deux soirs par semaine, sur peau parfaitement sèche, immédiatement suivi d’une crème riche — la fameuse technique du sandwich pour les peaux sensibles. On augmente la fréquence toutes les trois semaines si la peau accepte.",
+        "Les premiers résultats visibles demandent huit semaines. Pendant toute la durée du traitement, le solaire du matin n’est pas une option : c’est la condition de sécurité du traitement lui-même.",
+        "Grossesse, allaitement, voyage en haute montagne : on pose le flacon, on reviendra."
+      ],
+      "related": [
+        "filorga-time-filler-5xp",
+        "lrp-hyalu-b5-serum",
+        "la-roche-posay-anthelios-uvmune400"
+      ]
+    },
+    {
+      "id": "rituel-bain-bebe",
+      "rubrique": "Bébé",
+      "date": "2026-02-14",
+      "readTime": 4,
+      "title": "Le rituel du bain de bébé, minute par minute",
+      "excerpt": "Température, ordre des soins, sortie de bain : la chorégraphie exacte que recommandent les puéricultrices partenaires de la maison.",
+      "tint": "#F1EAE0",
+      "points": [
+        "37 °C pile — vérifiés au thermomètre, pas au poignet",
+        "On commence par les yeux, on finit par les fesses",
+        "Trois minutes de bain suffisent les premiers mois"
+      ],
+      "body": [
+        "Le bain n’est pas une hygiène : c’est le premier rituel sensoriel partagé. Mais il obéit à une chorégraphie précise.",
+        "Avant : pièce à 23 °C, eau à 37 °C mesurée au thermomètre, tout le matériel à portée de main. Pendant : trois minutes suffisent — visage d’abord avec coton et eau thermale, puis corps et cheveux au lavant doux deux fois par semaine maximum.",
+        "Après : séchage par tamponnement, jamais de frottement, puis lait hydratant en massage — c’est le moment d’apprentissage du toucher. Baume réparateur sur les zones de change, et au lit.",
+        "Le soir, ce rituel complet prépare au sommeil : bébé comme parents."
+      ],
+      "related": [
+        "mustela-hydra-bebe-lait",
+        "mustela-stelatopia-baume",
+        "avene-eau-thermale-300"
+      ]
+    }
+  ]
+}

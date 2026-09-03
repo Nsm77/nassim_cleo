@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Détail commande — Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Suivez le détail et l'avancement de votre commande Cléopâtre, de la validation à la livraison.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <header class="page-head grain"><div class="container"><nav class="crumbs"><a href="../index.html">Accueil</a><i>/</i><a href="account.html#commandes">Mes commandes</a><i>/</i><span id="crumbNum">Commande</span></nav><h1 class="display-1" id="orderTitle" style="margin-top:16px">Chargement…</h1></div></header>
+    <section class="section container order-layout">
+      <div>
+        <div class="account-panel" id="orderInfo"></div>
+        <div class="account-panel" style="margin-top:16px" id="orderItems"></div>
+      </div>
+      <div>
+        <div class="account-panel" id="orderTracking"></div>
+        <div class="account-panel" style="margin-top:16px" id="orderAddress"></div>
+        <div class="account-panel" style="margin-top:16px" id="orderActions"></div>
+      </div>
+    </section>
+  </main>
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const C=window.CLEO, API=window.CLEO_API, $=C.$;
+    const statusFr={pending:"Commande reçue",confirmed:"Commande confirmée",preparing:"En préparation",shipped:"Expédiée",delivered:"Livrée",cancelled:"Annulée"};
+    const orderFlow=["pending","confirmed","preparing","shipped","delivered"];
+
+    C.onReady(async ()=>{
+      const num=new URLSearchParams(location.search).get("order_number") || new URLSearchParams(location.search).get("id");
+      if(!num){ document.body.innerHTML="<p style='padding:40px'>Commande introuvable.</p>"; return; }
+      try{
+        const res=await API.orders.detail(num);
+        const o=res.data.order, items=res.data.items, tracking=res.data.tracking;
+        document.title=`Commande ${o.order_number} — Cléopâtre`;
+        $("#crumbNum").textContent=o.order_number;
+        $("#orderTitle").innerHTML=`Commande <em class="serif-i">${C.esc(o.order_number)}</em>`;
+        const date=new Date(o.created_at).toLocaleString("fr-TN",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
+        $("#orderInfo").innerHTML=`
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div><b style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Statut</b><br><span class="badge-status ${o.status}" style="margin-top:6px;display:inline-block">${statusFr[o.status]||o.status}</span></div>
+            <div style="text-align:right"><small style="color:var(--muted)">${date}</small><br><b style="font-family:var(--serif);font-size:1.4rem">${C.fmt(o.total)}</b> · ${C.esc(o.payment_method==="cash_on_delivery"?"Paiement à la livraison":o.payment_method)}</div>
+          </div>
+          <hr style="margin:16px 0;border:0;height:1px;background:var(--line)">
+          <div style="display:grid;gap:6px;font-size:.86rem">
+            <div style="display:flex;justify-content:space-between"><span>Sous-total</span><b>${C.fmt(o.subtotal)}</b></div>
+            ${o.discount?`<div style="display:flex;justify-content:space-between;color:var(--green)"><span>Réduction ${o.promo_code?`(${C.esc(o.promo_code)})`:""}</span><b>-${C.fmt(o.discount)}</b></div>`:""}
+            <div style="display:flex;justify-content:space-between"><span>Livraison</span><b>${o.shipping===0?"Offerte":C.fmt(o.shipping)}</b></div>
+            <div style="display:flex;justify-content:space-between;font-weight:500;border-top:1px solid var(--line);padding-top:8px;margin-top:4px"><span>Total</span><b style="font-family:var(--serif);font-size:1.2rem">${C.fmt(o.total)}</b></div>
+          </div>
+          ${o.customer_note?`<p style="margin-top:12px;font-size:.84rem;color:var(--soft)"><b>Note :</b> ${C.esc(o.customer_note)}</p>`:""}
+        `;
+        $("#orderItems").innerHTML=`<h3 style="font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Produits</h3>
+          ${items.map(it=>`
+            <div class="order-item-line">
+              <div class="art">${it.image?`<img src="${C.ROOT+it.image}" alt="" loading="lazy">`:C.ART.front({id:it.product_id,name:it.product_name,brand:it.brand,tint:"#E4DBC9"})}</div>
+              <div class="body"><b>${C.esc(it.product_name)}</b><small>${C.esc(it.brand||"")} · ${it.quantity} × ${C.fmt(it.price)}</small></div>
+              <span class="price">${C.fmt(it.price*it.quantity)}</span>
+            </div>
+          `).join("")}
+        `;
+        $("#orderAddress").innerHTML=`
+          <h3 style="font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Adresse de livraison</h3>
+          <p style="font-size:.9rem;line-height:1.6;word-break:break-word">${C.esc(o.shipping_first_name||"")} ${C.esc(o.shipping_last_name||"")}<br>${C.esc(o.shipping_address||"")}<br>${C.esc(o.shipping_postal_code||"")} ${C.esc(o.shipping_city||"")}<br><small style="color:var(--muted)">${C.esc(o.shipping_phone||"")}</small></p>
+        `;
+
+        // tracking timeline
+        const allStatuses=["pending","confirmed","preparing","shipped","delivered"];
+        let html=`<h3 style="font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Suivi</h3><div class="timeline">`;
+        // si annulée
+        if(o.status==="cancelled"){
+          tracking.forEach(t=>{
+            const d=new Date(t.created_at).toLocaleString("fr-TN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+            html+=`<div class="tl-item is-done"><b>${statusFr[t.status]||t.status}</b><span>${d}${t.note?` · ${C.esc(t.note)}`:""}</span></div>`;
+          });
+          html+=`</div>`;
+        }else{
+          const currentIdx=allStatuses.indexOf(o.status);
+          // build map of dates by status
+          const byStatus={};
+          tracking.forEach(t=>{ byStatus[t.status]=t; });
+          allStatuses.forEach((s,i)=>{
+            const t=byStatus[s];
+            const done=i<=currentIdx;
+            const isCurrent=i===currentIdx;
+            const d=t? new Date(t.created_at).toLocaleString("fr-TN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}) : "";
+            const note=t&&t.note? ` · ${C.esc(t.note)}` : "";
+            html+=`<div class="tl-item ${done?'is-done':''} ${isCurrent?'is-current':''}"><b>${statusFr[s]}</b><span>${done? d+note : "En attente"}</span></div>`;
+          });
+          html+=`</div>`;
+        }
+        $("#orderTracking").innerHTML=html;
+
+        // actions
+        let actHtml="";
+        if(!["shipped","delivered","cancelled"].includes(o.status)){
+          actHtml+=`<button class="btn btn--ghost btn--sm" id="cancelBtn" style="color:#8A3A1F;width:100%">Annuler la commande</button>`;
+        }
+        actHtml+=`<a class="btn btn--ghost btn--sm" href="account.html#commandes" style="width:100%;margin-top:8px;display:flex;justify-content:center">Retour à mes commandes</a>`;
+        $("#orderActions").innerHTML=actHtml;
+        const cb=document.getElementById("cancelBtn");
+        if(cb) cb.addEventListener("click", async ()=>{
+          if(!confirm("Annuler cette commande ?")) return;
+          cb.textContent="Annulation…"; cb.disabled=true;
+          try{ await API.orders.cancel(o.id); location.reload(); }catch(ex){ alert(ex.message); cb.textContent="Annuler la commande"; cb.disabled=false; }
+        });
+
+      }catch(e){
+        if(e.status===404) $("#orderTitle").textContent="Commande introuvable.";
+        else $("#orderTitle").textContent="Erreur chargement.";
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
+

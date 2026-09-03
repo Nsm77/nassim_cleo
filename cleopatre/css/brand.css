@@ -1,0 +1,69 @@
+/* CLÉOPÂTRE — Page marque individuelle (rebuilt) */
+
+.bhero{
+  position:relative;padding-block:clamp(48px,7vw,100px);
+  background:var(--brand-tint,var(--surface));overflow:hidden;border-bottom:1px solid var(--line);
+}
+.bhero__grid{
+  display:grid;grid-template-columns:minmax(220px,.55fr) 1fr;
+  gap:clamp(36px,5vw,90px);align-items:center;
+}
+@media(max-width:860px){.bhero__grid{grid-template-columns:1fr;gap:28px}}
+.bhero__art{width:min(320px,100%);opacity:0;transform:scale(.96);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.bhero__art.is-in{opacity:1;transform:none}
+.bhero__art .mask-reveal{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/4.8;box-shadow:var(--shadow-soft)}
+.bhero__art svg{width:100%;height:100%}
+@media(max-width:860px){.bhero__art{width:100%;max-width:320px;margin-inline:auto}}
+.bhero h1{font-weight:500;letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
+.bhero h1::after{content:"";display:block;width:32px;height:1px;background:var(--gold);margin-top:14px;opacity:.6}
+.bhero .lead{margin-top:18px;font-size:1.18rem;max-width:42ch;line-height:1.6;color:var(--soft)}
+.bhero .lead::before{content:"—";margin-right:8px;color:var(--gold);opacity:.8}
+.bhero__copy .eyebrow{margin-bottom:8px}
+
+.bstory{padding-top:clamp(48px,6vw,80px)}
+.bstory__cols{margin-top:28px;display:grid;gap:22px;max-width:72ch}
+.bstory__cols p{font-size:1.06rem;line-height:1.85;color:var(--soft)}
+.bstory__cols p:first-child::first-letter{
+  font-family:var(--serif);font-size:3.4em;line-height:.85;float:left;
+  padding-right:.12em;color:var(--green);font-style:italic;
+}
+
+/* Piliers — editorial, no full-bleed strip */
+.bpillars{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.5vw,36px);
+  margin-top:8px;
+}
+@media(max-width:800px){.bpillars{grid-template-columns:1fr}}
+.bpillar{
+  position:relative;padding:clamp(22px,2.8vw,36px) clamp(20px,2.4vw,32px);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.bpillar.is-in{opacity:1;transform:none}
+.bpillar::before{
+  content:"";position:absolute;top:0;left:clamp(20px,2.4vw,32px);right:clamp(20px,2.4vw,32px);
+  height:2px;background:linear-gradient(90deg,var(--gold),transparent);
+}
+.bpillar i{
+  display:block;font-style:italic;font-family:var(--serif);font-size:1.1rem;
+  color:var(--gold);letter-spacing:.08em;margin-bottom:12px;
+}
+.bpillar p{
+  margin:0;font-family:var(--serif);font-size:clamp(1.15rem,1.6vw,1.35rem);
+  color:var(--ink);line-height:1.4;font-weight:500;
+}
+.bpillars__sig{
+  margin:0;max-width:28ch;text-align:right;font-size:clamp(1.05rem,1.5vw,1.25rem);
+  color:var(--soft);line-height:1.45;
+}
+@media(max-width:800px){.bpillars__sig{text-align:left;max-width:none}}
+
+.bprods{margin-top:0}
+
+.bquote{
+  position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:clamp(32px,4vw,60px);text-align:center;overflow:hidden;margin-top:clamp(48px,6vw,80px);
+}
+.bquote::before{content:"“";position:absolute;top:-28px;left:20px;font-family:var(--serif);font-size:10rem;color:var(--sand);line-height:1}
+.bquote p{font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.3vw,1.85rem);color:var(--soft);max-width:none;margin-inline:auto;line-height:1.45;position:relative}
+.bquote footer{margin-top:22px;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Paramètres — Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side"><div class="admin-brand"><b>Cléopâtre</b><small>Administration</small></div><nav class="admin-nav"><a href="index.html">Tableau</a><a href="orders.html">Commandes</a><a href="customers.html">Clients</a><a href="products.html">Produits</a><a href="promotions.html">Promotions</a><a href="settings.html" class="is-on">Paramètres</a><a href="activity.html">Activité</a><a href="contact.html">Messages</a><div class="nav-sep"></div><a href="../index.html">? Boutique</a><a href="#" id="logout">Déconnexion</a></nav></aside>
+    <div>
+      <header class="admin-top"><div><h1>Paramètres</h1><small>Configuration boutique</small></div></header>
+      <div class="admin-content">
+        <div class="card"><div class="card-head"><h2>Boutique</h2></div><div style="padding:16px;display:grid;gap:12px;max-width:520px">
+          <label style="display:grid;gap:4px;font-size:.86rem">Nom du magasin<input id="sName" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Téléphone<input id="sPhone" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">E-mail<input id="sEmail" type="email" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Seuil livraison offerte (millimes, 99000 = 99 DT)<input id="sThreshold" type="number" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Frais de livraison (millimes, 8000 = 8 DT)<input id="sShip" type="number" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Préfixe commande<input id="sPrefix" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <button class="btn btn--ink btn--sm" id="save" style="justify-self:start">Enregistrer</button>
+          <p id="msg" style="font-size:.86rem"></p>
+        </div></div>
+        <div class="card" style="margin-top:16px"><div class="card-head"><h2>Système</h2></div><div style="padding:16px" id="sys"></div></div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click",async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      load();
+      $("#save").addEventListener("click",async()=>{
+        const btn=$("#save"), msg=$("#msg");
+        btn.textContent="Enregistrement…"; btn.disabled=true;
+        try{
+          const payload={store_name:$("#sName").value.trim(), store_phone:$("#sPhone").value.trim(), store_email:$("#sEmail").value.trim(), free_shipping_threshold:$("#sThreshold").value.trim(), default_shipping_cost:$("#sShip").value.trim(), order_prefix:$("#sPrefix").value.trim()};
+          const res=await API.admin.settingsUpdate(payload);
+          msg.textContent="Paramètres enregistrés."; msg.style.color="#24301C";
+        }catch(e){ msg.textContent=e.message; msg.style.color="#8A3A1F"; }
+        finally{ btn.textContent="Enregistrer"; btn.disabled=false; }
+      });
+    }
+    async function load(){
+      try{
+        const res=await API.admin.settings();
+        const s=res.data.settings||{};
+        $("#sName").value=s.store_name||"";
+        $("#sPhone").value=s.store_phone||"";
+        $("#sEmail").value=s.store_email||"";
+        $("#sThreshold").value=s.free_shipping_threshold||"99000";
+        $("#sShip").value=s.default_shipping_cost||"8000";
+        $("#sPrefix").value=s.order_prefix||"CLEO";
+        const h=await API.health();
+        $("#sys").innerHTML=`<pre style="background:var(--admin-bg);padding:12px;border-radius:4px;font-size:.78rem;overflow:auto">${JSON.stringify(h.checks,null,2)}</pre>`;
+      }catch(e){ $("#sys").textContent="Erreur : "+e.message; }
+    }
+    guard();
+  })();
+  </script>
+
+  <script>
+  // Guard: normal Admin (products only) cannot access this page — redirect to products
+  (function(){
+    const _origMe = window.CLEO_API && window.CLEO_API.me;
+    // Delay check after load
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      try{
+        const me=await window.CLEO_API.me();
+        if(me.authenticated && me.user.role==='admin'){
+          document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--admin-bg)"><div style="max-width:520px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:12px;padding:32px;text-align:center"><h2 style="font-family:var(--serif)">Accès réservé au Super Admin</h2><p style="color:var(--admin-muted);margin-top:12px">Votre rôle <b>Admin</b> donne accès uniquement à la gestion produits (catalogue, stocks, catégories, marques). Cette page nécessite le rôle <b>Super Admin</b> (nssm@cleopatre.tn).</p><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><a class="btn btn--ink" href="products.html">Aller aux produits</a><a class="btn btn--ghost" href="index.html">Tableau de bord</a></div><p style="font-size:.78rem;color:var(--admin-muted);margin-top:16px">Tentative d’accès direct à une API restreinte renverra <code>403 Permission insuffisante</code> — vérification serveur.</p></div></div>';
+        }
+      }catch(e){}
+    });
+  })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>La Boutique — Cléopâtre Parapharmacie | Soins experts sélectionnés</title>
+  <meta name="description" content="Explorez l’intégralité de notre sélection : visage, corps, cheveux, bébé, santé et bien-être. Filtres par marque, besoin et budget. Livraison offerte dès 99 DT.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/shop.html">
+  <meta property="og:title" content="La Boutique — Cléopâtre Parapharmacie">
+  <meta property="og:description" content="Soins experts sélectionnés avec exigence, livrés partout en Tunisie.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/shop.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <header class="page-head grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Boutique</span></nav>
+        <span class="eyebrow" data-reveal>Le catalogue intégral</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:16px">Chaque référence, <em class="serif-i">choisie au comptoir.</em></h1>
+        <p class="lead" data-reveal style="--d:2;margin-top:18px">Deux mille cinq cents références passent nos portes ;
+        quelques centaines seulement rejoignent ces rayons. Voici celles-là.</p>
+      </div>
+    </header>
+
+    <!-- Barre catégories -->
+    <nav class="catbar" aria-label="Univers de la boutique">
+      <div class="container catbar__row" id="catBar"></div>
+    </nav>
+
+    <!-- Collections — merchandising premium (Phase 37) -->
+    <nav class="collection-bar container" aria-label="Collections" id="collectionBar" style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:14px;border-bottom:1px solid var(--line)">
+      <button class="chip is-on" data-collection="">Toutes les collections</button>
+      <button class="chip" data-collection="routine-hydratation">Routine Hydratation</button>
+      <button class="chip" data-collection="essentiels-spf">Essentiels SPF</button>
+      <button class="chip" data-collection="incontournables">Les incontournables</button>
+    </nav>
+
+    <!-- Barre d’outils -->
+    <div class="toolbar container">
+      <button class="btn btn--ghost btn--slim" data-filters-open aria-expanded="false" aria-controls="filtersPanel">
+        Filtrer<span class="fcount" data-filter-count hidden></span>
+      </button>
+      <p class="count" data-result-count aria-live="polite"></p>
+      <div class="toolbar__right">
+        <label class="sort-label" for="sortSel">Trier&nbsp;:</label>
+        <select id="sortSel" class="sort-sel" aria-label="Trier les produits">
+          <option value="featured">Notre sélection</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="rating">Les mieux notés</option>
+          <option value="promo">Meilleures remises</option>
+          <option value="name">Ordre alphabétique</option>
+        </select>
+        <div class="viewtoggle" role="group" aria-label="Affichage">
+          <button data-view="grid" class="is-on" aria-label="Vue grille"><svg viewBox="0 0 20 20"><path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z"/></svg></button>
+          <button data-view="list" aria-label="Vue liste"><svg viewBox="0 0 20 20"><path d="M3 5h14M3 10h14M3 15h14"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-layout container">
+      <!-- Filtres -->
+      <aside class="filters" id="filtersPanel" aria-label="Filtres">
+        <div class="filters__head">
+          <span class="drawer__title">Affiner</span>
+          <button class="drawer__close filters__close" data-filters-close aria-label="Fermer les filtres">
+            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          </button>
+        </div>
+        <form id="filterForm" class="filters__body"></form>
+        <div class="filters__foot">
+          <button class="link-u" type="button" id="resetFilters">Réinitialiser tout</button>
+        </div>
+      </aside>
+
+      <!-- Grille -->
+      <section class="results" aria-label="Résultats">
+        <div class="pgrid" id="productGrid"></div>
+        <div class="noresult" id="noResult" hidden>
+          <p class="display-2 serif-i">Rien à cette adresse.</p>
+          <p>Vos filtres sont peut-être trop stricts — desserrons-les ensemble.</p>
+          <button class="btn btn--ink" id="resetFromEmpty">Réinitialiser les filtres</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/shop.js"></script>
+</body>
+</html>
+

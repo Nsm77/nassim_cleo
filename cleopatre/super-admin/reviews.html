@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Avis — Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div><nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html" class="is-on"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1>Avis</h1><small>Modération</small></div></div><div class="filters"><select id="status"><option value="">Tous</option><option value="pending">En attente</option><option value="approved">Approuvés</option><option value="rejected">Rejetés</option><option value="reported">Signalés</option></select><button class="btn btn--ink btn--sm" id="filter">Filtrer</button></div></header>
+      <div class="admin-content">
+        <div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Produit</th><th>Client</th><th>Note</th><th>Commentaire</th><th>Statut</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div><div class="pagination" id="pag"></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click", async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#filter").addEventListener("click", ()=> load(1));
+      load(1);
+    }
+    async function load(page=1){
+      const status=$("#status").value;
+      $("#tbody").innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.reviews({page, per_page:15, status});
+        const rows=res.data.reviews||[];
+        if(!rows.length) $("#tbody").innerHTML=`<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--admin-muted)">Aucun avis.</td></tr>`;
+        else $("#tbody").innerHTML=rows.map(r=>`<tr><td>${new Date(r.created_at).toLocaleString("fr-TN")}</td><td><b>${r.product_name||r.product_id}</b></td><td>${r.first_name} ${r.last_name}</td><td>${"?".repeat(r.rating)}<small style="color:var(--admin-muted)"> (${r.rating})</small></td><td style="max-width:320px"><b>${r.title||""}</b><br><small style="color:var(--admin-muted)">${(r.body||"").substring(0,120)}</small></td><td><span class="badge ${r.status==='approved'?'badge--green':r.status==='pending'?'badge--amber':'badge--red'}">${r.status}</span></td><td><div style="display:flex;gap:6px">${r.status!=='approved'?`<button class="btn btn--ghost btn--sm" data-act="approved" data-id="${r.id}">Approuver</button>`:""}${r.status!=='rejected'?`<button class="btn btn--ghost btn--sm" data-act="rejected" data-id="${r.id}">Rejeter</button>`:""}<button class="btn btn--ghost btn--sm" data-act="pending" data-id="${r.id}">En attente</button></div></td></tr>`).join("");
+        document.querySelectorAll("[data-act]").forEach(b=> b.addEventListener("click", async()=>{
+          try{ await API.admin.reviewModerate(b.dataset.id, b.dataset.act); toast("Mis à jour","ok"); load(page); }catch(e){ toast(e.message,"err")}
+        }));
+        const pg=res.data.pagination; const pag=$("#pag"); pag.innerHTML="";
+        if(pg.total_pages>1) for(let i=1;i<=pg.total_pages;i++){ const b=document.createElement("button"); b.textContent=i; if(i===pg.page) b.classList.add("is-on"); b.addEventListener("click",()=>load(i)); pag.appendChild(b); }
+      }catch(e){ $("#tbody").innerHTML=`<tr><td colspan="7" style="color:#8A3A1F">${e.message}</td></tr>`; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

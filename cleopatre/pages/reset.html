@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Réinitialiser le mot de passe — Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Réinitialisez votre mot de passe Cléopâtre en toute sécurité en quelques instants.">
+</head>
+<body>
+  <main id="main">
+    <header class="page-head grain"><div class="container"><h1 class="display-1">Nouveau<br><em class="serif-i">mot de passe.</em></h1></div></header>
+    <section class="section container"><div class="auth-wrap">
+      <div class="auth-error" id="err"></div>
+      <div class="auth-success" id="ok"></div>
+      <form class="auth-form" id="resetForm">
+        <div class="field"><label for="token">Jeton</label><input id="token" type="text" required></div>
+        <div class="field"><label for="pwd">Nouveau mot de passe *</label><input id="pwd" type="password" required></div>
+        <div class="field"><label for="pwd2">Confirmer *</label><input id="pwd2" type="password" required></div>
+        <button class="btn btn--ink btn--wide" type="submit" id="btn">Réinitialiser<span class="arr">?</span></button>
+        <p class="auth-alt"><a href="login.html">Se connecter</a></p>
+      </form>
+    </div></section>
+  </main>
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const C=window.CLEO, API=window.CLEO_API;
+    C.onReady(()=>{
+      const tok=new URLSearchParams(location.search).get("token");
+      if(tok) document.getElementById("token").value=tok;
+      const form=document.getElementById("resetForm"), err=document.getElementById("err"), ok=document.getElementById("ok"), btn=document.getElementById("btn");
+      form.addEventListener("submit", async e=>{
+        e.preventDefault(); err.classList.remove("is-on"); ok.classList.remove("is-on");
+        const payload={ token:document.getElementById("token").value.trim(), new_password:document.getElementById("pwd").value, confirm_password:document.getElementById("pwd2").value };
+        btn.textContent="Traitement…"; btn.disabled=true;
+        try{
+          const res=await API.resetPassword(payload);
+          ok.textContent=res.message||"Mot de passe réinitialisé.";
+          ok.classList.add("is-on");
+          setTimeout(()=> location.href="login.html",1200);
+        }catch(ex){ err.textContent=ex.message; err.classList.add("is-on"); }
+        finally{ btn.textContent="Réinitialiser ?"; btn.disabled=false; }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Paramètres — Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side"><div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div><nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html" class="is-on"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav></aside>
+    <div>
+      <header class="admin-top"><div><h1>Paramètres</h1><small>Configuration boutique</small></div></header>
+      <div class="admin-content">
+        <div class="card"><div class="card-head"><h2>Boutique</h2></div><div style="padding:16px;display:grid;gap:12px;max-width:520px">
+          <label style="display:grid;gap:4px;font-size:.86rem">Nom du magasin<input id="sName" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Téléphone<input id="sPhone" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">E-mail<input id="sEmail" type="email" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Seuil livraison offerte (millimes, 99000 = 99 DT)<input id="sThreshold" type="number" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Frais de livraison (millimes, 8000 = 8 DT)<input id="sShip" type="number" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <label style="display:grid;gap:4px;font-size:.86rem">Préfixe commande<input id="sPrefix" style="border:1px solid var(--admin-line);padding:8px;border-radius:4px"></label>
+          <button class="btn btn--ink btn--sm" id="save" style="justify-self:start">Enregistrer</button>
+          <p id="msg" style="font-size:.86rem"></p>
+        </div></div>
+        <div class="card" style="margin-top:16px"><div class="card-head"><h2>Système</h2></div><div style="padding:16px" id="sys"></div></div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click",async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      load();
+      $("#save").addEventListener("click",async()=>{
+        const btn=$("#save"), msg=$("#msg");
+        btn.textContent="Enregistrement…"; btn.disabled=true;
+        try{
+          const payload={store_name:$("#sName").value.trim(), store_phone:$("#sPhone").value.trim(), store_email:$("#sEmail").value.trim(), free_shipping_threshold:$("#sThreshold").value.trim(), default_shipping_cost:$("#sShip").value.trim(), order_prefix:$("#sPrefix").value.trim()};
+          const res=await API.admin.settingsUpdate(payload);
+          msg.textContent="Paramètres enregistrés."; msg.style.color="#24301C";
+        }catch(e){ msg.textContent=e.message; msg.style.color="#8A3A1F"; }
+        finally{ btn.textContent="Enregistrer"; btn.disabled=false; }
+      });
+    }
+    async function load(){
+      try{
+        const res=await API.admin.settings();
+        const s=res.data.settings||{};
+        $("#sName").value=s.store_name||"";
+        $("#sPhone").value=s.store_phone||"";
+        $("#sEmail").value=s.store_email||"";
+        $("#sThreshold").value=s.free_shipping_threshold||"99000";
+        $("#sShip").value=s.default_shipping_cost||"8000";
+        $("#sPrefix").value=s.order_prefix||"CLEO";
+        const h=await API.health();
+        $("#sys").innerHTML=`<pre style="background:var(--admin-bg);padding:12px;border-radius:4px;font-size:.78rem;overflow:auto">${JSON.stringify(h.checks,null,2)}</pre>`;
+      }catch(e){ $("#sys").textContent="Erreur : "+e.message; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

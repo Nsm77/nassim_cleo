@@ -1,0 +1,101 @@
+/* CLÉOPÂTRE — Boutique */
+
+.page-head{background:var(--surface)}
+
+/* Barre catégories — navigation premium */
+.catbar{border-bottom:1px solid var(--line);position:sticky;top:var(--header-h);z-index:60;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.catbar.is-stuck{top:62px}
+.catbar__row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px;scroll-padding-inline:var(--container-pad)}
+.catbar__row::-webkit-scrollbar{display:none}
+.catlink{
+  white-space:nowrap;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  padding:.65em 1.25em;border-radius:var(--radius-pill);color:var(--soft);transition:all var(--dur-base) var(--ease);border:1px solid transparent;background:transparent;
+}
+.catlink:hover{color:var(--ink);background:var(--surface);border-color:var(--line);transform:translateY(-1px)}
+.catlink.is-on{background:var(--ink);color:var(--bg);border-color:var(--ink);box-shadow:var(--shadow-sm)}
+
+/* Toolbar — outils premium */
+.toolbar{display:flex;align-items:center;gap:16px;padding-block:16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.count{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.toolbar__right{margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sort-label{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.sort-sel{
+  font-family:var(--sans);font-size:.8rem;font-weight:400;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:.6em 2.4em .6em 1em;appearance:none;cursor:pointer;
+  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%231A1814" fill="none" stroke-width="1.3"/></svg>');
+  background-repeat:no-repeat;background-position:right .9em center;transition:border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.sort-sel:hover{border-color:rgba(26,24,20,.28);background:var(--surface-elevated)}
+.sort-sel:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--focus-ring);outline:none}
+.btn--slim{padding:.85em 1.6em;font-size:.7rem}
+.fcount{background:var(--gold);color:#fff;border-radius:99px;padding:.15em .6em;margin-left:.5em;font-size:.66rem}
+
+.viewtoggle{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--radius);overflow:hidden}
+.viewtoggle button{width:38px;height:34px;display:flex;align-items:center;justify-content:center;opacity:.45;transition:all .3s}
+.viewtoggle button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.3}
+.viewtoggle button:hover{opacity:.8}
+.viewtoggle button.is-on{background:var(--ink);color:var(--bg);opacity:1}
+
+@media(max-width:760px){.count{display:none}.sort-label{display:none}}
+
+/* Layout */
+.shop-layout{display:grid;grid-template-columns:250px 1fr;gap:clamp(26px,3.4vw,54px);padding-block:clamp(30px,4vw,56px) clamp(70px,9vw,120px)}
+@media(max-width:1020px){.shop-layout{grid-template-columns:1fr}}
+
+/* Filtres — système premium — discovery master */
+.filters__head,.filters__close{display:none}
+.filters__body{display:grid;gap:26px}
+.fgroup{padding-bottom:4px;border-bottom:1px solid transparent;transition:border-color var(--dur-fast) var(--ease)}
+.fgroup:has(input:checked){border-bottom-color:var(--line);padding-bottom:18px}
+.fgroup>h4{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.fgroup>h4::after{content:"";width:18px;height:1px;background:var(--line);opacity:.6}
+.fgroup:has(input:checked) > h4{color:var(--ink)}
+.fgroup:has(input:checked) > h4::after{background:var(--gold);opacity:1}
+.fgroup h4 small{color:var(--muted);letter-spacing:.08em}
+.fopt{display:flex;align-items:center;gap:10px;padding-block:7px;cursor:pointer;font-size:.9rem;color:var(--soft)}
+.fopt input{position:absolute;opacity:0;pointer-events:none}
+.fopt .box{width:16px;height:16px;border:1px solid var(--line-strong);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+.fopt .box::after{content:"";width:8px;height:8px;background:var(--ink);transform:scale(0);transition:transform .25s var(--ease)}
+.fopt input:checked~.box{border-color:var(--ink)}
+.fopt input:checked~.box::after{transform:scale(1)}
+.fopt input:focus-visible~.box{outline:2px solid var(--gold);outline-offset:2px}
+.fopt em{font-style:normal;color:var(--faint);font-size:.72rem;margin-left:auto}
+.price-row{display:flex;align-items:center;gap:10px}
+.price-row input{
+  width:100%;font-family:var(--sans);font-size:.86rem;background:transparent;
+  border:1px solid var(--line-strong);border-radius:var(--radius);padding:.55em .8em;color:var(--ink);
+}
+.price-row span{color:var(--faint)}
+.filters__foot{margin-top:24px}
+
+@media(max-width:1020px){
+  .filters{
+    position:fixed;top:0;bottom:0;left:0;z-index:210;width:min(380px,92vw);
+    background:var(--bg);transform:translateX(-102%);transition:transform .6s var(--ease-io);
+    display:flex;flex-direction:column;padding:22px clamp(20px,4vw,32px);overflow-y:auto;
+    box-shadow:30px 0 80px -40px rgba(26,24,20,.4);
+  }
+  .filters.is-open{transform:none}
+  .filters__head{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .filters__close{display:flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:50%}
+  .filters__close:hover{background:rgba(26,24,20,.07)}
+  .filters__close svg{width:17px;height:17px;stroke-width:1.4}
+  .btn--slim{box-shadow:inset 0 0 0 1px var(--line-strong)}
+}
+
+/* Grille produits — rythme premium */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:clamp(20px,2.6vw,32px) clamp(16px,1.8vw,24px);align-items:start}
+.pgrid .pcard{animation:cardin var(--dur-slow) var(--ease) backwards;animation-delay:calc(var(--i,0)*45ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.etile{min-height:auto;border-radius:var(--radius-md)}
+.noresult{text-align:center;padding:72px 24px;display:grid;gap:16px;justify-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);margin-top:24px}
+.noresult .display-2{font-size:1.6rem}
+.noresult p{max-width:36ch;color:var(--muted);line-height:1.6}
+
+/* Vue liste */
+.pgrid.is-list{grid-template-columns:1fr}
+.pgrid.is-list .pcard{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:clamp(18px,3vw,44px);align-items:center;border-bottom:1px solid var(--line);padding-bottom:26px}
+.pgrid.is-list .pcard__media-link{position:absolute;inset:0;z-index:2}
+.pgrid.is-list .pcard__quick{display:none}
+.pgrid.is-list .etile{grid-column:1/-1}

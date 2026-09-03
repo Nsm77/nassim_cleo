@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /pages/cart.html
+Disallow: /pages/wishlist.html
+Disallow: /pages/account.html
+Disallow: /pages/checkout.html
+Disallow: /pages/order.html
+Disallow: /pages/confirmation.html
+Disallow: /pages/login.html
+Disallow: /pages/register.html
+Disallow: /admin/
+Disallow: /api/
+Disallow: /database/
+Disallow: /config/
+
+Sitemap: https://para-cleopatre.tn/sitemap.xml

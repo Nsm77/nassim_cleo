@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Équipe — Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Administration</small></div><nav class="admin-nav"><a href="index.html">? Tableau</a><a href="system.html">? Système</a><a href="admin-users.html" class="is-on">? Équipe</a><a href="activity.html">= Activité</a><div class="nav-sep"></div><a href="../index.html">? Boutique</a><a href="#" id="logout">? Déconnexion</a></nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1>Équipe admin</h1><small>Rôles : Super Admin · Manager · Staff — permissions serveur</small></div></div><button class="btn btn--ink btn--sm" id="newBtn">+ Admin</button></header>
+      <div class="admin-content">
+        <div class="card"><div class="table-wrap"><table><thead><tr><th>Utilisateur</th><th>Rôle</th><th>Statut</th><th>Dernier login</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+        <div class="card" style="margin-top:16px"><div class="card-head"><h2>Permissions par rôle</h2></div><div style="padding:16px;font-size:.84rem;color:var(--admin-muted)"><pre style="background:var(--admin-bg);padding:12px;border-radius:8px">super_admin: * (tout)
+admin: orders, customers, products, promotions, settings, activity, loyalty, reviews, support
+manager: orders, customers, products, promotions, loyalty, reviews, support
+staff: orders, customers, support</pre></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <div class="modal-admin" id="createModal"><div class="modal-panel"><h3 style="font-family:var(--serif)">Nouvel admin</h3><div style="display:grid;gap:10px;margin-top:12px"><input id="fFirst" placeholder="Prénom"><input id="fLast" placeholder="Nom"><input id="fEmail" type="email" placeholder="Email"><input id="fPhone" placeholder="Téléphone"><select id="fRole"><option value="staff">Staff</option><option value="manager">Manager</option><option value="admin">Admin</option><option value="super_admin">Super Admin</option></select><input id="fPwd" type="password" placeholder="Mot de passe (8+ lettre+chiffre)"><div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="create">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div></div></div></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) { toast("Super Admin requis","err"); location.href="index.html"; } else init(); }
+    async function init(){
+      $("#logout").addEventListener("click", async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#newBtn").addEventListener("click", ()=> $("#createModal").classList.add("is-on"));
+      document.querySelectorAll("[data-close]").forEach(b=> b.addEventListener("click", ()=> b.closest(".modal-admin").classList.remove("is-on")));
+      $("#createModal").addEventListener("click", e=>{ if(e.target.id==="createModal") e.currentTarget.classList.remove("is-on")});
+      $("#create").addEventListener("click", async()=>{
+        const payload={first_name:$("#fFirst").value.trim(), last_name:$("#fLast").value.trim(), email:$("#fEmail").value.trim(), phone:$("#fPhone").value.trim(), role:$("#fRole").value, password:$("#fPwd").value};
+        try{ await API.admin.adminUserCreate(payload); toast("Créé","ok"); $("#createModal").classList.remove("is-on"); load(); }catch(e){ toast(e.message,"err")}
+      });
+      load();
+    }
+    async function load(){
+      $("#tbody").innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.adminUsers();
+        const rows=res.data.admins||[];
+        $("#tbody").innerHTML=rows.map(u=>`<tr><td><b>${u.first_name} ${u.last_name}</b><br><small style="color:var(--admin-muted)">${u.email}</small></td><td><span class="badge badge--neutral">${u.role}</span></td><td><span class="badge ${u.status==='active'?'badge--green':'badge--red'}">${u.status}</span></td><td>${u.last_login_at? new Date(u.last_login_at).toLocaleString("fr-TN"):"—"}</td><td><select data-role="${u.id}" style="border:1px solid var(--admin-line);padding:6px;border-radius:8px"><option value="staff" ${u.role==="staff"?"selected":""}>Staff</option><option value="manager" ${u.role==="manager"?"selected":""}>Manager</option><option value="admin" ${u.role==="admin"?"selected":""}>Admin</option><option value="super_admin" ${u.role==="super_admin"?"selected":""}>Super Admin</option></select> <select data-status="${u.id}" style="border:1px solid var(--admin-line);padding:6px;border-radius:8px"><option value="active" ${u.status==="active"?"selected":""}>Actif</option><option value="suspended" ${u.status==="suspended"?"selected":""}>Suspendu</option><option value="disabled" ${u.status==="disabled"?"selected":""}>Désactivé</option></select></td></tr>`).join("");
+        document.querySelectorAll("[data-role]").forEach(s=> s.addEventListener("change", async()=>{
+          try{ await fetch("../api/admin/admin-users.php",{method:"POST", credentials:"same-origin", headers:{"Content-Type":"application/json","X-CSRF-Token":API.csrfToken}, body:JSON.stringify({action:"update_role", id:s.dataset.role, role:s.value})}).then(r=>r.json()).then(j=>{if(!j.success)throw new Error(j.message)}); toast("Rôle mis à jour","ok"); }catch(e){ toast(e.message,"err")}
+        }));
+        document.querySelectorAll("[data-status]").forEach(s=> s.addEventListener("change", async()=>{
+          try{ await fetch("../api/admin/admin-users.php",{method:"POST", credentials:"same-origin", headers:{"Content-Type":"application/json","X-CSRF-Token":API.csrfToken}, body:JSON.stringify({action:"toggle_status", id:s.dataset.status, status:s.value})}).then(r=>r.json()).then(j=>{if(!j.success)throw new Error(j.message)}); toast("Statut mis à jour","ok"); }catch(e){ toast(e.message,"err")}
+        }));
+      }catch(e){ $("#tbody").innerHTML=`<tr><td colspan="5" style="color:#8A3A1F">${e.message}</td></tr>`; }
+    }
+    guard();
+  })();
+  </script>
+
+  <script>
+  // Guard: normal Admin (products only) cannot access this page — redirect to products
+  (function(){
+    const _origMe = window.CLEO_API && window.CLEO_API.me;
+    // Delay check after load
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      try{
+        const me=await window.CLEO_API.me();
+        if(me.authenticated && me.user.role==='admin'){
+          document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--admin-bg)"><div style="max-width:520px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:12px;padding:32px;text-align:center"><h2 style="font-family:var(--serif)">Accès réservé au Super Admin</h2><p style="color:var(--admin-muted);margin-top:12px">Votre rôle <b>Admin</b> donne accès uniquement à la gestion produits (catalogue, stocks, catégories, marques). Cette page nécessite le rôle <b>Super Admin</b> (nssm@cleopatre.tn).</p><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><a class="btn btn--ink" href="products.html">Aller aux produits</a><a class="btn btn--ghost" href="index.html">Tableau de bord</a></div><p style="font-size:.78rem;color:var(--admin-muted);margin-top:16px">Tentative d’accès direct à une API restreinte renverra <code>403 Permission insuffisante</code> — vérification serveur.</p></div></div>';
+        }
+      }catch(e){}
+    });
+  })();
+  </script>
+</body>
+</html>
+

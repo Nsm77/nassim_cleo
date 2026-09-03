@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Maison — Cléopâtre Parapharmacie</title>
+  <meta name="description" content="Histoire, philosophie et collections d’une maison partenaire de la parapharmacie Cléopâtre.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/brand.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/brand.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+
+    <!-- Héros de la maison -->
+    <header class="bhero grain" id="bHero">
+      <div class="container bhero__grid">
+        <figure class="bhero__art" aria-hidden="true"><div class="mask-reveal is-in" id="bArt"></div></figure>
+        <div class="bhero__copy">
+          <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><a href="brands.html">Marques</a><i>/</i><span id="bCrumb"></span></nav>
+          <span class="eyebrow eyebrow--bare" id="bMeta"></span>
+          <h1 class="display-hero" id="bName" style="margin-top:14px"></h1>
+          <p class="lead serif-i" id="bTagline"></p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Histoire -->
+    <section class="section container bstory" aria-label="L’histoire de la maison">
+      <span class="num-label" data-reveal><i>01</i>L’histoire</span>
+      <div class="bstory__cols" id="bStory"></div>
+    </section>
+
+    <!-- Pillars — premium maison -->
+    <section class="section section--tight container" aria-label="Les piliers de la maison">
+      <hr class="hr-fade">
+      <header class="sec-head" style="margin-bottom:clamp(28px,4vw,48px)">
+        <div class="sec-head__left">
+          <span class="num-label" data-reveal><i>02</i>Les piliers</span>
+          <h2 class="display-2" data-reveal style="--d:1">Ce que nous retenons<br>de la maison.</h2>
+        </div>
+        <div class="sec-head__side" data-reveal style="--d:2">
+          <p class="serif-i bpillars__sig" id="bSignature"></p>
+        </div>
+      </header>
+      <div class="bpillars" id="bValues"></div>
+    </section>
+
+    <!-- Produits — collections & filtering -->
+    <section class="section container" aria-label="Sélection de la maison">
+      <header class="sec-head" style="margin-bottom:clamp(24px,3vw,36px)">
+        <div class="sec-head__left">
+          <span class="num-label" data-reveal><i>03</i>La sélection</span>
+          <h2 class="display-2" data-reveal style="--d:1">Chez nous, en rayon.</h2>
+        </div>
+        <div class="sec-head__side" data-reveal style="--d:2">
+          <a class="link-u" href="shop.html" id="bShopAll">Voir dans la boutique<span class="arr">?</span></a>
+        </div>
+      </header>
+      <div class="bcollections" id="bCollections" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"></div>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+        <span class="count" id="bCount" style="font-size:.8rem;color:var(--muted)"></span>
+        <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <label class="sort-label" for="bSort">Trier&nbsp;:</label>
+          <select id="bSort" class="sort-sel" aria-label="Trier">
+            <option value="featured">Notre sélection</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+            <option value="rating">Mieux notés</option>
+          </select>
+        </span>
+      </div>
+      <div class="grid-3 bprods" id="bProducts"></div>
+    </section>
+
+    <!-- Recommandation experte -->
+    <section class="section container" aria-label="Le mot du comptoir">
+      <hr class="hr-fade">
+      <blockquote class="bquote grain" data-reveal>
+        <p id="bQuote"></p>
+        <footer>— L’équipe des pharmaciennes, Cléopâtre Tunis</footer>
+      </blockquote>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/brand.js"></script>
+</body>
+</html>
+

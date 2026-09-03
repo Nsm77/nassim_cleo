@@ -1,0 +1,5 @@
+Require all denied
+Deny from all
+<FilesMatch "\.(sqlite|sqlite3|db|log)$">
+Require all denied
+</FilesMatch>

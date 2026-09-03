@@ -1,0 +1,38 @@
+/* CLÉOPÂTRE — Contact */
+
+.contact-layout{display:grid;grid-template-columns:minmax(260px,.8fr) 1.2fr;gap:clamp(30px,5vw,90px);padding-block:clamp(40px,6vw,80px)}
+@media(max-width:860px){.contact-layout{grid-template-columns:1fr}}
+
+.cinfo{display:grid;gap:28px;align-content:start}
+.cblock{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:10px;justify-items:start;transition:border-color var(--dur-base) var(--ease)}
+.cblock:hover{border-top-color:var(--line-strong)}
+.cblock h4{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500;font-family:var(--sans)}
+.cblock h4::after{content:"";display:block;width:18px;height:1px;background:var(--line);margin-top:6px;opacity:.6}
+address{font-style:normal;font-size:1.06rem;line-height:1.7;color:var(--soft)}
+.big-tel a{font-family:var(--serif);font-size:1.65rem;font-weight:500;color:var(--ink);transition:color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);display:inline-block}
+.big-tel a:hover{color:var(--green);transform:translateX(2px)}
+.hours{font-size:.78rem;color:var(--muted)}
+.mail-link{font-family:var(--serif);font-size:1.15rem;border-bottom:1px solid var(--line-strong)}
+.cblock p{font-size:.88rem;color:var(--soft);max-width:none}
+
+.cform-wrap h2{margin-bottom:clamp(24px,3vw,40px)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
+@media(max-width:600px){.frow{grid-template-columns:1fr}}
+#contactForm .field{margin-bottom:0}
+#contactForm .field:last-of-type{margin-bottom:26px}
+.form-note{font-size:.72rem;color:var(--muted);margin-top:14px}
+.form-done{text-align:center;padding:60px 0;display:grid;gap:16px;justify-items:center}
+.form-done p{color:var(--soft)}
+
+/* Accordéons */
+.faq-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(28px,4vw,70px);align-items:start}
+@media(max-width:800px){.faq-grid{grid-template-columns:1fr}}
+.acc__item{border-bottom:1px solid var(--line)}
+.acc__btn{width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 2px;font-family:var(--serif);font-size:1.22rem;font-weight:500}
+.acc__btn i{font-style:normal;position:relative;width:14px;height:14px;flex-shrink:0}
+.acc__btn i::before,.acc__btn i::after{content:"";position:absolute;background:var(--ink);left:50%;top:50%;transition:transform .4s var(--ease)}
+.acc__btn i::before{width:100%;height:1px;transform:translate(-50%,-50%)}
+.acc__btn i::after{width:1px;height:100%;transform:translate(-50%,-50%)}
+.acc__item.is-open .acc__btn i::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
+.acc__panel{overflow:hidden;height:0;transition:height .5s var(--ease-io)}
+.acc__panel-inner{padding:0 2px 22px;color:var(--soft);font-size:.95rem;line-height:1.7}

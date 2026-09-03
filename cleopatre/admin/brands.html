@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Marques — Admin Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Administration · Produits</small><small class="brand-sub2">Gestion catalogue</small></div>      <nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▤</span> Catégories</a>
+        <a href="brands.html" class="is-on"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="inventory.html"><span class="nav-icon">▦</span> Stocks</a>
+        <div class="nav-sep"></div>
+        <div class="nav-label">Compte</div>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../super-admin/index.html" id="superLink" style="display:none;color:var(--admin-gold)"><span class="nav-icon">★</span> Super Admin</a>
+      </nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1>Marques</h1><small>Logos, histoires, produits associés</small></div></div><button class="btn btn--ink btn--sm" id="newBtn">+ Marque</button></header>
+      <div class="admin-content">
+        <div class="card"><div class="table-wrap"><table><thead><tr><th>Marque</th><th>Pays</th><th>Produits</th><th>Featured</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <div class="modal-admin" id="modal"><div class="modal-panel"><h3 style="font-family:var(--serif)">Nouvelle marque</h3><div style="display:grid;gap:10px;margin-top:12px"><input id="bSlug" placeholder="slug (ex: avene)"><input id="bName" placeholder="Nom *"><input id="bCountry" placeholder="Pays"><input id="bTagline" placeholder="Tagline"><div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="bSave">Créer</button><button class="btn btn--ghost btn--sm" data-close>Annuler</button></div></div></div></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click", async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#newBtn").addEventListener("click", ()=> $("#modal").classList.add("is-on"));
+      document.querySelectorAll("[data-close]").forEach(b=> b.addEventListener("click", ()=> b.closest(".modal-admin").classList.remove("is-on")));
+      $("#modal").addEventListener("click", e=>{ if(e.target.id==="modal") e.currentTarget.classList.remove("is-on")});
+      $("#bSave").addEventListener("click", async()=>{
+        try{ await API.admin.brandCreate({slug:$("#bSlug").value.trim()||undefined, name:$("#bName").value.trim(), country:$("#bCountry").value.trim(), tagline:$("#bTagline").value.trim()}); toast("Créée","ok"); $("#modal").classList.remove("is-on"); load(); }catch(e){ toast(e.message,"err")}
+      });
+      load();
+    }
+    async function load(){
+      $("#tbody").innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.brands();
+        const rows=res.data.brands||[];
+        $("#tbody").innerHTML=rows.map(b=>`<tr><td><b>${b.name}</b><br><small style="color:var(--admin-muted)">${b.slug} · ${b.tagline||""}</small></td><td>${b.country||"—"}</td><td>${b.product_count}</td><td>${b.featured?'<span class="badge badge--green">Oui</span>':'<span class="badge badge--neutral">Non</span>'}</td><td><button class="btn btn--ghost btn--sm" data-edit="${b.slug}">Éditer</button> <button class="btn btn--ghost btn--sm" data-del="${b.slug}" style="color:var(--admin-danger)">Suppr.</button></td></tr>`).join("");
+        document.querySelectorAll("[data-del]").forEach(btn=> btn.addEventListener("click", async()=>{
+          if(!confirm("Supprimer marque ? Produits liés bloquent.")) return;
+          try{ await fetch(`../api/admin/brands.php?slug=${encodeURIComponent(btn.dataset.del)}`,{method:"DELETE", credentials:"same-origin", headers:{"X-CSRF-Token":API.csrfToken}}).then(r=>r.json()).then(j=>{if(!j.success)throw new Error(j.message)}); toast("Supprimée","ok"); load(); }catch(e){ toast(e.message,"err")}
+        }));
+        document.querySelectorAll("[data-edit]").forEach(btn=> btn.addEventListener("click", async()=>{
+          const name=prompt("Nouveau nom pour "+btn.dataset.edit);
+          if(!name) return;
+          try{ await fetch("../api/admin/brands.php",{method:"PUT", credentials:"same-origin", headers:{"Content-Type":"application/json","X-CSRF-Token":API.csrfToken}, body:JSON.stringify({slug:btn.dataset.edit, name})}).then(r=>r.json()).then(j=>{if(!j.success)throw new Error(j.message)}); toast("Mise à jour","ok"); load(); }catch(e){ toast(e.message,"err")}
+        }));
+      }catch(e){ $("#tbody").innerHTML=`<tr><td colspan="5" style="color:#8A3A1F">${e.message}</td></tr>`; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+
