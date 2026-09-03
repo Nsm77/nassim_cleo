@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Clients — Admin Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Administration</small><small class="brand-sub2">CRM · Clients</small></div><nav class="admin-nav"><a href="index.html">? Tableau</a><a href="orders.html">? Commandes</a><a href="customers.html" class="is-on">? Clients</a><a href="products.html">? Produits</a><a href="loyalty.html">? Fidélité</a><a href="support.html">? Support</a><a href="promotions.html">% Promotions</a><a href="settings.html">? Paramètres</a><div class="nav-sep"></div><a href="../index.html">? Boutique</a><a href="#" id="logout">? Déconnexion</a></nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1>Clients</h1><small id="count"></small></div></div><div style="display:flex;gap:8px"><button class="btn btn--ghost btn--sm" id="exportBtn">Export CSV</button><a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=customers" target="_blank">Export serveur</a></div></header>
+      <div class="admin-content">
+        <div class="kpi-grid" id="kpi"></div>
+        <div class="card"><div class="card-head">
+          <div class="filters" style="flex:1">
+            <input type="search" id="q" placeholder="Nom, e-mail, téléphone" style="min-width:200px">
+            <select id="fTag"><option value="">Tag</option><option value="VIP">VIP</option><option value="High Value">High Value</option><option value="New">New</option><option value="Regular">Regular</option><option value="Support Required">Support Required</option></select>
+            <select id="fStatus"><option value="">Statut</option><option value="active">Actif</option><option value="suspended">Suspendu</option><option value="disabled">Désactivé</option></select>
+            <select id="fSort"><option value="newest">Plus récents</option><option value="spent">Plus dépensiers</option><option value="orders">Plus commandes</option></select>
+            <button class="btn btn--ink btn--sm" id="search">Filtrer</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Client</th><th>E-mail</th><th>Commandes</th><th>Dépensé</th><th>Tags</th><th>Statut</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div><div class="pagination" id="pag" style="padding:12px 16px"></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    const fmt=m=> (m/1000).toFixed(3).replace(".",",")+" DT";
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click",async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#search").addEventListener("click",()=>load(1));
+      $("#q").addEventListener("keydown",e=>{if(e.key==="Enter") load(1);});
+      $("#exportBtn").addEventListener("click",()=>{
+        const rows=window._rows||[]; if(!rows.length) return toast("Rien à exporter","err");
+        let csv="nom,email,commandes,total_depense\n";
+        rows.forEach(r=> csv+=`"${r.first_name} ${r.last_name}","${r.email}",${r.order_count},${r.total_spent}\n`);
+        const blob=new Blob([csv],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="clients.csv"; a.click();
+      });
+      load(1); loadKpi();
+    }
+     async function loadKpi(){
+      try{
+        const res=await API.admin.customers({per_page:1});
+        const total=res.data.pagination.total;
+        const dash=await API.admin.dashboard();
+        $("#kpi").innerHTML=`
+          <div class="kpi-card"><span class="kpi-label">Total clients</span><b class="kpi-value">${total}</b></div>
+          <div class="kpi-card green"><span class="kpi-label">Nouveaux 7j</span><b class="kpi-value">${dash.data.customers.new_week}</b></div>
+          <div class="kpi-card"><span class="kpi-label">Fidèles</span><b class="kpi-value">${dash.data.customers.returning}</b><small>=2 commandes</small></div>
+          <div class="kpi-card gold"><span class="kpi-label">En attente ?</span><b class="kpi-value">${dash.data.actions.to_confirm+dash.data.actions.to_prepare}</b><small>Actions</small></div>
+        `;
+      }catch(e){
+        console.warn("[customers] kpi load failed", e);
+        $("#kpi").innerHTML=`<div class="card" style="padding:16px"><p style="color:#8A3A1F">KPI indisponibles: ${e.message}</p><button class="btn btn--ghost btn--sm" onclick="location.reload()">Réessayer</button></div>`;
+      }
+    }
+    }
+    async function load(page=1){
+      const q=$("#q").value.trim();
+      const fTag=$("#fTag").value;
+      const fStatus=$("#fStatus").value;
+      $("#tbody").innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.customers({page, per_page:15, q});
+        let rows=res.data.customers||[]; window._rows=rows;
+        if(fTag){
+          const filtered=[];
+          for(const r of rows){
+            try{ const t=await API.admin.customerTags(r.id); const has=(t.data.tags||[]).some(x=> x.tag===fTag); if(has) filtered.push(r); }catch(err){ console.warn("[customers] tag filter failed for "+r.id, err); }
+          }
+          rows=filtered;
+        }
+        if(fStatus) rows=rows.filter(r=> r.status===fStatus);
+        const sort=$("#fSort").value;
+        if(sort==="spent") rows.sort((a,b)=> b.total_spent - a.total_spent);
+        if(sort==="orders") rows.sort((a,b)=> b.order_count - a.order_count);
+        $("#count").textContent=`${res.data.pagination.total} clients`;
+        if(!rows.length) $("#tbody").innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--admin-muted)">Aucun client.</td></tr>`;
+        else {
+          // need to fetch tags for each row to display
+          const tagMap=new Map();
+          for(const r of rows){
+            try{ const tr=await API.admin.customerTags(r.id); tagMap.set(r.id, tr.data.tags||[]); }catch(err){ console.warn("[customers] tags fetch failed for "+r.id, err); tagMap.set(r.id,[])}
+          }
+          $("#tbody").innerHTML=rows.map(r=>{
+            const tags=tagMap.get(r.id)||[];
+            return `<tr>
+              <td><b>${r.first_name} ${r.last_name}</b><br><small style="color:var(--admin-muted)">${new Date(r.created_at).toLocaleDateString("fr-TN")}</small></td>
+              <td>${r.email}<br><small style="color:var(--admin-muted)">${r.phone||""}</small></td>
+              <td>${r.order_count}</td>
+              <td>${fmt(r.total_spent)}</td>
+              <td>${tags.map(t=>`<span class="badge badge--amber" style="font-size:.58rem;margin:2px">${t.tag}</span>`).join("")||"<small style='color:var(--admin-muted)'>—</small>"}</td>
+              <td><span class="badge ${r.status==="active"?"badge--green":r.status==="suspended"?"badge--amber":"badge--red"}">${r.status==="active"?"Actif": r.status==="suspended"?"Suspendu":"Désactivé"}</span></td>
+              <td>
+                <a class="btn btn--ghost btn--sm" href="customer.html?id=${r.id}">Voir</a>
+                ${r.status==="active"?`<button class="btn btn--ghost btn--sm" data-action="suspend" data-id="${r.id}">Suspendre</button> <button class="btn btn--ghost btn--sm" data-action="disable" data-id="${r.id}" style="color:var(--admin-danger)">Désactiver</button>`:
+                  r.status==="suspended"?`<button class="btn btn--ghost btn--sm" data-action="activate" data-id="${r.id}">Réactiver</button> <button class="btn btn--ghost btn--sm" data-action="disable" data-id="${r.id}" style="color:var(--admin-danger)">Désactiver</button>`:
+                  `<button class="btn btn--ghost btn--sm" data-action="activate" data-id="${r.id}">Réactiver</button>`}
+              </td>
+            </tr>`;
+          }).join("");
+        }
+        const pg=res.data.pagination, pag=$("#pag"); pag.innerHTML="";
+        if(pg.total_pages>1) for(let i=1;i<=pg.total_pages;i++){ const b=document.createElement("button"); b.textContent=i; if(i===pg.page) b.classList.add("is-on"); b.addEventListener("click",()=>load(i)); pag.appendChild(b); }
+        document.querySelectorAll("[data-action]").forEach(b=>{
+          b.addEventListener("click", async ()=>{
+            const id=b.dataset.id, action=b.dataset.action;
+            const labels={suspend:"Suspendre ce compte ?", disable:"Désactiver ?", activate:"Réactiver ?"};
+            if(!confirm(labels[action]||"Confirmer ?")) return;
+            try{ await API.admin.customerStatus(id, action); toast("Mis à jour","ok"); load(page); }catch(e){ toast(e.message,"err"); }
+          });
+        });
+      }catch(e){
+        console.error("[customers] load failed", e);
+        let hint=e.status===401 ? "Session expirée — <a href='login.html'>Se reconnecter</a>" : e.status===403 ? "Accès restreint" : e.status===404 ? "Endpoint introuvable — vérifiez api/admin/customers.php" : "Vérifiez /api/system/health.php";
+        $("#tbody").innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px"><p style="color:#8A3A1F">Impossible de charger: ${e.message}</p><p style="color:var(--admin-muted);font-size:.84rem">${hint}</p><button class="btn btn--ghost btn--sm" onclick="location.reload()" style="margin-top:8px">Réessayer</button></td></tr>`;
+      }
+    }
+    guard();
+  })();
+  </script>
+
+  <script>
+  // Guard: normal Admin (products only) cannot access this page — redirect to products
+  (function(){
+    const _origMe = window.CLEO_API && window.CLEO_API.me;
+    // Delay check after load
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      try{
+        const me=await window.CLEO_API.me();
+        if(me.authenticated && me.user.role==='admin'){
+          document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--admin-bg)"><div style="max-width:520px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:12px;padding:32px;text-align:center"><h2 style="font-family:var(--serif)">Accès réservé au Super Admin</h2><p style="color:var(--admin-muted);margin-top:12px">Votre rôle <b>Admin</b> donne accès uniquement à la gestion produits (catalogue, stocks, catégories, marques). Cette page nécessite le rôle <b>Super Admin</b> (nssm@cleopatre.tn).</p><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><a class="btn btn--ink" href="products.html">Aller aux produits</a><a class="btn btn--ghost" href="index.html">Tableau de bord</a></div><p style="font-size:.78rem;color:var(--admin-muted);margin-top:16px">Tentative d’accès direct à une API restreinte renverra <code>403 Permission insuffisante</code> — vérification serveur.</p></div></div>';
+        }
+      }catch(e){}
+    });
+  })();
+  </script>
+</body>
+</html>
+
