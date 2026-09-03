@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Stocks — Admin Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div><nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html" class="is-on"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1>Stocks</h1><small id="invStats">Chargement…</small></div></div><div style="display:flex;gap:8px"><button class="btn btn--ghost btn--sm" id="historyBtn">Historique</button><a class="btn btn--ghost btn--sm" href="../api/admin/exports.php?type=inventory" target="_blank">Export</a></div></header>
+      <div class="admin-content">
+        <div class="kpi-grid" id="kpi"></div>
+        <div class="card">
+          <div class="card-head"><div class="filters"><input type="search" id="q" placeholder="Nom, id"><select id="f"><option value="">Tous</option><option value="low">Stock faible</option><option value="out">Rupture</option><option value="in">En stock</option><option value="fast">Fast sellers</option><option value="slow">Slow sellers</option></select><button class="btn btn--ink btn--sm" id="filter">Filtrer</button></div><button class="btn btn--ghost btn--sm" id="restockBtn">Réassort rapide</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Produit</th><th>Stock</th><th>Vendu (90j)</th><th>Statut</th><th>Ajuster</th></tr></thead><tbody id="tbody"></tbody></table></div>
+          <div class="pagination" id="pag"></div>
+        </div>
+        <div class="card"><div class="card-head"><h2>Mouvements récents</h2></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Produit</th><th>Qté</th><th>Raison</th><th>Admin</th></tr></thead><tbody id="recent"></tbody></table></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <div class="modal-admin" id="adjustModal"><div class="modal-panel">
+    <h3 style="font-family:var(--serif)">Ajuster stock</h3>
+    <p id="adjInfo" style="color:var(--admin-muted);font-size:.84rem;margin-top:6px"></p>
+    <div style="display:grid;gap:10px;margin-top:12px">
+      <input id="adjQty" type="number" placeholder="Nouvelle quantité" style="border:1px solid var(--admin-line);padding:10px;border-radius:8px">
+      <select id="adjReason" style="border:1px solid var(--admin-line);padding:10px;border-radius:8px"><option value="restock">Restock</option><option value="manual_correction">Correction manuelle</option><option value="damaged">Endommagé</option><option value="returned">Retour</option><option value="other">Autre</option></select>
+      <div style="display:flex;gap:8px"><button class="btn btn--ink btn--sm" id="adjSave">Enregistrer</button><button class="btn btn--ghost btn--sm" id="adjCancel">Annuler</button></div>
+    </div>
+  </div></div>
+  <div class="drawer" id="historyDrawer"><div class="drawer-backdrop"></div><div class="drawer-panel"><div class="drawer-head"><b>Historique stock</b><button class="btn btn--ghost btn--sm" id="hClose">?</button></div><div class="drawer-body" id="hBody"></div></div></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    let page=1, adjusting=null;
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click", async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#filter").addEventListener("click", ()=> load(1));
+      $("#q").addEventListener("keydown", e=>{ if(e.key==="Enter") load(1);});
+      $("#historyBtn").addEventListener("click", openHistory);
+      $("#hClose").addEventListener("click", ()=> $("#historyDrawer").classList.remove("is-on"));
+      $("#historyDrawer .drawer-backdrop").addEventListener("click", ()=> $("#historyDrawer").classList.remove("is-on"));
+      $("#adjCancel").addEventListener("click", ()=> $("#adjustModal").classList.remove("is-on"));
+      $("#adjSave").addEventListener("click", saveAdjust);
+      $("#adjustModal").addEventListener("click", e=>{ if(e.target.id==="adjustModal") e.currentTarget.classList.remove("is-on")});
+      const params=new URLSearchParams(location.search); if(params.get("filter")) $("#f").value=params.get("filter");
+      load(1);
+    }
+    async function load(p=1){
+      page=p;
+      const q=$("#q").value.trim(), f=$("#f").value;
+      $("#tbody").innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.inventory({page, per_page:15, filter:f, q});
+        const d=res.data;
+        $("#invStats").textContent=`${d.stats.total} produits · ${d.stats.in_stock} en stock · ${d.stats.low_stock} faibles · ${d.stats.out_stock} ruptures`;
+        $("#kpi").innerHTML=`
+          <div class="kpi-card"><span class="kpi-label">Total</span><b class="kpi-value">${d.stats.total}</b></div>
+          <div class="kpi-card green"><span class="kpi-label">En stock</span><b class="kpi-value">${d.stats.in_stock}</b></div>
+          <div class="kpi-card"><span class="kpi-label">Faible</span><b class="kpi-value" style="color:#8A6D1A">${d.stats.low_stock}</b></div>
+          <div class="kpi-card"><span class="kpi-label">Rupture</span><b class="kpi-value" style="color:#8A3A1F">${d.stats.out_stock}</b></div>
+          <div class="kpi-card"><span class="kpi-label">Réassorts 7j</span><b class="kpi-value">${d.stats.recent_restocked}</b></div>
+        `;
+        if(!d.products.length) $("#tbody").innerHTML=`<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--admin-muted)">Aucun produit.</td></tr>`;
+        else $("#tbody").innerHTML=d.products.map(p=>{
+          const badge=p.track_stock && p.stock_quantity<=0 ? '<span class="badge badge--red">Rupture</span>' : p.track_stock && p.stock_quantity<=5 ? '<span class="badge badge--amber">Faible</span>' : '<span class="badge badge--green">OK</span>';
+          return `<tr><td><b>${p.name}</b><br><small style="color:var(--admin-muted)">${p.id} · ${p.brand}</small></td><td>${p.stock_quantity} <small style="color:var(--admin-muted)">u.</small></td><td>${p.sold_qty||0}</td><td>${badge}</td><td><button class="btn btn--ghost btn--sm" data-adj="${p.id}">Ajuster</button></td></tr>`;
+        }).join("");
+        const pag=$("#pag"); pag.innerHTML="";
+        if(d.pagination.total_pages>1) for(let i=1;i<=d.pagination.total_pages;i++){ const b=document.createElement("button"); b.textContent=i; if(i===d.pagination.page) b.classList.add("is-on"); b.addEventListener("click",()=>load(i)); pag.appendChild(b); }
+        document.querySelectorAll("[data-adj]").forEach(b=> b.addEventListener("click", ()=> openAdjust(b.dataset.adj)));
+        $("#recent").innerHTML=(d.recent_movements||[]).map(m=>`<tr><td>${new Date(m.created_at).toLocaleString("fr-TN")}</td><td>${m.product_name||m.product_id}</td><td>${m.change_qty>0?'+':''}${m.change_qty}</td><td>${m.reason}</td><td>${m.admin_id||"—"}</td></tr>`).join("") || `<tr><td colspan="5" style="text-align:center;color:var(--admin-muted)">Aucun mouvement</td></tr>`;
+      }catch(e){ $("#tbody").innerHTML=`<tr><td colspan="5" style="color:#8A3A1F">${e.message}</td></tr>`; }
+    }
+    function openAdjust(id){ adjusting=id; $("#adjInfo").textContent=`Produit ${id}`; $("#adjQty").value=""; $("#adjustModal").classList.add("is-on"); }
+    async function saveAdjust(){
+      const qty=parseInt($("#adjQty").value); if(isNaN(qty)) return toast("Quantité invalide","err");
+      const reason=$("#adjReason").value;
+      try{ await API.admin.inventoryAdjust({product_id:adjusting, stock_quantity:qty, reason}); toast("Stock mis à jour","ok"); $("#adjustModal").classList.remove("is-on"); load(page); }catch(e){ toast(e.message,"err")}
+    }
+    async function openHistory(){
+      $("#historyDrawer").classList.add("is-on");
+      $("#hBody").innerHTML=`<p style="color:var(--admin-muted)">Chargement…</p>`;
+      try{
+        const res=await API.admin.inventoryHistory({per_page:30});
+        const rows=res.data.movements||[];
+        if(!rows.length){
+          $("#hBody").innerHTML=`<p style="color:var(--admin-muted)">Aucun mouvement.</p>`;
+          return;
+        }
+        $("#hBody").innerHTML=rows.map(m=>{
+          const prev = m.previous_qty ?? "?";
+          const next = m.new_qty ?? m["new_qty"] ?? "?";
+          const sign = m.change_qty>0? '+':'';
+          const date = new Date(m.created_at).toLocaleString("fr-TN");
+          const admin = m.admin_email || "—";
+          return `<div style="padding:12px;border:1px solid var(--admin-line);border-radius:10px"><b>${m.product_name||m.product_id}</b><br><small style="color:var(--admin-muted)">${date} · ${admin}</small><div style="margin-top:6px">? ${sign}${m.change_qty} (${prev} ? ${next}) — ${m.reason}</div></div>`;
+        }).join("");
+      }catch(e){ $("#hBody").innerHTML=`<p style="color:#8A3A1F">${e.message}</p>`; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

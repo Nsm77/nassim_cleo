@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Créer un compte — Cléopâtre Parapharmacie</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Créez votre compte Cléopâtre pour passer commande, suivre vos livraisons et cumuler des points de fidélité.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <header class="page-head page-head--compact grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Créer un compte</span></nav>
+        <span class="eyebrow" data-reveal>Rejoignez la maison</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:10px">Un compte,<br><em class="serif-i">votre rituel.</em></h1>
+      </div>
+    </header>
+
+    <section class="section section--tight container">
+      <div class="auth-form-wide" data-reveal>
+        <h2 class="display-2">Créer un compte</h2>
+        <p class="auth-lead">En quelques instants, votre espace personnel est prêt.</p>
+
+        <div class="auth-error" id="authError" role="alert"></div>
+        <div class="auth-success" id="authSuccess" role="status"></div>
+
+        <form class="cform" id="registerForm" novalidate>
+          <div class="frow">
+            <div class="field">
+              <label for="first">Prénom <span class="req">*</span></label>
+              <input id="first" name="first_name" type="text" autocomplete="given-name" required>
+              <span class="err" data-err></span>
+            </div>
+            <div class="field">
+              <label for="last">Nom <span class="req">*</span></label>
+              <input id="last" name="last_name" type="text" autocomplete="family-name" required>
+              <span class="err" data-err></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Adresse e-mail <span class="req">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+            <span class="err" data-err></span>
+          </div>
+
+          <div class="field">
+            <label for="phone">Téléphone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+216 …">
+            <span class="err" data-err></span>
+          </div>
+
+          <div class="field">
+            <label for="pwd">Mot de passe <span class="req">*</span></label>
+            <input id="pwd" name="password" type="password" autocomplete="new-password" required>
+            <span class="err" data-err></span>
+            <small class="hint">8 caractères minimum, avec lettre et chiffre.</small>
+          </div>
+
+          <div class="field">
+            <label for="pwd2">Confirmer le mot de passe <span class="req">*</span></label>
+            <input id="pwd2" name="password_confirm" type="password" autocomplete="new-password" required>
+            <span class="err" data-err></span>
+          </div>
+
+          <button class="btn btn--ink btn--wide" type="submit" id="submitBtn">Créer mon compte<span class="arr">?</span></button>
+          <p class="auth-alt">Déjà cliente ? <a href="login.html">Se connecter</a></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+  (function(){
+    const C = window.CLEO, API = window.CLEO_API;
+    const $ = C.$;
+    let redirect = new URLSearchParams(location.search).get('redirect') || '../pages/account.html';
+    try {
+      if (redirect && (redirect.startsWith('http') || redirect.includes('://') || redirect.startsWith('//'))) redirect = '../pages/account.html';
+      if (redirect && !redirect.startsWith('/') && !redirect.startsWith('../') && !redirect.startsWith('./')) redirect = '../pages/account.html';
+    } catch (e) { redirect = '../pages/account.html'; }
+
+    C.onReady(() => {
+      const form = $("#registerForm"), err = $("#authError"), ok = $("#authSuccess"), btn = $("#submitBtn");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        err.classList.remove("is-on"); err.textContent = "";
+        ok.classList.remove("is-on"); ok.textContent = "";
+        form.querySelectorAll(".field").forEach(f => f.classList.remove("is-invalid"));
+        form.querySelectorAll(".err").forEach(el => el.textContent = "");
+
+        const payload = {
+          first_name: $("#first").value.trim(),
+          last_name: $("#last").value.trim(),
+          email: $("#email").value.trim(),
+          phone: $("#phone").value.trim(),
+          password: $("#pwd").value,
+          password_confirm: $("#pwd2").value
+        };
+
+        btn.classList.add("btn--loading");
+        btn.textContent = "Création…";
+
+        try {
+          await API.register(payload);
+          ok.textContent = "Compte créé — redirection…";
+          ok.classList.add("is-on");
+          try {
+            const guest = JSON.parse(localStorage.getItem("cleo_wishlist_v1") || "[]");
+            if (guest.length) await API.wishlist.sync(guest.map(v => typeof v === "string" ? v : v.id));
+          } catch (syncErr) { console.warn("[register] wishlist sync failed", syncErr); }
+          location.replace(redirect);
+        } catch (ex) {
+          err.textContent = ex.message || "Erreur lors de la création.";
+          err.classList.add("is-on");
+          if (ex.errors) {
+            const map = { first_name: "first", last_name: "last", email: "email", phone: "phone", password: "pwd", password_confirm: "pwd2" };
+            Object.entries(ex.errors).forEach(([k, v]) => {
+              const id = map[k] || k;
+              const el = document.getElementById(id);
+              if (el) {
+                const f = el.closest(".field");
+                if (f) {
+                  f.classList.add("is-invalid");
+                  const eEl = f.querySelector(".err");
+                  if (eEl) eEl.textContent = v;
+                }
+              }
+            });
+          }
+        } finally {
+          btn.classList.remove("btn--loading");
+          btn.innerHTML = 'Créer mon compte<span class="arr">?</span>';
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

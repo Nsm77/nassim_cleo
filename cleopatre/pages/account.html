@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Mon compte — Cléopâtre Parapharmacie</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Gérez votre compte Cléopâtre : commandes, adresses, informations personnelles et programme de fidélité.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <header class="page-head page-head--compact grain">
+      <div class="container">
+        <nav class="crumbs"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Mon compte</span></nav>
+        <span class="eyebrow" data-reveal>Espace client</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:16px" id="welcomeTitle">Bonjour,<br><em class="serif-i">chargement…</em></h1>
+      </div>
+    </header>
+
+    <section class="section section--tight container account-layout" aria-label="Espace client">
+      <nav class="account-nav" aria-label="Navigation compte" id="accountNav">
+        <div class="nav-head">Mon espace</div>
+        <a href="#overview" data-tab="overview" class="is-on">Vue d’ensemble</a>
+        <a href="#commandes" data-tab="orders">Mes commandes</a>
+        <a href="#fidélité" data-tab="loyalty">Fidélité</a>
+        <a href="#infos" data-tab="profile">Mes informations</a>
+        <a href="#adresses" data-tab="addresses">Mes adresses</a>
+        <a href="#envies" data-tab="wishlist">Ma liste d’envies</a>
+        <a href="#notifications" data-tab="notifications">Notifications</a>
+        <a href="#securite" data-tab="security">Sécurité</a>
+        <button data-logout style="margin-top:8px;color:#8A3A1F">Déconnexion</button>
+      </nav>
+
+      <div class="account-panels">
+        <!-- Overview -->
+        <section class="account-panel" id="panel-overview">
+          <h2>Vue d’ensemble</h2>
+          <div class="cards-grid" id="overviewCards"></div>
+          <div id="recentOrders" style="margin-top:28px"></div>
+        </section>
+        <!-- Orders -->
+        <section class="account-panel" id="panel-orders" hidden>
+          <h2>Mes commandes</h2>
+          <div id="ordersList"></div>
+          <div id="ordersPagination" style="margin-top:16px;display:flex;gap:8px"></div>
+        </section>
+        <!-- Profile -->
+        <section class="account-panel" id="panel-profile" hidden>
+          <h2>Mes informations</h2>
+          <div class="auth-error" id="profileError"></div>
+          <div class="auth-success" id="profileSuccess"></div>
+          <form class="auth-form" id="profileForm">
+            <div class="account-form-grid">
+              <div class="field"><label for="pfFirst">Prénom <span class="req">*</span></label><input id="pfFirst" name="first_name" required></div>
+              <div class="field"><label for="pfLast">Nom <span class="req">*</span></label><input id="pfLast" name="last_name" required></div>
+            </div>
+            <div class="field"><label for="pfEmail">E-mail *</label><input id="pfEmail" type="email" required></div>
+            <div class="field"><label for="pfPhone">Téléphone</label><input id="pfPhone" type="tel"></div>
+            <button class="btn btn--ink" type="submit" id="profileBtn">Enregistrer<span class="arr">?</span></button>
+          </form>
+        </section>
+        <!-- Addresses -->
+        <section class="account-panel" id="panel-addresses" hidden>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h2 style="margin:0">Mes adresses</h2>
+            <button class="btn btn--ghost btn--sm" id="addAddressBtn">+ Nouvelle adresse</button>
+          </div>
+          <div id="addressGrid" class="address-grid"></div>
+          <div class="empty-state" id="noAddress" hidden>
+            <span class="serif-i">Vous n’avez aucune adresse enregistrée.</span>
+            <p>Ajoutez votre première adresse pour accélérer vos prochaines commandes.</p>
+          </div>
+          <!-- Form modal -->
+          <div class="modal" id="addressModal" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(26,24,20,.42);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px">
+            <div style="background:var(--surface);max-width:560px;width:100%;border-radius:4px;padding:28px;max-height:90vh;overflow:auto">
+              <h3 class="serif" style="font-size:1.4rem;margin-bottom:16px" id="addrModalTitle">Nouvelle adresse</h3>
+              <div class="auth-error" id="addrError"></div>
+              <form class="auth-form" id="addressForm">
+                <div class="field"><label for="aLabel">Libellé (Domicile, Bureau…)</label><input id="aLabel" placeholder="Domicile"></div>
+                <div class="account-form-grid">
+                  <div class="field"><label for="aFirst">Prénom <span class="req">*</span></label><input id="aFirst" required></div>
+                  <div class="field"><label for="aLast">Nom <span class="req">*</span></label><input id="aLast" required></div>
+                </div>
+                <div class="field"><label for="aPhone">Téléphone</label><input id="aPhone" type="tel"></div>
+                <div class="field"><label for="aAddr">Adresse <span class="req">*</span></label><input id="aAddr" required></div>
+                <div class="account-form-grid">
+                  <div class="field"><label for="aCity">Ville <span class="req">*</span></label><input id="aCity" required></div>
+                  <div class="field"><label for="aPostal">Code postal <span class="req">*</span></label><input id="aPostal" required></div>
+                </div>
+                <div class="field"><label for="aAdd">Complément</label><input id="aAdd" placeholder="Étage, digicode…"></div>
+                <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem;margin-top:4px"><input type="checkbox" id="aDefault"> Définir comme adresse par défaut</label>
+                <div style="display:flex;gap:12px;margin-top:16px">
+                  <button class="btn btn--ink" type="submit" id="addrSave">Enregistrer</button>
+                  <button class="btn btn--ghost" type="button" id="addrCancel">Annuler</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <!-- Loyalty -->
+        <section class="account-panel" id="panel-loyalty" hidden>
+          <h2>Fidélité Cléopâtre</h2>
+          <p style="font-size:.84rem;color:var(--muted)">1 DT dépensé = 10 points. 1 000 points = 10 DT de réduction.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px" id="loyaltySummary"></div>
+          <div id="loyaltyRewards" style="margin-top:24px"></div>
+          <h3 style="font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:24px">Historique</h3>
+          <div id="loyaltyHistory" style="margin-top:12px"></div>
+        </section>
+        <!-- Notifications -->
+        <section class="account-panel" id="panel-notifications" hidden>
+          <h2>Notifications</h2>
+          <div id="notifList"></div>
+          <div id="notifPrefs" style="margin-top:24px"></div>
+        </section>
+        <!-- Wishlist -->
+        <section class="account-panel" id="panel-wishlist" hidden>
+          <h2>Ma liste d’envies</h2>
+          <div id="wishList"></div>
+        </section>
+        <!-- Security -->
+        <section class="account-panel" id="panel-security" hidden>
+          <h2>Sécurité</h2>
+          <p style="font-size:.86rem;color:var(--muted);margin-bottom:16px">Mettez à jour votre mot de passe. Nous vous recommandons un mot de passe unique et robuste.</p>
+          <div class="auth-error" id="secError"></div>
+          <div class="auth-success" id="secSuccess"></div>
+          <form class="auth-form" id="securityForm">
+            <div class="field"><label for="sCurrent">Mot de passe actuel *</label><input id="sCurrent" type="password" required></div>
+            <div class="field"><label for="sNew">Nouveau mot de passe *</label><input id="sNew" type="password" required></div>
+            <div class="field"><label for="sConfirm">Confirmer *</label><input id="sConfirm" type="password" required></div>
+            <button class="btn btn--ink" type="submit" id="secBtn">Mettre à jour<span class="arr">?</span></button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+  (function(){
+    const C=window.CLEO, API=window.CLEO_API; const $=C.$, $$=C.$$;
+    const mapStatus = {pending:"Commande reçue",confirmed:"Commande confirmée",preparing:"En préparation",shipped:"Expédiée",delivered:"Livrée",cancelled:"Annulée"};
+    let user=null;
+
+    C.onReady(async ()=>{
+      try{
+        const me=await API.me();
+        if(!me.authenticated){ location.href="login.html?redirect="+encodeURIComponent(location.pathname+location.hash); return; }
+        user=me.user;
+        $("#welcomeTitle").innerHTML=`Bonjour, <br><em class="serif-i">${C.esc(user.first_name)}.</em>`;
+        initTabs();
+        loadOverview();
+        loadProfile();
+        loadAddresses();
+        loadWishlist();
+        binds();
+      }catch(e){
+        location.href="login.html?redirect="+encodeURIComponent(location.pathname+location.hash);
+      }
+    });
+
+    function initTabs(){
+      const tabs=$$(".account-nav [data-tab]");
+      const panels={overview:$("#panel-overview"),orders:$("#panel-orders"),profile:$("#panel-profile"),addresses:$("#panel-addresses"),wishlist:$("#panel-wishlist"),security:$("#panel-security"),loyalty:$("#panel-loyalty"),notifications:$("#panel-notifications")};
+      function show(tab){
+        const norm = tab==="fidélité" ? "loyalty" : tab;
+        tabs.forEach(a=>a.classList.toggle("is-on",a.dataset.tab===norm));
+        Object.entries(panels).forEach(([k,el])=>{ if(el) el.hidden = k!==norm; });
+        if(norm==="orders") loadOrders();
+        if(norm==="wishlist") loadWishlist();
+        if(norm==="loyalty") loadLoyalty();
+        if(norm==="notifications") loadNotifications();
+        history.replaceState(null,"","#"+norm);
+      }
+      tabs.forEach(a=>a.addEventListener("click",e=>{
+        e.preventDefault(); show(a.dataset.tab);
+      }));
+      $$("[data-logout]").forEach(b=>b.addEventListener("click", async ()=>{
+        await API.logout(); location.href="../index.html";
+      }));
+      const hash=(location.hash.replace("#","")||"overview").toLowerCase();
+      const valid=["overview","orders","profile","addresses","wishlist","security","loyalty","notifications","fidélité"];
+      const h = valid.includes(hash)? hash : "overview";
+      show(h);
+      window.addEventListener("hashchange",()=>{
+        const hh=(location.hash.replace("#","")||"overview").toLowerCase();
+        if(valid.includes(hh)) show(hh);
+      });
+    }
+
+    async function loadLoyalty(){
+      const sum=$("#loyaltySummary"), rew=$("#loyaltyRewards"), hist=$("#loyaltyHistory");
+      sum.innerHTML=`<p style="color:var(--muted)">Chargement…</p>`;
+      try{
+        const res=await API.loyalty.balance();
+        const acc=res.data.account, rewards=res.data.rewards;
+        const tierMap={classic:"Classique",argent:"Argent",or:"Or",platine:"Platine"};
+        const need = Math.max(0, 1000 - acc.balance);
+        const pct = Math.min(1, acc.balance/1000);
+        sum.innerHTML=`
+          <div class="stat-card"><span>Solde actuel</span><b>${acc.balance.toLocaleString('fr-FR')} pts</b><small style="color:var(--muted)">${acc.lifetime_earned} gagnés · ${acc.lifetime_redeemed} utilisés</small><div class="free-bar" style="margin-top:8px;height:4px;background:var(--sand);border-radius:99px;overflow:hidden"><i style="display:block;height:100%;background:var(--gold);width:${(pct*100).toFixed(1)}%"></i></div><small style="color:var(--muted)">${acc.balance.toLocaleString('fr-FR')} / 1 000 pts ${acc.balance>=1000? '· Récompense 10 DT disponible' : '· Encore '+need+' pts pour 10 DT'}</small></div>
+          <div class="stat-card"><span>Niveau</span><b>${tierMap[acc.tier]||acc.tier}</b><small style="color:var(--muted)">${acc.balance>=1000?"Éligible 10 DT":"Encore "+(1000-acc.balance)+" pts pour 10 DT"}</small><small style="color:var(--muted);margin-top:4px">1 DT = 10 pts · 1 000 pts = 10 DT</small></div>
+        `;
+        rew.innerHTML=`<h3 style="font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)">Vos récompenses</h3>
+          <div style="display:grid;gap:10px;margin-top:12px">${rewards.map(r=>`
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid ${r.eligible?"var(--gold)":"var(--line)"};border-radius:4px;background:${r.eligible?"var(--surface)":"var(--bg)"}">
+              <div><b>${C.esc(r.name)}</b><br><small style="color:var(--muted)">${r.points_cost} pts ? ${C.fmt(r.discount_value)}</small></div>
+              <span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.4em .9em;border-radius:99px;background:${r.eligible?"var(--gold)":"var(--line)"};color:${r.eligible?"white":"var(--muted)"}">${r.eligible?"Disponible":"Verrouillé"}</span>
+            </div>
+          `).join("")}</div>`;
+        // history
+        const hRes=await API.loyalty.history({page:1, per_page:10});
+        const tx=hRes.data.transactions||[];
+        if(!tx.length) hist.innerHTML=`<p style="color:var(--muted);font-size:.84rem">Aucune transaction pour l’instant. Vos points apparaîtront ici après livraison.</p>`;
+        else hist.innerHTML=tx.map(t=>{
+          const sign = t.points>0 ? "+" : "";
+          const color = t.points>0 ? "var(--green)" : "#8A3A1F";
+          const date=new Date(t.created_at).toLocaleDateString("fr-TN");
+          return `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><div><b style="color:${color}">${sign}${t.points} pts</b> <span style="font-size:.78rem;color:var(--muted)">${C.esc(t.type)}  — ${C.esc(t.reference||"")}</span><br><small style="color:var(--muted)">${date}  — solde ${t.balance_after} pts</small></div><span style="font-size:.76rem">${t.order_id?`<a href="order.html?order_number=${t.order_id}" class="link-u" style="font-size:.66rem">Voir</a>`:""}</span></div>`;
+        }).join("");
+        // also patch overview cards to include loyalty
+        const loCard=document.querySelector("#overviewCards");
+        if(loCard && !loCard.querySelector("[data-loyalty]")){
+          const el=document.createElement("div");
+          el.className="stat-card"; el.setAttribute("data-loyalty","");
+          el.innerHTML=`<span>Fidélité</span><b>${acc.balance} pts</b><small style="color:var(--muted)">${tierMap[acc.tier]}  — <a href="#fidélité" onclick="location.hash='loyalty'" style="color:var(--gold);text-decoration:underline">Détails</a></small>`;
+          loCard.appendChild(el);
+        }
+      }catch(e){ sum.innerHTML=`<p style="color:#8A3A1F">Impossible de charger la fidélité.</p>`; }
+    }
+    async function loadNotifications(){
+      const list=$("#notifList");
+      list.innerHTML=`<p style="color:var(--muted)">Chargement…</p>`;
+      try{
+        const res=await API.notifications.list({page:1, per_page:10});
+        const notifs=res.data.notifications||[];
+        if(!notifs.length) list.innerHTML=`<div class="empty-state"><span class="serif-i">Aucune notification</span><p>Vous serez informée ici de chaque étape de vos commandes et de vos points.</p></div>`;
+        else list.innerHTML=notifs.map(n=>`
+          <div style="padding:12px;border:1px solid var(--line);border-radius:4px;margin-bottom:8px;background:${n.is_read?"var(--surface)":"var(--bg)"}">
+            <b style="font-size:.88rem">${C.esc(n.title)}</b> <small style="color:var(--muted)">${new Date(n.created_at).toLocaleDateString("fr-TN")}</small>
+            <p style="font-size:.84rem;color:var(--soft);margin-top:4px">${C.esc(n.body||"")}</p>
+            ${n.link?`<a class="link-u" style="font-size:.66rem;margin-top:6px" href="../${n.link}">Voir ?</a>`:""}
+          </div>
+        `).join("");
+      }catch(e){ list.innerHTML=`<p style="color:#8A3A1F">Erreur.</p>`; }
+    }
+
+    async function loadOverview(){
+      const cards=$("#overviewCards"), recent=$("#recentOrders");
+      try{
+        const [ordersRes, wishRes, loyRes] = await Promise.all([
+          API.orders.list({page:1, per_page:5}),
+          API.wishlist.list(),
+          API.loyalty.balance().catch(()=>({data:{account:{balance:0,tier:"classic"}}}))
+        ]);
+        const orders=ordersRes.data.orders||[];
+        const total=ordersRes.data.pagination?.total||orders.length;
+        const inProgress = orders.filter(o=>["pending","confirmed","preparing","shipped"].includes(o.status)).length;
+        const delivered = orders.filter(o=>o.status==="delivered").length;
+        const wishCount = wishRes.data.count||0;
+        const loy=loyRes.data.account||{balance:0, tier:"classic"};
+        const tierMap={classic:"Classique",argent:"Argent",or:"Or",platine:"Platine"};
+        cards.innerHTML=`
+          <div class="stat-card"><span>Commandes</span><b>${total}</b><small style="color:var(--muted)">${total===0?"Aucune commande":"Historique complet"}</small></div>
+          <div class="stat-card"><span>En cours</span><b>${inProgress}</b><small style="color:var(--muted)">Suivi en temps réel</small></div>
+          <div class="stat-card"><span>Livrées</span><b>${delivered}</b><small style="color:var(--muted)">Merci pour votre confiance</small></div>
+          <div class="stat-card"><span>Fidélité</span><b>${loy.balance} pts</b><small style="color:var(--muted)">${tierMap[loy.tier]||loy.tier}  — 1 DT =10 pts</small></div>
+        `;
+        if(!orders.length){
+          recent.innerHTML=`<div class="empty-state"><span class="serif-i">Aucune commande</span><p>Votre première commande apparaîtra ici.</p><a class="btn btn--ink" href="shop.html">Explorer la boutique</a></div>`;
+        }else{
+          recent.innerHTML=`<h3 style="font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Dernières commandes</h3>
+            ${orders.slice(0,3).map(o=>orderCard(o)).join("")}
+            <p style="margin-top:12px"><a class="link-u" href="#commandes" onclick="location.hash='orders';return false">Voir toutes les commandes ?</a></p>`;
+        }
+      }catch(e){
+        cards.innerHTML=`<p style="color:var(--muted)">Chargement…</p>`;
+      }
+    }
+    function orderCard(o){
+      const date=new Date(o.created_at).toLocaleDateString("fr-TN",{day:"numeric",month:"long",year:"numeric"});
+      return `<div class="order-row" style="cursor:pointer" onclick="location.href='order.html?order_number=${o.order_number}'">
+        <div><b style="font-family:var(--serif)">${o.order_number}</b><br><small style="color:var(--muted)">${date}  — ${o.items_count||""} articles</small></div>
+        <div style="text-align:right"><span class="badge-status ${o.status}">${mapStatus[o.status]||o.status}</span><br><b style="font-variant-numeric:tabular-nums">${C.fmt(o.total)}</b></div>
+      </div>`;
+    }
+
+    let ordersPage=1;
+    async function loadOrders(page=1){
+      ordersPage=page;
+      const list=$("#ordersList"), pag=$("#ordersPagination");
+      list.innerHTML=`<p style="color:var(--muted)">Chargement…</p>`;
+      try{
+        const res=await API.orders.list({page, per_page:8});
+        const orders=res.data.orders||[];
+        const pg=res.data.pagination;
+        if(!orders.length){
+          list.innerHTML=`<div class="empty-state"><span class="serif-i">Aucune commande</span><p>Parcourez la boutique et finalisez votre première commande.</p><a class="btn btn--ink" href="shop.html">Boutique</a></div>`;
+          pag.innerHTML=""; return;
+        }
+        list.innerHTML=orders.map(o=>orderCard(o)).join("");
+        pag.innerHTML="";
+        if(pg.total_pages>1){
+          for(let i=1;i<=pg.total_pages;i++){
+            const b=document.createElement("button");
+            b.textContent=i; b.className="btn btn--ghost btn--sm"+(i===pg.page?" is-on":"");
+            b.addEventListener("click",()=>loadOrders(i));
+            pag.appendChild(b);
+          }
+        }
+      }catch(e){ list.innerHTML=`<p style="color:#8A3A1F">Impossible de charger vos commandes.</p>`; }
+    }
+
+    function loadProfile(){
+      $("#pfFirst").value=user.first_name||"";
+      $("#pfLast").value=user.last_name||"";
+      $("#pfEmail").value=user.email||"";
+      $("#pfPhone").value=user.phone||"";
+      $("#profileForm").addEventListener("submit", async e=>{
+        e.preventDefault();
+        const btn=$("#profileBtn"), err=$("#profileError"), ok=$("#profileSuccess");
+        err.classList.remove("is-on"); ok.classList.remove("is-on");
+        err.textContent=""; ok.textContent="";
+        btn.textContent="Enregistrement…"; btn.disabled=true;
+        try{
+          const res=await API.profile.update({
+            first_name:$("#pfFirst").value.trim(),
+            last_name:$("#pfLast").value.trim(),
+            email:$("#pfEmail").value.trim(),
+            phone:$("#pfPhone").value.trim()
+          });
+          user=res.data.user;
+          $("#welcomeTitle").innerHTML=`Bonjour, <br><em class="serif-i">${C.esc(user.first_name)}.</em>`;
+          ok.textContent="Profil mis  — jour."; ok.classList.add("is-on");
+        }catch(ex){
+          err.textContent=ex.message; err.classList.add("is-on");
+          if(ex.errors) Object.entries(ex.errors).forEach(([k,v])=>{
+            const id={first_name:"pfFirst",last_name:"pfLast",email:"pfEmail",phone:"pfPhone"}[k];
+            if(id){ const el=document.getElementById(id); if(el) el.closest(".field").classList.add("is-invalid"); }
+          });
+        }finally{ btn.textContent="Enregistrer ?"; btn.disabled=false; }
+      });
+    }
+
+    // Addresses
+    let editingId=null;
+    function loadAddresses(){
+      const grid=$("#addressGrid"), empty=$("#noAddress");
+      API.addresses.list().then(res=>{
+        const addrs=res.data.addresses||[];
+        if(!addrs.length){ grid.innerHTML=""; empty.hidden=false; return; }
+        empty.hidden=true;
+        grid.innerHTML=addrs.map(a=>`
+          <div class="addr-card ${a.is_default?'is-default':''}">
+            ${a.is_default?'<span class="def">Par défaut</span>':''}
+            <b>${C.esc(a.label||"Adresse")}  — ${C.esc(a.first_name)} ${C.esc(a.last_name)}</b>
+            <span style="font-size:.86rem;color:var(--soft)">${C.esc(a.address)}<br>${C.esc(a.postal_code)} ${C.esc(a.city)}<br>${C.esc(a.phone||"")}</span>
+            ${a.additional_information?`<small style="color:var(--muted)">${C.esc(a.additional_information)}</small>`:""}
+            <div class="addr-actions">
+              <button class="btn btn--ghost btn--sm" data-edit="${a.id}">Modifier</button>
+              <button class="btn btn--ghost btn--sm" data-del="${a.id}" style="color:#8A3A1F">Supprimer</button>
+              ${!a.is_default?`<button class="btn btn--ghost btn--sm" data-def="${a.id}">Par défaut</button>`:""}
+            </div>
+          </div>
+        `).join("");
+        grid.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openAddrModal(parseInt(b.dataset.edit))));
+        grid.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>deleteAddr(parseInt(b.dataset.del))));
+        grid.querySelectorAll("[data-def]").forEach(b=>b.addEventListener("click",()=>setDefaultAddr(parseInt(b.dataset.def))));
+      }).catch(()=>{ grid.innerHTML=`<p style="color:#8A3A1F">Erreur chargement adresses.</p>`; });
+    }
+    function openAddrModal(id=null){
+      editingId=id;
+      const modal=$("#addressModal"), title=$("#addrModalTitle");
+      modal.style.display="flex";
+      $("#addrError").classList.remove("is-on");
+      if(id){
+        API.addresses.get(id).then(r=>{
+          const a=r.data.address;
+          $("#aLabel").value=a.label||"";
+          $("#aFirst").value=a.first_name||"";
+          $("#aLast").value=a.last_name||"";
+          $("#aPhone").value=a.phone||"";
+          $("#aAddr").value=a.address||"";
+          $("#aCity").value=a.city||"";
+          $("#aPostal").value=a.postal_code||"";
+          $("#aAdd").value=a.additional_information||"";
+          $("#aDefault").checked=!!a.is_default;
+          title.textContent="Modifier l’adresse";
+        });
+      }else{
+        $("#addressForm").reset();
+        title.textContent="Nouvelle adresse";
+      }
+    }
+    function closeAddrModal(){ $("#addressModal").style.display="none"; editingId=null; }
+    $("#addAddressBtn").addEventListener("click",()=>openAddrModal(null));
+    $("#addrCancel").addEventListener("click",closeAddrModal);
+    $("#addressModal").addEventListener("click",e=>{ if(e.target.id==="addressModal") closeAddrModal(); });
+    $("#addressForm").addEventListener("submit", async e=>{
+      e.preventDefault();
+      const err=$("#addrError"), btn=$("#addrSave");
+      err.classList.remove("is-on");
+      const payload={
+        label:$("#aLabel").value.trim()||"Domicile",
+        first_name:$("#aFirst").value.trim(),
+        last_name:$("#aLast").value.trim(),
+        phone:$("#aPhone").value.trim(),
+        address:$("#aAddr").value.trim(),
+        city:$("#aCity").value.trim(),
+        postal_code:$("#aPostal").value.trim(),
+        additional_information:$("#aAdd").value.trim(),
+        is_default:$("#aDefault").checked?1:0
+      };
+      btn.textContent="Enregistrement…"; btn.disabled=true;
+      try{
+        if(editingId) await API.addresses.update(editingId,payload);
+        else await API.addresses.create(payload);
+        closeAddrModal(); loadAddresses();
+      }catch(ex){
+        err.textContent=ex.message; err.classList.add("is-on");
+      }finally{ btn.textContent="Enregistrer"; btn.disabled=false; }
+    });
+    async function deleteAddr(id){
+      if(!confirm("Supprimer cette adresse ?")) return;
+      try{ await API.addresses.remove(id); loadAddresses(); }catch(ex){ alert(ex.message); }
+    }
+    async function setDefaultAddr(id){
+      try{ await API.addresses.update(id,{is_default:1}); loadAddresses(); }catch(ex){ alert(ex.message); }
+    }
+
+    // wishlist
+    async function loadWishlist(){
+      const zone=$("#wishList");
+      zone.innerHTML=`<p style="color:var(--muted)">Chargement…</p>`;
+      try{
+        const res=await API.wishlist.list();
+        const items=res.data.wishlist||[];
+        if(!items.length){
+          zone.innerHTML=`<div class="empty-state"><span class="serif-i">Votre liste d’envies est vide</span><p>Parcourez la boutique et touchez le cœur des produits qui vous parlent.</p><a class="btn btn--ink" href="shop.html">Explorer la boutique</a></div>`;
+          return;
+        }
+        zone.innerHTML=`<div class="grid-3" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">${items.map(p=>{
+          const prod=C.byId(p.product_id) || {id:p.product_id, name:p.name||p.product_id, brand:p.brand||"", price:p.price||0, tint:"#E4DBC9"};
+          return C.cardHTML(Object.assign({price:p.price, name:p.name||prod.name, brand:p.brand||prod.brand, sub:"", cat:"", rating:4.5, reviews:0, stock:!!p.stock, tint:prod.tint||"#E4DBC9", image:p.image||prod.image}, prod, {id:p.product_id}));
+        }).join("")}</div>`;
+        C.observe(zone);
+      }catch(e){ zone.innerHTML=`<p style="color:#8A3A1F">Erreur.</p>`; }
+    }
+
+    function binds(){
+      $("#securityForm").addEventListener("submit", async e=>{
+        e.preventDefault();
+        const err=$("#secError"), ok=$("#secSuccess"), btn=$("#secBtn");
+        err.classList.remove("is-on"); ok.classList.remove("is-on");
+        const payload={
+          current_password:$("#sCurrent").value,
+          new_password:$("#sNew").value,
+          confirm_password:$("#sConfirm").value
+        };
+        btn.textContent="Mise à jour…"; btn.disabled=true;
+        try{
+          const res=await API.changePassword(payload);
+          ok.textContent=res.message||"Mot de passe mis  — jour."; ok.classList.add("is-on");
+          e.target.reset();
+        }catch(ex){
+          err.textContent=ex.message; err.classList.add("is-on");
+        }finally{ btn.textContent="Mettre à jour ?"; btn.disabled=false; }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
+

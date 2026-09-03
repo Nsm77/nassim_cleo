@@ -1,0 +1,69 @@
+# CLÉOPÂTRE — Apache config — base-path aware, 404-safe
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .json .xml .txt .php
+Options -Indexes
+RewriteEngine On
+# Base dynamique: fonctionne à "/" et "/cleopatre/" — ne pas hardcoder RewriteBase, mais le détecter via ENV
+# Si projet dans sous-dossier, Apache doit résoudre relativement; on ne force pas de RewriteBase fixe.
+# Pour hosting sans mod_rewrite actif, on dégrade gracieusement (health + API restent accessibles en direct).
+
+# Protect sensitive dirs — répondre 403 propre, pas 404 masqué
+RewriteRule ^(config|database|logs|storage)/ - [F,L]
+RewriteRule \.(sqlite|sqlite3|db|env|log|sqlite-journal|sqlite-wal|sqlite-shm)$ - [F,L]
+
+# Ne pas intercepter les fichiers physiques existants (API, assets, pages)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Gestion 404 premium — si ce n'est pas un fichier API/asset et que l'URL ne correspond à aucune page connue,
+# on laisse Apache servir la 404 naturelle, mais on s'assure que les routes /pages/* et /admin/* ne cassent pas
+# en cas de préfixe sous-dossier mal résolu: on redirige les accès sans slash final vers leur équivalent
+RewriteRule ^admin$ %{REQUEST_URI}/ [R=301,L]
+RewriteRule ^pages$ %{REQUEST_URI}/ [R=301,L]
+
+# Security + charset headers (UTF-8 everywhere)
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-XSS-Protection "1; mode=block"
+  # HSTS (only if HTTPS — uncomment in production)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# Performance: compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# Performance: caching (1y for assets, 1h for html)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# Prevent directory listing, protect sensitive files already above
+<FilesMatch "\.(sqlite|sqlite3|db)$">
+  Require all denied
+</FilesMatch>
+
+# 404 premium — routeur frontal Cléopâtre
+# Toute navigation HTML inconnue (hors API/assets) sert pages/404.html en conservant l'identité.
+# Base-aware: fonctionne à / et à /cleopatre/ ou /cleopatre/cleopatre/ via rewrite relatif.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/ [NC]
+RewriteCond %{REQUEST_URI} !^.*\.(css|js|png|jpg|jpeg|webp|svg|woff2?|json|php|map|ico)$ [NC]
+RewriteCond %{REQUEST_URI} !^.*/(api|assets|css|js|data|database|config|logs|storage)/ [NC]
+RewriteRule ^.*$ pages/404.html [L]
+
+# PHP settings for production (override in php.ini ideally)
+# php_flag display_errors off

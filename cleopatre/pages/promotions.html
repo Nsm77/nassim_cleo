@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Offres du Moment — Promotions vérifiées | Cléopâtre Parapharmacie</title>
+  <meta name="description" content="Des remises réelles sur des produits authentiques : nos promotions du moment, choisies et limitées. Livraison offerte dès 99 DT en Tunisie.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/promotions.html">
+  <meta property="og:title" content="Offres du moment — Cléopâtre Parapharmacie">
+  <meta property="og:description" content="Des remises mesurées, jamais mises en scène.">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/promotions.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+
+    <!-- Bandeau -->
+    <header class="pband grain">
+      <div class="container pband__grid">
+        <div class="pband__copy">
+          <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Promotions</span></nav>
+          <span class="eyebrow eyebrow--bare" style="color:var(--gold-bright)" data-reveal>Offres du moment</span>
+          <h1 class="display-1" data-reveal style="--d:1;margin-top:14px;color:#EDEAE0;font-weight:400">Des remises<br><em style="color:var(--gold-bright)">mesurées,</em><br>jamais mises en scène.</h1>
+          <p data-reveal style="--d:2;color:rgba(237,234,224,.72);margin-top:20px;max-width:42ch">Chaque offre porte sur un stock réel et une date limite honnête.
+          Quand c’est fini, c’est fini.</p>
+          <div class="countdown countdown--dark" id="countdown" data-reveal style="--d:3" aria-label="Fin des offres">
+            <div><b>--</b><span>jours</span></div><div><b>--</b><span>heures</span></div><div><b>--</b><span>min</span></div><div><b>--</b><span>sec</span></div>
+          </div>
+        </div>
+        <figure class="pband__art mask-reveal is-in" aria-hidden="true" id="promoArt"></figure>
+      </div>
+    </header>
+
+    <!-- Grille des offres -->
+    <section class="section container" aria-label="Produits en promotion">
+      <header class="sec-head">
+        <div class="sec-head__left">
+          <span class="num-label" data-reveal><i>-%</i>En ce moment</span>
+          <h2 class="display-2" data-reveal style="--d:1">Les remises actives,<br><em class="serif-i">classées sans complaisance.</em></h2>
+        </div>
+      </header>
+      <div class="promogrid" id="promoGrid"></div>
+      <div class="noresult" id="noPromo" hidden>Aucune promotion active — revenez bientôt, elles reviennent toujours.</div>
+    </section>
+
+    <!-- Note d’éthique -->
+    <section class="section section--tight container" aria-label="Notre politique promotionnelle">
+      <hr class="hr-fade">
+      <div class="ethic" data-reveal>
+        <span class="num-label"><i>§</i>Notre politique</span>
+        <p class="display-2 ethic__line">Nous ne gonflons pas les prix avant de les baisser.
+        Une remise Cléopâtre part toujours du prix comptoir réel.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/promotions.js"></script>
+</body>
+</html>
+

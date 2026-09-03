@@ -1,0 +1,61 @@
+/* CLÉOPÂTRE — Article conseil (rebuilt) */
+
+.article-hero{
+  padding-block:clamp(40px,6vw,80px) clamp(32px,4vw,56px);
+  border-bottom:1px solid var(--line);
+}
+.article-hero .crumbs{margin-bottom:28px}
+.article-hero__meta{
+  display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;
+}
+.article-hero__meta .cat{color:var(--gold);font-weight:500}
+.article-hero h1{font-size:clamp(2rem,4.2vw,3.4rem);font-weight:500;line-height:1.12;max-width:18ch}
+.article-hero .lead{margin-top:20px;font-size:1.15rem;max-width:52ch;color:var(--soft);line-height:1.7}
+
+.article-body{
+  display:grid;grid-template-columns:1fr minmax(0,720px) 1fr;
+  gap:0;padding-block:clamp(48px,6vw,90px);
+}
+.article-body > *{grid-column:2}
+@media(max-width:800px){
+  .article-body{grid-template-columns:1fr;padding-inline:clamp(20px,4vw,40px)}
+  .article-body > *{grid-column:1}
+}
+
+.article-body .prose p{
+  font-size:1.08rem;line-height:1.85;color:var(--soft);margin-bottom:1.4em;
+}
+.article-body .prose p:first-of-type::first-letter{
+  font-family:var(--serif);font-size:3.2em;line-height:.85;float:left;
+  padding-right:.1em;color:var(--green);font-style:italic;
+}
+.article-body .prose h2{
+  font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:2em 0 .8em;color:var(--ink);
+}
+.article-body .prose ul{margin:1.2em 0 1.6em;padding-left:0;list-style:none}
+.article-body .prose li{
+  position:relative;padding-left:22px;margin-bottom:.6em;font-size:1.02rem;color:var(--soft);line-height:1.65;
+}
+.article-body .prose li::before{
+  content:"";position:absolute;left:0;top:.65em;width:8px;height:1px;background:var(--gold);
+}
+
+.article-related{
+  margin-top:clamp(48px,6vw,80px);padding-top:clamp(40px,5vw,64px);
+  border-top:1px solid var(--line);
+  background:linear-gradient(180deg, var(--surface) 0%, transparent 100%);
+  margin-inline:calc(-50vw + 50%);
+  padding-inline:calc(50vw - 50%);
+}
+.article-related h2{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:6px}
+.article-related p{color:var(--muted);font-size:.9rem;margin-bottom:24px}
+.article-related .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:800px){.article-related .grid-3{grid-template-columns:1fr}}
+.article-related .pcard{transition:transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease)}
+.article-related .pcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+.reading-progress{
+  position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0;z-index:100;
+  transition:width .1s linear;
+}

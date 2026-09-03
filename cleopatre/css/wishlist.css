@@ -1,0 +1,17 @@
+/* CLÉOPÂTRE — Favoris */
+
+.wish-zone{padding-block:clamp(34px,5vw,60px) 0}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));gap:clamp(24px,3vw,40px) clamp(18px,2vw,28px)}
+.wempty{
+  display:grid;grid-template-columns:minmax(220px,.9fr) 1.1fr;gap:clamp(28px,4vw,70px);align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:clamp(30px,5vw,64px);
+}
+@media(max-width:780px){.wempty{grid-template-columns:1fr}}
+.wempty__art{aspect-ratio:4/4.2;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.wempty__art svg{width:100%;height:100%}
+.wempty h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;line-height:1.2;letter-spacing:-.01em}
+.wempty p{margin-top:14px;color:var(--soft);font-size:.98rem;line-height:1.6;max-width:40ch}
+.wempty .btn{margin-top:24px;box-shadow:var(--shadow-sm)}
+.wgrid .pcard.is-unavailable{opacity:.72}
+.wgrid .pcard.is-unavailable .pcard__media::after{content:"Indisponible";position:absolute;inset:0;display:grid;place-items:center;background:rgba(245,241,233,.72);color:var(--muted);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500}

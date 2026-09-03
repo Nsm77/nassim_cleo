@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Commande — Livraison & Paiement | Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/checkout.css">
+  <meta name="description" content="Finalisez votre commande Cléopâtre en toute sécurité — livraison en Tunisie, paiement à la réception.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <header class="page-head page-head--compact grain">
+      <div class="container">
+        <nav class="crumbs"><a href="../index.html">Accueil</a><i>/</i><a href="cart.html">Panier</a><i>/</i><span aria-current="page">Commande</span></nav>
+        <h1 class="display-1" style="margin-top:16px">Finaliser<br><em class="serif-i">votre commande.</em></h1>
+        <div id="steps" style="margin-top:18px">
+          <div class="step is-on" data-step="1"><i>1</i><b>Livraison</b></div>
+          <div class="step" data-step="2"><i>2</i><b>Paiement</b></div>
+          <div class="step" data-step="3"><i>3</i><b>Vérification</b></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="container checkout-layout">
+      <div>
+        <div id="authPrompt" hidden class="checkout-card" style="text-align:center">
+          <h3>Connexion requise</h3>
+          <p style="color:var(--muted);font-size:.9rem">Connectez-vous pour poursuivre votre commande, ou créez un compte en quelques instants.</p>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:16px">
+            <a class="btn btn--ink" id="loginLink">Se connecter</a>
+            <a class="btn btn--ghost" id="registerLink">Créer un compte</a>
+          </div>
+        </div>
+
+        <div id="step1" class="checkout-card">
+          <h3><span>01</span> Livraison — Adresse</h3>
+          <div id="addressList"></div>
+          <div id="newAddressForm" style="margin-top:16px;display:none"></div>
+          <button class="link-u" id="toggleNew" style="margin-top:16px">+ Ajouter une adresse</button>
+          <div id="deliveryOptions" style="margin-top:18px;display:grid;gap:10px">
+            <label class="delivery-option is-selected" data-delivery="home">
+              <input type="radio" name="delivery" value="home" checked hidden>
+              <span><b>Livraison à domicile</b><small style="display:block;color:var(--muted);font-weight:300">Partout en Tunisie — 24–72 h</small></span>
+              <span class="del-cost" id="deliveryCostLabel">8,000 DT</span>
+            </label>
+            <div class="free-ship-progress" id="freeShipProgress"></div>
+          </div>
+        </div>
+
+        <div id="step2" class="checkout-card">
+          <h3><span>02</span> Paiement</h3>
+          <label class="payment-option is-selected" style="display:flex;gap:10px;align-items:center">
+            <input type="radio" name="pay" value="cash_on_delivery" checked>
+            <span><b>Paiement à la livraison</b><br><small style="color:var(--muted)">Espèces à la réception — aucun frais supplémentaire</small></span>
+            <span style="margin-left:auto;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;background:var(--green);color:white;padding:.3em .7em;border-radius:99px">Disponible</span>
+          </label>
+          <label class="payment-option" style="display:flex;gap:10px;align-items:center;opacity:.62;cursor:not-allowed">
+            <input type="radio" name="pay" value="card" disabled>
+            <span><b>Carte bancaire</b><br><small style="color:var(--muted)">Paiement sécurisé 3D — en cours d’activation</small></span>
+            <span style="margin-left:auto;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;background:var(--beige);color:var(--ink);padding:.3em .7em;border-radius:99px">Bientôt</span>
+          </label>
+          <label class="payment-option" style="display:flex;gap:10px;align-items:center;opacity:.62;cursor:not-allowed">
+            <input type="radio" name="pay" value="bank_transfer" disabled>
+            <span><b>Virement bancaire</b><br><small style="color:var(--muted)">Sur demande — contactez la pharmacie</small></span>
+            <span style="margin-left:auto;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;background:var(--beige);color:var(--ink);padding:.3em .7em;border-radius:99px">Sur demande</span>
+          </label>
+          <p style="font-size:.74rem;color:var(--muted);margin-top:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;line-height:1.5">Architecture <code style="background:var(--card);padding:2px 6px;border-radius:4px">payment_method</code> déjà prête pour carte/virement — backend <code>api/checkout/create.php</code> acceptera <code>card</code> dès activation sans modification front.</p>
+          <div class="field" style="margin-top:16px"><label for="note">Note pour la commande <span class="opt">(optionnel)</span></label><textarea id="note" rows="3" placeholder="Instructions de livraison, digicode, étage…"></textarea><span class="field-msg"></span></div>
+        </div>
+
+        <div id="step3" class="checkout-card">
+          <h3><span>03</span> Vérification</h3>
+          <div id="verifyList"></div>
+        </div>
+      </div>
+
+      <aside class="csummary" style="position:sticky;top:calc(var(--header-h) + 16px)">
+        <h3>Récapitulatif</h3>
+        <div id="summaryRows"></div>
+        <!-- Fidélité — bloc premium -->
+        <div id="loyaltyBox" style="margin-top:16px;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:4px;display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <div>
+              <b style="font-size:.78rem">Fidélité Cléopâtre</b><br>
+              <small id="loyaltyBalance" style="color:var(--muted)"></small>
+            </div>
+            <span id="loyaltyPoints" style="font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--green)"></span>
+          </div>
+          <div id="loyaltyProgressWrap" style="margin-top:12px;display:none">
+            <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);margin-bottom:6px"><span>Progression récompense</span><span id="loyaltyProgressText">0 / 1 000 pts</span></div>
+            <div class="free-bar"><i id="loyaltyProgressBar" style="--p:0"></i></div>
+          </div>
+          <label id="loyaltyToggle" style="display:flex;gap:.6em;align-items:center;margin-top:12px;font-size:.84rem;cursor:pointer">
+            <input type="checkbox" id="useLoyalty"> Utiliser <b>1 000 pts = 10 DT</b> de réduction
+          </label>
+          <small id="loyaltyMsg" style="display:block;margin-top:8px;font-size:.74rem;color:var(--muted)"></small>
+          <div id="loyaltyEarn" style="margin-top:10px;font-size:.74rem;color:var(--green)"></div>
+        </div>
+        <form class="promo-row" id="promoForm" style="margin-top:16px">
+          <input type="text" id="promoCode" placeholder="Code promotionnel" autocomplete="off" aria-label="Code promotionnel">
+          <button type="submit">Appliquer</button>
+        </form>
+        <p class="promo-msg" id="promoMsg" role="status" aria-live="polite"></p>
+        <button class="btn btn--green btn--wide" id="placeOrder" style="margin-top:16px">Création de votre commande…</button>
+        <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:10px">Paiement à la réception · échanges sous 14 jours</p>
+        <p class="auth-error" id="orderError" style="margin-top:12px"></p>
+        <div style="margin-top:16px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);display:grid;gap:8px">
+          <b style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">Besoin d’aide ?</b>
+          <p style="font-size:.82rem;color:var(--soft);line-height:1.5;margin:0">Une question sur votre commande ? <a href="contact.html" style="color:var(--gold);text-decoration:underline">Écrivez-nous</a> ou appelez <a href="tel:+21629835402" style="color:var(--ink);font-weight:500">+216 29 835 402</a> (Lun–Sam 9h–19h).</p>
+          <p style="font-size:.74rem;color:var(--muted);margin:0">Livraison 24–72h partout en Tunisie · offerte dès 99 DT · échanges 14 jours · produits authentiques.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+  (function(){
+    const C=window.CLEO, API=window.CLEO_API, $=C.$;
+    let user=null, addresses=[], selectedAddr=null, promo=null, cartItems=[], loyalty=null, useLoyalty=false;
+    let FREE_THRESH=99000;
+    // Source de vérité backend: /api/system/health.php ? config.free_shipping_threshold
+    (async()=>{
+      try{
+        const h=await API.health();
+        if(h.config && h.config.free_shipping_threshold) FREE_THRESH=parseInt(h.config.free_shipping_threshold);
+        else if(h.data && h.data.config && h.data.config.free_shipping_threshold) FREE_THRESH=parseInt(h.data.config.free_shipping_threshold);
+        // aussi mettre à jour global FREE_SHIP si présent
+        if(window.CLEO) window.CLEO.FREE_SHIP=FREE_THRESH;
+        renderSummary(); // recalcul shipping après fetch config
+      }catch(e){ console.warn("[checkout] free threshold fetch failed", e); }
+    })();
+
+    C.onReady(async ()=>{
+      try{
+        const me=await API.me();
+        if(!me.authenticated){
+          $("#authPrompt").hidden=false;
+          $("#loginLink").href="login.html?redirect="+encodeURIComponent(location.pathname);
+          $("#registerLink").href="register.html?redirect="+encodeURIComponent(location.pathname);
+          $("#placeOrder").disabled=true; $("#placeOrder").textContent="Connexion requise";
+        } else {
+          user=me.user;
+          $("#authPrompt").hidden=true;
+          // Charger adresses + fidélité en parallèle, mais ne pas bloquer affichage panier si échec partiel
+          try{ await loadAddresses(); }catch(ae){ console.warn("[checkout] addresses failed", ae); }
+          try{ await loadLoyalty(); }catch(le){ console.warn("[checkout] loyalty failed", le); }
+        }
+      }catch(e){
+        console.warn("[checkout] me() failed", e);
+        const errBox=document.getElementById("orderError");
+        if(errBox){ errBox.textContent="Impossible de vérifier la session — veuillez rafraîchir. "+(e.message||""); errBox.style.display="block"; }
+      }
+
+      loadCart();
+      bind();
+    });
+
+    async function loadLoyalty(){
+      try{
+        const res=await API.loyalty.balance();
+        loyalty=res.data.account;
+        const box=$("#loyaltyBox"), bal=$("#loyaltyBalance"), pts=$("#loyaltyPoints"), msg=$("#loyaltyMsg"), cb=$("#useLoyalty");
+        const wrap=$("#loyaltyProgressWrap"), pText=$("#loyaltyProgressText"), pBar=$("#loyaltyProgressBar");
+        if(loyalty){
+          box.style.display="block";
+          const balance = Number(loyalty.balance)||0;
+          pts.textContent= balance.toLocaleString('fr-FR')+" pts";
+          const eligible = balance>=1000;
+          const need = Math.max(0, 1000 - balance);
+          bal.textContent= eligible ? "Vous avez une récompense de 10 DT disponible ·" + (balance>=2000 ? " 20 DT avec 2 000 pts":"") : `Encore ${need} points pour obtenir 10 DT`;
+          msg.textContent= eligible ? "Cochez pour utiliser 1 000 points = 10 DT de réduction maintenant." : "Continuez vos achats pour débloquer votre bon de 10 DT.";
+          if(wrap){
+            wrap.style.display="block";
+            const pct = Math.min(1, balance/1000);
+            pBar.style.setProperty('--p', pct.toFixed(3));
+            pBar.style.transform=`scaleX(${pct})`;
+            pText.textContent= `${balance.toLocaleString('fr-FR')} / 1 000 pts`;
+          }
+          cb.disabled=!eligible;
+          if(!eligible) cb.checked=false;
+          updateLoyaltyEarn();
+        }
+      }catch(e){
+        console.warn("[checkout] loyalty load failed", e);
+        const box=document.getElementById("loyaltyBox");
+        if(box){ box.style.display="block"; box.innerHTML=`<p style="color:#8A3A1F;font-size:.84rem">Fidélité indisponible: ${e.message}</p><button class="btn btn--ghost btn--sm" onclick="location.reload()">Réessayer</button>`; }
+      }
+    }
+    function updateLoyaltyEarn(){
+      const earnEl=$("#loyaltyEarn");
+      if(!cartItems.length) return;
+      const sub=cartItems.reduce((s,{p,qty})=>s+p.price*qty,0);
+      const discount=promo? (promo.type==="percentage"? Math.round(sub*promo.value/100): promo.value) : 0;
+      const disc=Math.min(discount, sub);
+      const loyDisc = useLoyalty ? 10000 : 0;
+      const net = Math.max(0, sub - disc - loyDisc);
+      const pts = Math.floor((net/1000)*10);
+      const nextNeed = loyalty ? Math.max(0, 1000 - ((Number(loyalty.balance)||0) + pts)) : null;
+      if(pts>0){
+        earnEl.innerHTML = `Cette commande vous rapportera <b>+${pts.toLocaleString('fr-FR')} points</b> fidélité (10 pts = 1 DT).` + (nextNeed!==null ? (nextNeed===0 ? ` <span style="color:var(--green);font-weight:600">· Récompense 10 DT débloquée !</span>` : ` · Encore ${nextNeed} pts pour 10 DT.`) : "");
+      } else {
+        earnEl.textContent = `Cette commande vous rapproche de votre prochaine récompense.`;
+      }
+    }
+
+    function loadCart(){
+      const raw=C.cart.items;
+      cartItems=raw.map(({id,qty})=>{ const p=C.byId(id); return p?{p,qty}:null }).filter(Boolean);
+      if(!cartItems.length){
+        location.href="cart.html";
+        return;
+      }
+      renderVerify();
+      renderSummary();
+    }
+
+    async function loadAddresses(){
+      try{
+        const res=await API.addresses.list();
+        addresses=res.data.addresses||[];
+        const list=$("#addressList");
+        if(!addresses.length){
+          list.innerHTML=`<p style="color:var(--muted);font-size:.86rem">Aucune adresse enregistrée. Créez-en une ci-dessous.</p>`;
+          showNewForm(true);
+          return;
+        }
+        list.innerHTML=addresses.map(a=>`
+          <label class="addr-option ${a.is_default?'is-selected':''}" data-id="${a.id}">
+            <input type="radio" name="addr" value="${a.id}" ${a.is_default?'checked':''}>
+            <span><b>${C.esc(a.label||"Adresse")} ${a.is_default?'<em style="color:var(--gold)">· Par défaut</em>':''}</b><br>
+            ${C.esc(a.first_name)} ${C.esc(a.last_name)}<br>
+            ${C.esc(a.address)}, ${C.esc(a.postal_code)} ${C.esc(a.city)}<br>
+            <small style="color:var(--muted)">${C.esc(a.phone||"")}</small></span>
+          </label>
+        `).join("");
+        selectedAddr = addresses.find(a=>a.is_default) || addresses[0];
+        list.querySelectorAll('input[name="addr"]').forEach(r=>{
+          r.addEventListener("change",()=>{
+            $$(".addr-option").forEach(o=>o.classList.remove("is-selected"));
+            r.closest(".addr-option").classList.add("is-selected");
+            selectedAddr=addresses.find(a=>String(a.id)===r.value);
+          });
+        });
+      }catch(e){ $("#addressList").innerHTML=`<p style="color:#8A3A1F">Erreur chargement adresses.</p>`; }
+    }
+
+    function showNewForm(show){
+      const form=$("#newAddressForm"), btn=$("#toggleNew");
+      if(show){
+        form.style.display="block";
+        btn.textContent="Annuler";
+        form.innerHTML=`
+          <h4 style="font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px;color:var(--ink)">Nouvelle adresse</h4>
+          <div style="display:grid;gap:14px">
+            <div class="form-row-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="field"><label for="nFirst">Prénom <span class="req">*</span></label><input id="nFirst" type="text" placeholder="Inès" autocomplete="given-name" required><span class="field-msg"></span></div>
+              <div class="field"><label for="nLast">Nom <span class="req">*</span></label><input id="nLast" type="text" placeholder="Ben Ammar" autocomplete="family-name" required><span class="field-msg"></span></div>
+            </div>
+            <div class="field"><label for="nPhone">Téléphone <span class="req">*</span></label><input id="nPhone" type="tel" placeholder="+216 29 835 402" autocomplete="tel" inputmode="numeric"><span class="field-msg" id="nPhoneMsg"></span></div>
+            <div class="field"><label for="nAddr">Adresse <span class="req">*</span></label><input id="nAddr" type="text" placeholder="12 Avenue Habib Bourguiba" autocomplete="street-address" required><span class="field-msg"></span></div>
+            <div class="form-row-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="field"><label for="nCity">Ville <span class="req">*</span></label><input id="nCity" type="text" placeholder="Tunis" autocomplete="address-level2" required><span class="field-msg"></span></div>
+              <div class="field"><label for="nPostal">Code postal <span class="req">*</span></label><input id="nPostal" type="text" placeholder="1001" inputmode="numeric" autocomplete="postal-code" required><span class="field-msg"></span></div>
+            </div>
+            <div class="field"><label for="nAdd">Complément d'adresse <span class="opt">(optionnel)</span></label><input id="nAdd" type="text" placeholder="Étage, digicode, bâtiment"><span class="field-msg"></span></div>
+            <div class="field"><label for="nInstructions">Instructions de livraison <span class="opt">(optionnel)</span></label><textarea id="nInstructions" rows="2" placeholder="Sonner à l'interphone, laisser au gardien…"></textarea></div>
+            <label style="display:flex;gap:.7em;align-items:center;font-size:.86rem;cursor:pointer;padding:8px 0"><input type="checkbox" id="nSave" checked style="width:16px;height:16px;accent-color:var(--ink)"> Enregistrer cette adresse pour mes prochaines commandes</label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn btn--ink btn--sm" type="button" id="saveNew">Utiliser cette adresse</button>
+              <button class="btn btn--ghost btn--sm" type="button" id="cancelNew">Annuler</button>
+            </div>
+          </div>
+        `;
+        form.querySelector("#cancelNew").addEventListener("click",()=> showNewForm(false));
+        // live validation
+        const validate = ()=>{
+          const checks = [
+            {id:"nFirst", msg:"Veuillez renseigner votre prénom (2 caractères minimum)."},
+            {id:"nLast", msg:"Veuillez renseigner votre nom."},
+            {id:"nAddr", msg:"Veuillez renseigner votre adresse."},
+            {id:"nCity", msg:"Veuillez renseigner votre ville."},
+            {id:"nPostal", msg:"Veuillez renseigner un code postal valide (4 chiffres)."},
+          ];
+          let ok=true;
+          checks.forEach(({id,msg})=>{
+            const el=document.getElementById(id);
+            const field=el.closest('.field');
+            const m=field.querySelector('.field-msg');
+            let valid=true;
+            const v=el.value.trim();
+            if(id==="nFirst"||id==="nLast") valid=v.length>=2;
+            else if(id==="nPostal") valid=/^[0-9]{4}$/.test(v);
+            else valid=v.length>=2;
+            if(!valid && v!==""){ field.classList.add('is-invalid'); field.classList.remove('is-valid'); m.textContent=msg; m.className='field-msg field-msg--err'; ok=false; }
+            else if(!valid && v===""){ field.classList.remove('is-invalid','is-valid'); m.textContent=""; ok=false; }
+            else { field.classList.remove('is-invalid'); field.classList.add('is-valid'); m.textContent=""; }
+          });
+          const phone=document.getElementById("nPhone").value.trim();
+          const pm=document.getElementById("nPhoneMsg");
+          if(phone){
+            const clean=phone.replace(/[\s\-\.\(\)]/g,'');
+            const valid=/^(\+216[0-9]{8}|[0-9]{8}|\+?[0-9]{8,15})$/.test(clean);
+            const field=document.getElementById("nPhone").closest('.field');
+            if(!valid){ field.classList.add('is-invalid'); pm.textContent="Numéro invalide — 8 chiffres, ex: +216 29 835 402"; pm.className='field-msg field-msg--err'; ok=false; }
+            else { field.classList.remove('is-invalid'); field.classList.add('is-valid'); pm.textContent=""; }
+          }
+          return ok;
+        };
+        ["nFirst","nLast","nPhone","nAddr","nCity","nPostal"].forEach(id=> document.getElementById(id).addEventListener('input', validate));
+        form.querySelector("#saveNew").addEventListener("click",()=>{
+          const payload={
+            first_name:$("#nFirst").value.trim(),
+            last_name:$("#nLast").value.trim(),
+            phone:$("#nPhone").value.trim(),
+            address:$("#nAddr").value.trim(),
+            city:$("#nCity").value.trim(),
+            postal_code:$("#nPostal").value.trim(),
+            additional_information:($("#nAdd").value.trim() + ($("#nInstructions").value.trim() ? " — "+$("#nInstructions").value.trim() : "")),
+            save_address: $("#nSave").checked
+          };
+          const errors=[];
+          if(payload.first_name.length<2) errors.push("Veuillez renseigner votre prénom.");
+          if(payload.last_name.length<2) errors.push("Veuillez renseigner votre nom.");
+          if(payload.address.length<5) errors.push("Veuillez renseigner votre adresse.");
+          if(payload.city.length<2) errors.push("Veuillez renseigner votre ville.");
+          if(!/^[0-9]{4}$/.test(payload.postal_code)) errors.push("Veuillez renseigner un code postal valide (4 chiffres).");
+          if(payload.phone){
+            const clean=payload.phone.replace(/[\s\-\.\(\)]/g,'');
+            if(!/^(\+216[0-9]{8}|[0-9]{8}|\+?[0-9]{8,15})$/.test(clean)) errors.push("Veuillez renseigner un numéro de téléphone valide.");
+          } else {
+            errors.push("Veuillez renseigner votre numéro de téléphone.");
+          }
+          if(errors.length){
+            const f=form.querySelector('#nFirst').closest('.field').querySelector('.field-msg');
+            C.toast(errors[0]);
+            // show first error in field
+            validate();
+            return;
+          }
+          selectedAddr={ ...payload, label:"Livraison", is_new:true };
+          C.toast("Adresse sélectionnée — vérifiez le récapitulatif.");
+          // visual feedback: collapse form but keep selection
+          form.style.display="none"; btn.textContent="+ Modifier l'adresse";
+          // show selected preview
+          let preview=document.getElementById("newAddrPreview");
+          if(!preview){ preview=document.createElement("div"); preview.id="newAddrPreview"; preview.style.cssText="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font-size:.86rem"; form.parentElement.insertBefore(preview, btn.nextSibling); }
+          preview.innerHTML=`<b>${C.esc(payload.first_name)} ${C.esc(payload.last_name)}</b><br>${C.esc(payload.address)}, ${C.esc(payload.postal_code)} ${C.esc(payload.city)}<br><small style="color:var(--muted)">${C.esc(payload.phone)}</small>`;
+          updateSteps();
+        });
+      }else{
+        form.style.display="none"; btn.textContent="+ Nouvelle adresse"; form.innerHTML="";
+        const pv=document.getElementById("newAddrPreview"); if(pv) pv.remove();
+      }
+    }
+
+    function renderVerify(){
+      const v=$("#verifyList");
+      v.innerHTML=cartItems.map(({p,qty})=>`
+        <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)">
+          <div style="width:56px;aspect-ratio:4/5;background:var(--card);border-radius:4px;overflow:hidden">${C.ART.front(p)}</div>
+          <div style="flex:1"><b style="font-family:var(--serif)">${C.esc(p.name)}</b><br><small style="color:var(--muted)">${C.esc(p.brand)} · ${qty} × ${C.fmt(p.price)}</small></div>
+          <b style="font-variant-numeric:tabular-nums">${C.fmt(p.price*qty)}</b>
+        </div>
+      `).join("");
+    }
+
+    function renderSummary(){
+      const sub=cartItems.reduce((s,{p,qty})=>s+p.price*qty,0);
+      const discount=promo? (promo.type==="percentage"? Math.round(sub*promo.value/100): promo.value) : 0;
+      const disc=Math.min(discount, sub);
+      const loyDisc = useLoyalty ? Math.min(10000, Math.max(0, sub - disc)) : 0;
+      const netForShip = sub - disc - loyDisc;
+      const ship = netForShip >= FREE_THRESH ? 0 : 8000;
+      const total=Math.max(0, netForShip + ship);
+      const rows=$("#summaryRows");
+      rows.innerHTML=`
+        <div class="srow"><span>Sous-total (${cartItems.reduce((n, i)=>n+i.qty,0)} articles)</span><b>${C.fmt(sub)}</b></div>
+        ${disc?`<div class="srow"><span>Réduction ${promo.code}</span><b style="color:var(--green)">-${C.fmt(disc)}</b></div>`:""}
+        ${loyDisc?`<div class="srow"><span>Fidélité -1 000 pts</span><b style="color:var(--gold)">-${C.fmt(loyDisc)}</b></div>`:""}
+        <div class="srow"><span>Livraison</span><b>${ship===0?'<em style="color:var(--green);font-style:normal">Offerte</em>':C.fmt(ship)}</b></div>
+        <div class="srow total"><span>Total</span><b>${C.fmt(total)}</b></div>
+      `;
+      $("#placeOrder").textContent=`Payer ${C.fmt(total)} à la livraison`;
+      window._checkoutTotals={subtotal:sub,discount:disc,shipping:ship,total, loyaltyDiscount:loyDisc};
+      // free delivery progress
+      const freeEl=$("#freeShipProgress");
+      if(freeEl){
+        const remain = Math.max(0, FREE_THRESH - netForShip);
+        const pct = Math.min(1, netForShip / FREE_THRESH);
+        const shipLabel=document.getElementById("deliveryCostLabel");
+        if(shipLabel) shipLabel.textContent = ship===0 ? "Offerte" : C.fmt(ship);
+        if(ship===0){
+          freeEl.innerHTML=`<p class="free-achieved">Livraison offerte — seuil atteint !</p><div class="free-bar"><i style="--p:1;transform:scaleX(1)"></i></div>`;
+        } else {
+          freeEl.innerHTML=`<p>Plus que <em>${C.fmt(remain)}</em> pour bénéficier de la livraison offerte.</p><div class="free-bar"><i style="--p:${pct.toFixed(3)};transform:scaleX(${pct})"></i></div>`;
+        }
+      }
+      updateSteps();
+      updateLoyaltyEarn();
+    }
+    function updateSteps(){
+      const s1=document.querySelector('[data-step="1"]');
+      const s2=document.querySelector('[data-step="2"]');
+      const s3=document.querySelector('[data-step="3"]');
+      if(!s1||!s2||!s3) return;
+      const hasAddr=!!selectedAddr;
+      const hasPay=!!document.querySelector('input[name="pay"]:checked');
+      // 01 active/done, 02 active/future, 03 future
+      s1.className="step "+(hasAddr?"is-done":"is-on");
+      s2.className="step "+(hasAddr?(hasPay?"is-done":"is-on"):"is-future");
+      s3.className="step "+(hasAddr&&hasPay?"is-on":"is-future");
+    }
+
+    function bind(){
+      const ul=$("#useLoyalty");
+      if(ul) ul.addEventListener("change", e=>{ useLoyalty=e.target.checked; renderSummary(); updateSteps(); });
+      $("#toggleNew").addEventListener("click",()=>{
+        const f=$("#newAddressForm");
+        showNewForm(f.style.display==="none");
+      });
+      // reassess steps when payment changes
+      document.querySelectorAll('input[name="pay"]').forEach(r=> r.addEventListener('change', updateSteps));
+      $("#promoForm").addEventListener("submit", async e=>{
+        e.preventDefault();
+        const code=$("#promoCode").value.trim().toUpperCase();
+        const msg=$("#promoMsg");
+        if(!code){ promo=null; msg.textContent=""; msg.className="promo-msg"; renderSummary(); return; }
+        const sub=cartItems.reduce((s,{p,qty})=>s+p.price*qty,0);
+        msg.textContent="Vérification…"; msg.className="promo-msg";
+        try{
+          const res=await API.cart.validatePromo(code, sub);
+          promo=res.data.promotion;
+          promo.discount_preview=res.data.promotion.discount_preview;
+          msg.textContent=`Code ${promo.code} appliqué.`;
+          msg.className="promo-msg ok";
+          renderSummary();
+        }catch(ex){
+          promo=null; msg.textContent=ex.message; msg.className="promo-msg ko";
+          renderSummary();
+        }
+      });
+      $("#placeOrder").addEventListener("click", async ()=>{
+        const err=$("#orderError");
+        err.textContent=""; err.style.display="none";
+        if(!user){ location.replace("login.html?redirect="+encodeURIComponent(location.pathname)); return; }
+        if(!selectedAddr){
+          // detailed validation feedback
+          err.innerHTML = `Veuillez renseigner votre adresse de livraison.<br><small style="color:var(--muted)">Sélectionnez une adresse existante ou cliquez sur “+ Ajouter une adresse” et renseignez tous les champs obligatoires (*).</small>`;
+          err.style.display="block";
+          document.getElementById("step1").scrollIntoView({behavior:"smooth", block:"center"});
+          document.getElementById("step1").style.outline="2px solid #C17B5A";
+          setTimeout(()=> document.getElementById("step1").style.outline="", 2000);
+          return;
+        }
+        const btn=$("#placeOrder");
+        if(btn.dataset.lock==="1") return; // double click protection
+        btn.dataset.lock="1";
+        btn.disabled=true; btn.classList.add("is-loading"); btn.textContent="Création de votre commande…";
+        const items=cartItems.map(({p,qty})=>({id:p.id, qty}));
+        const payload={
+          items,
+          payment_method: document.querySelector('input[name="pay"]:checked')?.value || "cash_on_delivery",
+          customer_note: $("#note").value.trim(),
+          promo_code: promo?promo.code:null,
+          use_loyalty: useLoyalty,
+          loyalty_reward_id: useLoyalty ? 1 : null
+        };
+        if(selectedAddr.is_new){
+          payload.new_address={
+            first_name:selectedAddr.first_name,
+            last_name:selectedAddr.last_name,
+            phone:selectedAddr.phone,
+            address:selectedAddr.address,
+            city:selectedAddr.city,
+            postal_code:selectedAddr.postal_code,
+            additional_information:selectedAddr.additional_information,
+            save_address: selectedAddr.save_address
+          };
+        }else{
+          payload.address_id=selectedAddr.id;
+        }
+        try{
+          const res=await API.checkout.create(payload);
+          C.cart.clear();
+          location.href=`confirmation.html?order_number=${encodeURIComponent(res.data.order.order_number)}`;
+        }catch(ex){
+          let msg = ex.message || "Erreur lors de la commande.";
+          // enrichir messages backend en français premium
+          if(ex.errors && typeof ex.errors==='object'){
+            const first = Object.values(ex.errors)[0];
+            if(first) msg = Array.isArray(first) ? first[0] : first;
+          }
+          err.textContent=msg;
+          err.style.display="block";
+          btn.disabled=false; btn.classList.remove("is-loading"); btn.dataset.lock="0"; renderSummary();
+        }
+      });
+    }
+    function $$(s,c){ return Array.from((c||document).querySelectorAll(s)); }
+  })();
+  </script>
+</body>
+</html>
+

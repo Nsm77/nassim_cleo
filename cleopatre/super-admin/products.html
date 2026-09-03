@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Produits — Admin Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div>      <nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html" class="is-on"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav></aside>
+    <div style="min-width:0">
+      <header class="admin-top">
+        <div style="display:flex;gap:10px;align-items:center">
+          <!-- desktop-only: mobile toggle removed -->
+          <div><h1>Produits</h1><small id="prodCount">Chargement…</small></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn--ghost btn--sm" id="exportBtn">? Export CSV</button>
+          <label class="btn btn--ghost btn--sm" style="cursor:pointer"><input type="file" id="importFile" accept=".csv" style="display:none">? Import CSV</label>
+          <button class="btn btn--ink btn--sm" id="newBtn">+ Nouveau</button>
+        </div>
+      </header>
+      <div class="admin-content">
+        <!-- Filters -->
+        <div class="card">
+          <div class="card-head">
+            <div class="filters" style="flex:1">
+              <input type="search" id="q" placeholder="Nom, marque, id, SKU" style="min-width:220px">
+              <select id="fCat"><option value="">Catégorie</option></select>
+              <select id="fBrand"><option value="">Marque</option></select>
+              <select id="fStock"><option value="">Stock</option><option value="in">En stock</option><option value="low">Faible (=5)</option><option value="out">Rupture</option></select>
+              <select id="fStatus"><option value="">Statut</option><option value="active">Actif</option><option value="inactive">Inactif</option></select>
+              <select id="fFeatured"><option value="">Mise en avant</option><option value="1">Oui</option><option value="0">Non</option></select>
+              <select id="fPromo"><option value="">Promotion</option><option value="1">En promo</option><option value="0">Sans promo</option></select>
+              <input type="number" id="fMin" placeholder="Min DT" style="width:90px">
+              <input type="number" id="fMax" placeholder="Max DT" style="width:90px">
+              <select id="fSort"><option value="name">Nom</option><option value="price-asc">Prix ?</option><option value="price-desc">Prix ?</option><option value="stock">Stock</option><option value="newest">Nouveau</option><option value="updated">Modifié</option></select>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn--ink btn--sm" id="search">Filtrer</button>
+              <button class="btn btn--ghost btn--sm" id="resetF">Reset</button>
+              <!-- desktop-only: mobile filter removed -->
+            </div>
+          </div>
+          <div id="bulkBar" class="bulk-bar"><span id="bulkCount">0 sélectionnés</span><select id="bulkAction"><option value="">Action groupée…</option><option value="activate">Activer</option><option value="deactivate">Désactiver</option><option value="feature">Mettre en avant</option><option value="unfeature">Retirer mise en avant</option><option value="bestseller">Marquer bestseller</option><option value="unbestseller">Retirer bestseller</option><option value="apply_discount">Appliquer remise</option><option value="remove_discount">Retirer remise</option><option value="set_stock">Modifier stock</option><option value="delete">Supprimer (sécurisé)</option></select><button class="btn btn--ghost btn--sm" id="bulkApply" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.2)">Appliquer</button><button class="btn btn--ghost btn--sm" id="bulkCancel" style="color:#fff;border-color:rgba(255,255,255,.3)">Annuler</button></div>
+        </div>
+
+        <div class="card">
+          <div class="table-wrap product-table"><table><thead><tr><th><input type="checkbox" id="checkAll"></th><th>Produit</th><th>Marque</th><th>Prix</th><th>Stock</th><th>Statut</th><th>Mise en avant</th><th>Promo</th><th></th></tr></thead><tbody id="tbody"><tr><td colspan="9" style="text-align:center;padding:24px;color:var(--admin-muted)">Chargement…</td></tr></tbody></table></div>
+          <!-- desktop-only: mobile product cards removed -->
+          <div class="pagination" id="pag" style="padding:12px 16px"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Merchandising rapide</h2><small style="color:var(--admin-muted)">Gérez les vitrines sans toucher au design</small></div>
+          <div style="padding:16px;display:grid;gap:12px">
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="chip-filter" data-slot="featured">? Featured</button><button class="chip-filter" data-slot="bestsellers">? Bestsellers</button><button class="chip-filter" data-slot="promotions">% Promotions</button><button class="chip-filter" data-slot="new_arrivals">? Nouveautés</button></div>
+            <div id="merchList" style="font-size:.84rem;color:var(--admin-muted)">Sélectionnez une vitrine pour voir les produits.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+
+  <!-- Edit Modal — centred, viewport-safe, scrollable, sticky actions -->
+  <div class="modal-admin" id="editDrawer" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+    <div class="modal-panel" style="max-width:680px;max-height:92vh;display:flex;flex-direction:column;padding:0;overflow:hidden">
+      <div style="padding:20px 24px 14px;border-bottom:1px solid var(--admin-line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--admin-surface);z-index:2">
+        <b id="editTitle" style="font-family:var(--serif);font-size:1.25rem">Édition rapide</b>
+        <button class="btn btn--ghost btn--sm" id="closeDrawer" aria-label="Fermer">✕</button>
+      </div>
+      <div id="editBody" style="padding:20px 24px;overflow:auto;flex:1;display:grid;gap:22px;overscroll-behavior:contain">
+        <div id="editMeta" style="font-size:.76rem;color:var(--admin-muted);padding:12px;background:var(--admin-bg);border:1px solid var(--admin-line);border-radius:6px"></div>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Informations de base</h4>
+          <div class="field"><label for="eName">Nom produit *</label><input id="eName" placeholder="Ex: Sensibio H2O"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="eBrand">Marque *</label><input id="eBrand" placeholder="Ex: Bioderma"></div>
+            <div class="field"><label for="eSize">Taille</label><input id="eSize" placeholder="Ex: 500 ml"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="eForm">Forme</label><select id="eForm"><option value="">—</option><option value="pump">Pump</option><option value="tube">Tube</option><option value="dropper">Dropper</option><option value="jar">Jar</option><option value="spray">Spray</option><option value="bottle">Bottle</option><option value="box">Box</option><option value="stick">Stick</option></select></div>
+            <div class="field"><label for="eTint">Teinte (hex)</label><input id="eTint" placeholder="#DFE7EC"></div>
+          </div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Prix</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="ePrice">Prix (millimes) *</label><input id="ePrice" type="number" placeholder="39900"></div>
+            <div class="field"><label for="eOld">Ancien prix <span class="opt">(promo)</span></label><input id="eOld" type="number" placeholder="Vide si pas en promo"></div>
+          </div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Inventaire</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="eQty">Quantité stock</label><input id="eQty" type="number" placeholder="0"></div>
+            <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem;cursor:pointer;align-self:end"><input type="checkbox" id="eTrack"> Suivi stock activé</label>
+          </div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Classification</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="eCat">Catégorie</label><select id="eCat"><option value="visage">Visage</option><option value="corps">Corps</option><option value="cheveux">Cheveux</option><option value="bebe">Bébé</option><option value="bien-etre">Bien-être</option><option value="sante">Santé</option></select></div>
+            <div class="field"><label for="eSub">Sous-catégorie</label><input id="eSub" placeholder="Ex: Nettoyage & démaquillage"></div>
+          </div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Images</h4>
+          <div class="field"><label for="eImg">Image (chemin)</label><input id="eImg" placeholder="assets/products/bioderma-sensibio.webp"></div>
+          <div class="field"><label for="eThumb">Miniature</label><input id="eThumb" placeholder="assets/products/thumb.webp (optionnel)"></div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Description</h4>
+          <div class="field"><label for="eShort">Description courte</label><textarea id="eShort" rows="2" placeholder="Résumé court"></textarea></div>
+          <div class="field"><label for="eDesc">Description longue</label><textarea id="eDesc" rows="3" placeholder="Description détaillée"></textarea></div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Composition & usage</h4>
+          <div class="field"><label for="eIngr">Composition (ingrédients)</label><textarea id="eIngr" rows="2" placeholder="Aqua, Glycerin, ..."></textarea></div>
+          <div class="field"><label for="eBenefits">Bénéfices (un par ligne)</label><textarea id="eBenefits" rows="2" placeholder="Démaquille…&#10;Apaise…"></textarea></div>
+          <div class="field"><label for="eUsage">Rituel d’utilisation</label><textarea id="eUsage" rows="2" placeholder="Imprégner un coton..."></textarea></div>
+        </section>
+        <section style="display:grid;gap:12px">
+          <h4 style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--admin-gold);margin:0;border-bottom:1px solid var(--admin-line);padding-bottom:6px">Visibilité & statut</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem"><input type="checkbox" id="eActive"> Actif</label>
+            <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem"><input type="checkbox" id="eFeatured"> Mis en avant</label>
+            <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem"><input type="checkbox" id="eNew"> Nouveau</label>
+            <label style="display:flex;gap:.6em;align-items:center;font-size:.86rem"><input type="checkbox" id="eTrack2" style="display:none"> <span style="display:none">track2</span></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field"><label for="eBest">Bestseller rang</label><input id="eBest" type="number" placeholder="Vide si non bestseller"></div>
+            <div class="field"><label for="eVis">Visibilité</label><select id="eVis"><option value="1">Visible</option><option value="0">Masqué</option></select></div>
+          </div>
+        </section>
+      </div>
+      <div style="padding:14px 24px;border-top:1px solid var(--admin-line);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:var(--admin-surface)"><button class="btn btn--ghost btn--sm" id="cancelEdit">Annuler</button><button class="btn btn--ink btn--sm" id="saveEdit">Enregistrer</button></div>
+    </div>
+  </div>
+
+  <!-- Full Create Modal — unified .field -->
+  <div class="modal-admin" id="createModal"><div class="modal-panel" style="max-width:720px">
+    <h3 style="font-family:var(--serif)">Nouveau produit</h3>
+    <div style="display:grid;gap:16px;margin-top:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="field"><label for="cId">ID (slug) <span class="opt">(auto si vide)</span></label><input id="cId" placeholder="ex: avene-creme-40"><span class="field-msg"></span></div>
+        <div class="field"><label for="cBrand">Marque <span class="req">*</span></label><input id="cBrand" placeholder="Avène"><span class="field-msg"></span></div>
+      </div>
+      <div class="field"><label for="cName">Nom <span class="req">*</span></label><input id="cName" placeholder="Tolérance Control Crème"><span class="field-msg"></span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="field"><label for="cCat">Catégorie</label><select id="cCat"><option value="visage">Visage</option><option value="corps">Corps</option><option value="cheveux">Cheveux</option><option value="bebe">Bébé</option><option value="bien-etre">Bien-être</option><option value="sante">Santé</option></select></div>
+        <div class="field"><label for="cPrice">Prix (millimes)</label><input id="cPrice" type="number" placeholder="39900"></div>
+        <div class="field"><label for="cSize">Taille</label><input id="cSize" placeholder="40 ml"></div>
+      </div>
+      <div class="field"><label for="cShort">Description courte</label><textarea id="cShort" rows="2" placeholder="Description courte"></textarea></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><label style="display:flex;gap:.6em;align-items:center;font-size:.86rem;cursor:pointer"><input type="checkbox" id="cActive" checked> Actif</label><label style="display:flex;gap:.6em;align-items:center;font-size:.86rem;cursor:pointer"><input type="checkbox" id="cFeatured"> Mis en avant</label><label style="display:flex;gap:.6em;align-items:center;font-size:.86rem;cursor:pointer"><input type="checkbox" id="cNew"> Nouveau</label></div>
+      <div style="display:flex;gap:12px"><button class="btn btn--ink btn--sm" id="cSave">Créer</button><button class="btn btn--ghost btn--sm" id="cCancel">Annuler</button></div>
+    </div>
+  </div></div>
+
+  <!-- Bottom sheet filters mobile -->
+  <!-- desktop-only: bottom sheet removed --></div>
+
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API, $=s=>document.querySelector(s);
+    const fmt=m=> (m/1000).toFixed(3).replace(".",",")+" DT";
+    function toast(msg,type='info'){ const z=$("#toastZone"); const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; z.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300)},3200)}
+    let page=1, selected=new Set(), editing=null, currentSlot='featured';
+    async function guard(){ const me=await API.me(); if(!me.authenticated||!["admin","super_admin","manager","staff"].includes(me.user.role)) location.href="login.html"; else init(); }
+    async function init(){
+      $("#logout").addEventListener("click",async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      $("#search").addEventListener("click",()=>load(1));
+      $("#resetF").addEventListener("click",()=>{ document.querySelectorAll(".filters input, .filters select").forEach(el=> el.value=""); load(1); });
+      $("#q").addEventListener("keydown",e=>{if(e.key==="Enter") load(1);});
+      $("#checkAll").addEventListener("change", e=>{ const v=e.target.checked; document.querySelectorAll("[data-check]").forEach(c=>{ c.checked=v; if(v) selected.add(c.dataset.check); else selected.delete(c.dataset.check)}); updateBulk();});
+      $("#bulkCancel").addEventListener("click",()=>{ selected.clear(); document.querySelectorAll("[data-check]").forEach(c=>c.checked=false); updateBulk();});
+      $("#bulkApply").addEventListener("click", doBulk);
+      $("#newBtn").addEventListener("click", ()=> $("#createModal").classList.add("is-on"));
+      $("#cCancel").addEventListener("click", ()=> $("#createModal").classList.remove("is-on"));
+      $("#cSave").addEventListener("click", createProduct);
+      $("#closeDrawer").addEventListener("click", closeDrawer);
+      $("#cancelEdit").addEventListener("click", closeDrawer);
+      $("#saveEdit").addEventListener("click", saveEdit);
+      $("#editDrawer").addEventListener("click", e=>{ if(e.target.id==="editDrawer") closeDrawer(); });
+      document.addEventListener("keydown", e=>{ if(e.key==="Escape" && $("#editDrawer").classList.contains("is-on")) closeDrawer(); });
+      document.addEventListener("keydown", e=>{ if(e.key==="Escape" && $("#createModal").classList.contains("is-on")) $("#createModal").classList.remove("is-on"); });
+      $("#createModal").addEventListener("click", e=>{ if(e.target.id==="createModal") e.currentTarget.classList.remove("is-on")});
+      $("#exportBtn").addEventListener("click", ()=> window.open("../api/admin/products-export.php?format=csv","_blank"));
+      $("#importFile").addEventListener("change", doImport);
+      document.querySelectorAll(".chip-filter").forEach(b=> b.addEventListener("click", async()=>{
+        document.querySelectorAll(".chip-filter").forEach(x=>x.classList.remove("is-on")); b.classList.add("is-on"); currentSlot=b.dataset.slot; loadMerch();
+      }));
+      // filters dynamic cats/brands
+      loadFacets();
+      load(1);
+      loadMerch();
+    }
+    async function loadFacets(){
+      try{
+        const res=await API.get("categories/list.php");
+        const cats=res.data.categories||[];
+        const sel=$("#fCat");
+        cats.forEach(c=>{ const o=document.createElement("option"); o.value=c.slug; o.textContent=c.name; sel.appendChild(o);});
+        const bres=await API.admin.brands();
+        const selB=$("#fBrand");
+        (bres.data.brands||[]).forEach(b=>{ const o=document.createElement("option"); o.value=b.slug; o.textContent=b.name; selB.appendChild(o);});
+      }catch(e){ console.warn("[products] facets load failed", e); }
+    }
+    async function load(p=1){
+      page=p;
+      const params={page, per_page:15};
+      const q=$("#q").value.trim(); if(q) params.q=q;
+      const cat=$("#fCat").value; if(cat) params.cat=cat;
+      const brand=$("#fBrand").value; if(brand) params.brand=brand;
+      const stock=$("#fStock").value; if(stock) params.stock=stock;
+      const status=$("#fStatus").value; if(status) params.status=status;
+      const feat=$("#fFeatured").value; if(feat!=="") params.featured=feat;
+      const promo=$("#fPromo").value; if(promo!=="") params.promo=promo;
+      const min=$("#fMin").value; if(min) params.price_min=min;
+      const max=$("#fMax").value; if(max) params.price_max=max;
+      const sort=$("#fSort").value; if(sort) params.sort=sort;
+      $("#tbody").innerHTML=`<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--admin-muted)">Chargement…</td></tr>`;
+      try{
+        const res=await API.admin.products(params);
+        const rows=res.data.products||[];
+        $("#prodCount").textContent=`${res.data.pagination.total} produits — Page ${res.data.pagination.page}/${res.data.pagination.total_pages}`;
+        if(!rows.length){
+          $("#tbody").innerHTML=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--admin-muted)">Aucun produit.</td></tr>`;
+          /* desktop-only mobileList removed */ void 0; //=`<p style="text-align:center;color:var(--admin-muted)">Aucun produit.</p>`;
+        } else {
+          $("#tbody").innerHTML=rows.map(r=>{
+            const promo = r.old_price && r.old_price > r.price ? `<small style="color:var(--admin-success)">-${Math.round((1 - r.price/r.old_price)*100)}% ? <s>${fmt(r.old_price)}</s></small>` : (r.promo_active?`<small style="color:var(--admin-success)">Promo</small>`:"—");
+            const stockLabel= r.track_stock ? `${r.stock_quantity} u.` : (r.stock? "En stock":"épuisé");
+            const stockColor= r.track_stock && r.stock_quantity<=5 && r.stock_quantity>0 ? "color:#8A6D1A" : !r.stock ? "color:#8A3A1F" : "";
+            return `
+            <tr>
+              <td><input type="checkbox" data-check="${r.id}" ${selected.has(r.id)?"checked":""}></td>
+              <td><div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:8px;background:var(--admin-bg);overflow:hidden;flex-shrink:0">${r.image?`<img src="../${r.image}" style="width:100%;height:100%;object-fit:cover">`:"<span style='display:grid;place-items:center;height:100%'>?</span>"}</div><span><b>${r.name}</b><br><small style="color:var(--admin-muted)">${r.id}  — ${r.cat}  — ${r.sub||""}</small></span></div></td>
+              <td>${r.brand}<br><small style="color:var(--admin-muted)">${r.brand_slug||""}</small></td>
+              <td><span class="inline-edit"><input type="number" value="${r.price}" data-field="price" data-id="${r.id}" style="width:90px"></span><br>${promo}</td>
+              <td><span class="inline-edit"><input type="number" value="${r.stock_quantity}" data-field="qty" data-id="${r.id}" style="width:70px"></span><br><small style="${stockColor}">${stockLabel}</small></td>
+              <td><label style="display:inline-flex;align-items:center;gap:6px"><input type="checkbox" data-toggle="active" data-id="${r.id}" ${r.active?"checked":""}> ${r.active?"Actif":"Inactif"}</label></td>
+              <td><label style="display:inline-flex;align-items:center;gap:6px"><input type="checkbox" data-toggle="featured" data-id="${r.id}" ${r.featured?"checked":""}> ${r.featured?"Oui":"Non"}</label></td>
+              <td>${r.is_new?'<span class="badge badge--green">Nouveau</span>':''} ${r.bestseller?'<span class="badge badge--amber">Best</span>':''}</td>
+              <td><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn btn--ghost btn--sm" data-edit="${r.id}">Éditer</button><button class="btn btn--ghost btn--sm" data-dup="${r.id}">Dupliquer</button><button class="btn btn--ghost btn--sm" data-del="${r.id}" style="color:var(--admin-danger)">Suppr.</button></div></td>
+            </tr>`;
+          }).join("");
+          /* desktop-only mobileList removed */ void 0; //=rows.map(r=>`
+            <div class="pcard">
+              <img src="${r.image? '../'+r.image : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22/>'}" alt="">
+              <span><b>${r.name}</b><small>${r.brand}  — ${fmt(r.price)}  — ${r.stock_quantity} u.</small></span>
+              <span class="pc-actions"><button class="btn btn--ghost btn--sm" data-edit="${r.id}">Éditer</button></span>
+            </div>
+          `).join("");
+        }
+        // pagination
+        const pg=res.data.pagination; const pag=$("#pag"); pag.innerHTML="";
+        if(pg.total_pages>1) for(let i=1;i<=pg.total_pages;i++){ const b=document.createElement("button"); b.textContent=i; if(i===pg.page) b.classList.add("is-on"); b.addEventListener("click",()=>load(i)); pag.appendChild(b); }
+        bindRowEvents();
+        updateBulk();
+      }catch(e){
+        console.warn("[products] load failed", e);
+        const hint=e.status===401?"Session expirée  — <a href='login.html'>Se reconnecter</a>": e.status===403?"Permissions insuffisantes": "Vérifiez /api/system/health.php";
+        $("#tbody").innerHTML=`<tr><td colspan="9" style="text-align:center;padding:20px"><p style="color:#8A3A1F">Erreur chargement: ${e.message}</p><p style="color:var(--admin-muted);font-size:.84rem">${hint}</p><button class="btn btn--ghost btn--sm" onclick="location.reload()">Réessayer</button></td></tr>`;
+        /* desktop-only mobileList removed */ void 0; //=`<p style="color:#8A3A1F;text-align:center">Erreur: ${e.message}</p>`;
+      }
+    }
+    function bindRowEvents(){
+      document.querySelectorAll("[data-check]").forEach(c=> c.addEventListener("change", e=>{ const id=e.target.dataset.check; if(e.target.checked) selected.add(id); else selected.delete(id); updateBulk();}));
+      document.querySelectorAll("[data-toggle]").forEach(t=> t.addEventListener("change", async e=>{
+        const id=e.target.dataset.id, field=e.target.dataset.toggle, val=e.target.checked?1:0;
+        try{ await API.admin.productUpdate({id, [field]:val}); toast("Mis à jour","ok"); }catch(err){ toast(err.message,"err"); e.target.checked=!val; }
+      }));
+      document.querySelectorAll("[data-field]").forEach(inp=>{
+        let timer=null;
+        inp.addEventListener("change", async()=>{
+          const id=inp.dataset.id, field=inp.dataset.field, val=parseInt(inp.value)||0;
+          const payload={id}; if(field==='price') payload.price=val; if(field==='qty') payload.stock_quantity=val;
+          try{ await API.admin.productUpdate(payload); toast("Enregistré","ok"); }catch(err){ toast(err.message,"err")}
+        });
+      });
+      document.querySelectorAll("[data-edit]").forEach(b=> b.addEventListener("click", ()=> open(b.dataset.edit)));
+      document.querySelectorAll("[data-dup]").forEach(b=> b.addEventListener("click", async()=>{
+        if(!confirm("Dupliquer ce produit ?")) return;
+        try{ await API.admin.productDuplicate(b.dataset.dup); toast("Dupliqué","ok"); load(page); }catch(e){ toast(e.message,"err")}
+      }));
+      document.querySelectorAll("[data-del]").forEach(b=> b.addEventListener("click", async()=>{
+        if(!confirm("Supprimer ? Opération sécurisée : bloque si commandes liées.")) return;
+        try{ await API.admin.productDelete(b.dataset.del); toast("Supprimé","ok"); load(page); }catch(e){ toast(e.message,"err")}
+      }));
+    }
+    function updateBulk(){
+      $("#bulkCount").textContent=`${selected.size} sélectionnés`;
+      $("#bulkBar").classList.toggle("is-on", selected.size>0);
+      $("#checkAll").checked= selected.size>0 && document.querySelectorAll("[data-check]").length===selected.size;
+    }
+    async function doBulk(){
+      const action=$("#bulkAction").value;
+      if(!action) return toast("Choisissez une action","err");
+      if(!selected.size) return;
+      let extra={};
+      if(action==='apply_discount'){
+        const t=prompt("Type (percentage/fixed) ?","percentage");
+        const v=parseInt(prompt("Valeur ?","10"))||0;
+        extra={discount_type:t, discount_value:v};
+      }
+      if(action==='set_stock'){
+        const qty=parseInt(prompt("Nouvelle quantité ?","10"));
+        if(isNaN(qty)) return;
+        extra={stock_quantity:qty};
+      }
+      if(action==='delete' && !confirm("Supprimer la sélection ? Sécurité : seuls produits sans commande seront supprimés.")) return;
+      if(!confirm(`Appliquer "${action}"  — ${selected.size} produits ?`)) return;
+      try{ const res=await API.admin.productBulk([...selected], action, extra); toast(`${res.data.affected} produits traités`,"ok"); selected.clear(); load(page); }catch(e){ toast(e.message,"err")}
+    }
+    async function open(id){
+      try{
+        const res=await API.admin.products({q:id, per_page:1});
+        let p=(res.data.products||[]).find(x=>x.id===id);
+        if(!p){
+          const r=await fetch(`../api/products/detail.php?id=${encodeURIComponent(id)}`,{credentials:"same-origin"}).then(r=>r.json());
+          p=r.data.product;
+        }
+        if(!p) throw new Error("Introuvable");
+        editing=p;
+        $("#eName").value=p.name||"";
+        $("#eBrand").value=p.brand||"";
+        $("#eSize").value=p.size||"";
+        $("#eForm").value=p.form||"";
+        $("#eTint").value=p.tint||"";
+        $("#ePrice").value=p.price;
+        $("#eOld").value=p.old_price||"";
+        $("#eQty").value=p.stock_quantity||0;
+        $("#eTrack").checked=!!p.track_stock;
+        $("#eCat").value=p.cat||"visage";
+        $("#eSub").value=p.sub||"";
+        $("#eImg").value=p.image||"";
+        $("#eThumb").value=p.image_thumb||"";
+        $("#eShort").value=p.short||"";
+        $("#eDesc").value=p.description||"";
+        $("#eIngr").value=p.ingredients||"";
+        try{ const b=JSON.parse(p.benefits||"[]"); $("#eBenefits").value=Array.isArray(b)?b.join("\n"):p.benefits; }catch(e){ $("#eBenefits").value=p.benefits||""; }
+        $("#eUsage").value=p.usage_text||p.usage||"";
+        $("#eActive").checked=!!p.active;
+        $("#eFeatured").checked=!!p.featured;
+        $("#eNew").checked=!!p.is_new;
+        $("#eBest").value=p.bestseller||"";
+        $("#eVis").value=p.active? "1":"0";
+        $("#editMeta").innerHTML=`<b>${p.name}</b> — ${p.id}<br>Marque: ${p.brand} · Cat: ${p.cat}/${p.sub||'-'} · Créé ${new Date(p.created_at).toLocaleDateString("fr-TN")} · MAJ ${new Date(p.updated_at).toLocaleDateString("fr-TN")}`;
+        $("#editDrawer").classList.add("is-on");
+        document.body.style.overflow="hidden";
+        document.body.classList.add("is-locked");
+        setTimeout(()=> $("#eName").focus(), 180);
+      }catch(e){ toast(e.message,"err")}
+    }
+      function closeDrawer(){ $("#editDrawer").classList.remove("is-on"); editing=null; document.body.style.overflow=""; document.body.classList.remove("is-locked"); }
+    async function saveEdit(){
+      if(!editing) return;
+      const benefitsRaw=$("#eBenefits").value.trim();
+      const benefits=benefitsRaw? benefitsRaw.split("\n").map(s=>s.trim()).filter(Boolean):[];
+      const payload={
+        id:editing.id,
+        name: $("#eName").value.trim(),
+        brand: $("#eBrand").value.trim(),
+        size: $("#eSize").value.trim(),
+        form: $("#eForm").value,
+        tint: $("#eTint").value.trim(),
+        price: parseInt($("#ePrice").value)||0,
+        old_price: $("#eOld").value? parseInt($("#eOld").value): null,
+        stock_quantity: parseInt($("#eQty").value)||0,
+        track_stock: $("#eTrack").checked?1:0,
+        cat: $("#eCat").value,
+        sub: $("#eSub").value.trim(),
+        image: $("#eImg").value.trim(),
+        image_thumb: $("#eThumb").value.trim(),
+        short: $("#eShort").value.trim(),
+        description: $("#eDesc").value.trim(),
+        ingredients: $("#eIngr").value.trim(),
+        benefits: benefits,
+        usage_text: $("#eUsage").value.trim(),
+        active: $("#eActive").checked?1:0,
+        featured: $("#eFeatured").checked?1:0,
+        is_new: $("#eNew").checked?1:0,
+        bestseller: $("#eBest").value? parseInt($("#eBest").value): null,
+        stock: $("#eTrack").checked ? ($("#eQty").value>0?1:0) : (editing.stock?1:0)
+      };
+      if(!payload.name) return toast("Nom requis","err");
+      if(!payload.brand) return toast("Marque requise","err");
+      if($("#eVis").value==="0") payload.active=0;
+      const btn=$("#saveEdit"); btn.textContent="Enregistrement…"; btn.disabled=true;
+      try{ await API.admin.productUpdate(payload); toast("Enregistré","ok"); closeDrawer(); load(page);}catch(e){ toast(e.message,"err")}
+      finally{ btn.textContent="Enregistrer"; btn.disabled=false;}
+    }
+    async function createProduct(){
+      const payload={id:$("#cId").value.trim()||undefined, brand:$("#cBrand").value.trim(), name:$("#cName").value.trim(), cat:$("#cCat").value, price:parseInt($("#cPrice").value)||0, size:$("#cSize").value.trim(), short:$("#cShort").value.trim(), active:$("#cActive").checked?1:0, featured:$("#cFeatured").checked?1:0, is_new:$("#cNew").checked?1:0};
+      if(!payload.name||!payload.brand) return toast("Nom et marque requis","err");
+      try{ await API.admin.productCreate(payload); toast("Produit créé","ok"); $("#createModal").classList.remove("is-on"); load(1);}catch(e){ toast(e.message,"err")}
+    }
+    async function doImport(e){
+      const file=e.target.files[0]; if(!file) return;
+      const form=new FormData(); form.append("file",file);
+      const csrf=API.csrfToken;
+      try{
+        toast("Import en cours…","info");
+        const res=await fetch("../api/admin/products-import.php?preview=1",{method:"POST", body:form, credentials:"same-origin", headers:{"X-CSRF-Token":csrf}});
+        const j=await res.json();
+        if(!j.success) throw new Error(j.message);
+        const p=j.data.preview||j.data;
+        const ok=confirm(`Prévisualisation:\nNouveaux: ${p.counts.new}\nModifiés: ${p.counts.update}\nInvalides: ${p.counts.invalid}\nDoublons: ${p.counts.duplicate}\n\nConfirmer import ?`);
+        if(!ok) return;
+        const form2=new FormData(); form2.append("file",file);
+        const res2=await fetch("../api/admin/products-import.php",{method:"POST", body:form2, credentials:"same-origin", headers:{"X-CSRF-Token":csrf}});
+        const j2=await res2.json();
+        if(!j2.success) throw new Error(j2.message);
+        toast(`Import ${j2.data.imported} produits`,"ok"); load(1);
+      }catch(err){ toast(err.message,"err")}
+      finally{ e.target.value=""}
+    }
+    async function loadMerch(){
+      try{
+        const res=await API.admin.merchandising(true);
+        const slot=currentSlot;
+        const ids=res.data[slot]||[];
+        const prods=res.data[slot+"_products"]||[];
+        $("#merchList").innerHTML= ids.length ? prods.map(p=>`<span class="chip-filter" style="background:var(--admin-bg)">${p.name} <small>${p.id}</small></span>`).join(" ") + `<br><button class="btn btn--ghost btn--sm" id="editMerch" style="margin-top:8px">Modifier vitrine</button>` : `<em>Aucun produit dans ${slot}</em> <button class="btn btn--ghost btn--sm" id="editMerch">Configurer</button>`;
+        const btn=$("#editMerch"); if(btn) btn.addEventListener("click", async()=>{
+          const all=await API.admin.products({per_page:50});
+          const choices=(all.data.products||[]).map(p=>p.id+": "+p.name).join("\\n");
+          const input=prompt(`IDs séparés par virgule pour ${slot} (disponibles: voir console).` , ids.join(","));
+          if(input===null) return;
+          const newIds=input.split(",").map(s=>s.trim()).filter(Boolean);
+          await API.admin.merchandisingUpdate(slot,newIds);
+          toast("Vitrine mise à jour","ok"); loadMerch();
+        });
+      }catch(e){ $("#merchList").textContent=e.message; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

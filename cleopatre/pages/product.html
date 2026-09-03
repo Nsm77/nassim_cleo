@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Fiche produit — Cléopâtre Parapharmacie</title>
+  <meta name="description" content="Fiche produit détaillée : composition, conseils d’utilisation, avis vérifiés et recommandations de nos pharmaciennes. Livraison 24–72h en Tunisie.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/product.html">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="Fiche produit — Cléopâtre Parapharmacie">
+  <meta property="og:description" content="Composition, conseils d’utilisation et avis vérifiés.">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <div class="container"><nav class="crumbs crumbs--page" id="crumbs" aria-label="Fil d’Ariane"></nav></div>
+
+    <section class="pdp container" aria-label="Produit">
+      <!-- Galerie -->
+      <div class="pgal" data-reveal>
+        <figure class="pgal__stage mask-reveal is-in" id="galStage"></figure>
+        <div class="pgal__thumbs" id="galThumbs" role="tablist" aria-label="Vues du produit"></div>
+      </div>
+
+      <!-- Informations -->
+      <div class="pinfo" data-reveal style="--d:1">
+        <a class="pcard__brand" id="pBrandLink" href="#"></a>
+        <h1 class="display-2 pdp__name" id="pName"></h1>
+        <button class="pcard__rating pdp__rating" id="pRating" type="button"></button>
+
+        <div class="pdp__prices" id="pPrices"></div>
+        <p class="lead pdp__short" id="pShort"></p>
+        <ul class="pdp__benefits" id="pBenefits"></ul>
+
+        <div class="pdp__buy">
+          <div class="qty qty--lg" id="pQtyWrap" aria-label="Quantité">
+            <button data-q="-1" aria-label="Diminuer">-</button><output id="pQty">1</output><button data-q="1" aria-label="Augmenter">+</button>
+          </div>
+          <button class="btn btn--ink btn--wide" id="addMain">Ajouter au panier<span class="arr">?</span></button>
+          <button class="btn btn--ghost" id="wishMain">? Favori</button>
+        </div>
+
+        <ul class="pdp__svc">
+          <li><b>Livraison 24–72 h</b><span>Partout en Tunisie · offerte dès 99 DT</span></li>
+          <li><b>Paiement à la réception</b><span>Ou en ligne, comme vous préférez</span></li>
+          <li><b>Authenticité garantie</b><span>Marques officielles, chaîne tracée</span></li>
+        </ul>
+
+        <aside class="pdp__advice" id="pAdvice">
+          <span class="eyebrow eyebrow--bare">Le mot de la pharmacienne</span>
+          <p id="adviceText"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Détails -->
+    <section class="section container pdetails" aria-label="Détails du produit">
+      <hr class="hr-fade">
+      <div class="tabs" role="tablist" aria-label="Informations produit" id="tabBar"></div>
+      <div class="tabpanel" id="tabPanel" role="tabpanel" tabindex="0"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--tight container faq-wrap" aria-labelledby="faqTitle">
+      <hr class="hr-fade">
+      <div class="faq-grid">
+        <div><span class="num-label"><i>?</i>Questions fréquentes</span><h2 class="display-2" id="faqTitle" style="margin-top:16px">Tout ce qu’on nous demande<br>au <em class="serif-i">comptoir.</em></h2></div>
+        <div class="acc" id="faqAcc"></div>
+      </div>
+    </section>
+
+    <!-- Recommandations -->
+    <section class="section container rel-wrap" aria-labelledby="relTitle">
+      <hr class="hr-fade">
+      <header class="sec-head">
+        <div class="sec-head__left"><span class="num-label" data-reveal><i>+</i>Compléter le rituel</span>
+          <h2 class="display-2" id="relTitle" data-reveal style="--d:1">Souvent choisis ensemble.</h2></div>
+      </header>
+      <div class="grid-3 rel-grid" id="relatedGrid"></div>
+    </section>
+  </main>
+
+  <!-- Barre d’achat mobile -->
+  <div class="mbuybar" id="mBuyBar" hidden>
+    <img alt="" id="mBuyArt" style="width:44px;height:55px;background:var(--card);border-radius:2px">
+    <div><small id="mBuyPrice"></small><b id="mBuyName"></b></div>
+    <button class="btn btn--green" data-add-main-mobile>Ajouter</button>
+  </div>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/product.js"></script>
+</body>
+</html>
+

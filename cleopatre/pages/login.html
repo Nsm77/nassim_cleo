@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Connexion — Cléopâtre Parapharmacie</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Connectez-vous à votre compte Cléopâtre pour suivre vos commandes et votre programme de fidélité.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <header class="page-head page-head--compact grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Connexion</span></nav>
+        <span class="eyebrow" data-reveal>Accédez à votre espace</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:10px">Ravie de vous<br><em class="serif-i">revoir.</em></h1>
+      </div>
+    </header>
+
+    <section class="section section--tight container">
+      <div class="auth-form-wide" data-reveal>
+        <h2 class="display-2">Votre espace, <em class="serif-i">en un instant.</em></h2>
+
+        <div class="auth-error" id="authError" role="alert"></div>
+        <div class="auth-success" id="authSuccess" role="status"></div>
+
+        <form class="cform" id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Adresse e-mail <span class="req">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+            <span class="err" data-err></span>
+          </div>
+          <div class="field">
+            <label for="pwd">Mot de passe <span class="req">*</span></label>
+            <input id="pwd" name="password" type="password" autocomplete="current-password" required>
+            <span class="err" data-err></span>
+          </div>
+
+          <div class="auth-meta">
+            <label class="auth-remember"><input type="checkbox" id="remember"> Se souvenir de moi</label>
+            <a href="forgot.html" class="auth-forgot">Mot de passe oublié ?</a>
+          </div>
+
+          <button class="btn btn--ink btn--wide" type="submit" id="submitBtn">Se connecter<span class="arr">?</span></button>
+          <p class="auth-alt">Pas encore de compte ? <a href="register.html">Créer un compte</a></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+  (function(){
+    const C = window.CLEO, API = window.CLEO_API;
+    const $ = C.$;
+    let redirect = new URLSearchParams(location.search).get('redirect') || '../pages/account.html';
+    try {
+      if (redirect && (redirect.startsWith('http') || redirect.includes('://') || redirect.startsWith('//'))) redirect = '../pages/account.html';
+      if (redirect && !redirect.startsWith('/') && !redirect.startsWith('../') && !redirect.startsWith('./')) redirect = '../pages/account.html';
+    } catch (e) { redirect = '../pages/account.html'; }
+
+    C.onReady(() => {
+      API.me().then(d => {
+        if (d.authenticated) {
+          if (d.user && ["admin","super_admin","manager","staff"].includes(d.user.role)) {
+            location.replace("../admin/index.html");
+          } else {
+            location.replace(redirect);
+          }
+        }
+      }).catch(err => console.warn("[login] me() failed", err));
+
+      const form = $("#loginForm"), err = $("#authError"), ok = $("#authSuccess"), btn = $("#submitBtn");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        err.classList.remove("is-on"); err.textContent = "";
+        ok.classList.remove("is-on"); ok.textContent = "";
+        form.querySelectorAll(".field").forEach(f => f.classList.remove("is-invalid"));
+
+        const email = $("#email").value.trim(), pwd = $("#pwd").value;
+        if (!email || !pwd) {
+          err.textContent = "Veuillez renseigner votre e-mail et mot de passe.";
+          err.classList.add("is-on");
+          return;
+        }
+
+        btn.classList.add("btn--loading");
+        btn.textContent = "Connexion…";
+
+        try {
+          await API.login({ email, password: pwd });
+          try {
+            const guest = JSON.parse(localStorage.getItem("cleo_wishlist_v1") || "[]");
+            if (guest.length) {
+              const ids = guest.map(v => typeof v === "string" ? v : v.id);
+              await API.wishlist.sync(ids);
+            }
+          } catch (syncErr) { console.warn("[login] wishlist sync failed", syncErr); }
+
+          const me = await API.me();
+          if (me.user && ["admin","super_admin","manager","staff"].includes(me.user.role)) {
+            ok.textContent = "Bienvenue — redirection vers l’administration…";
+            ok.classList.add("is-on");
+            location.replace("../admin/index.html");
+            return;
+          }
+          ok.textContent = "Connexion réussie — redirection…";
+          ok.classList.add("is-on");
+          location.replace(redirect);
+        } catch (ex) {
+          err.textContent = ex.message || "Identifiants invalides.";
+          err.classList.add("is-on");
+          if (ex.errors) {
+            Object.entries(ex.errors).forEach(([k, v]) => {
+              const el = document.querySelector(`[name="${k}"]`);
+              if (el) el.closest(".field").classList.add("is-invalid");
+            });
+          }
+          if (ex.status === 429) err.textContent = "Trop de tentatives — veuillez patienter 15 minutes.";
+          if (ex.status === 403) err.textContent = ex.message;
+        } finally {
+          btn.classList.remove("btn--loading");
+          btn.innerHTML = 'Se connecter<span class="arr">?</span>';
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

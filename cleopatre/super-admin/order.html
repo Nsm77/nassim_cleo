@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200">
+  <title>Détail commande — Admin Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin">
+  <div class="admin-layout">
+    <aside class="admin-side" id="adminSide"><div class="admin-brand"><b>Cléopâtre</b><small>Super Administration</small><small class="brand-sub2">Command Center — Accès complet</small></div><nav class="admin-nav" id="sideNav">
+        <a href="index.html"><span class="nav-icon">◧</span> Tableau de bord</a>
+        <div class="nav-label">Catalogue</div>
+        <a href="products.html"><span class="nav-icon">◇</span> Produits</a>
+        <a href="categories.html"><span class="nav-icon">▥</span> Catégories</a>
+        <a href="brands.html"><span class="nav-icon">⬢</span> Marques</a>
+        <a href="collections.html"><span class="nav-icon">▦</span> Collections</a>
+        <a href="inventory.html"><span class="nav-icon">☰</span> Stocks</a>
+        <div class="nav-label">Ventes</div>
+        <a href="orders.html"><span class="nav-icon">▤</span> Commandes</a>
+        <a href="customers.html"><span class="nav-icon">◐</span> Clients</a>
+        <div class="nav-label">Marketing</div>
+        <a href="promotions.html"><span class="nav-icon">%</span> Promotions</a>
+        <a href="loyalty.html"><span class="nav-icon">◆</span> Fidélité</a>
+        <div class="nav-label">Engagement</div>
+        <a href="reviews.html"><span class="nav-icon">★</span> Avis</a>
+        <a href="support.html"><span class="nav-icon">☎</span> Support</a>
+        <a href="contact.html"><span class="nav-icon">✉</span> Messages</a>
+        <div class="nav-label">Analyse</div>
+        <a href="analytics.html"><span class="nav-icon">◈</span> Analytics</a>
+        <a href="activity.html"><span class="nav-icon">≡</span> Activité</a>
+        <div class="nav-label">Administration</div>
+        <a href="admin-users.html"><span class="nav-icon">◑</span> Administrateurs</a>
+        <div class="nav-label">Système</div>
+        <a href="settings.html"><span class="nav-icon">⚙</span> Configuration</a>
+        <a href="system.html"><span class="nav-icon">⚙</span> Système & Sécurité</a>
+        <div class="nav-sep"></div>
+        <a href="../index.html"><span class="nav-icon">←</span> Boutique</a>
+        <a href="../admin/index.html"><span class="nav-icon">◇</span> Espace Produits</a>
+        <a href="#" id="logout"><span class="nav-icon">↪</span> Déconnexion</a>
+      </nav></aside>
+    <div>
+      <header class="admin-top"><div style="display:flex;gap:10px;align-items:center"><!-- desktop-only: mobile toggle removed --><div><h1 id="title">Commande</h1><small id="subtitle">Chargement…</small></div></div><a class="btn btn--ghost btn--sm" href="orders.html">? Retour</a></header>
+      <div class="admin-content" id="content"><div class="card"><div style="padding:24px;text-align:center;color:var(--admin-muted)">Chargement…</div></div></div>
+    </div>
+  </div>
+  <div class="modal-admin" id="statusModal"><div class="modal-panel">
+    <h3 style="font-family:var(--serif);font-size:1.2rem;margin-bottom:12px">Changer le statut</h3>
+    <p style="font-size:.86rem;color:var(--admin-muted);margin-bottom:12px">Note interne / message client (optionnel)</p>
+    <textarea id="statusNote" rows="3" style="width:100%;border:1px solid var(--admin-line);padding:10px;border-radius:8px" placeholder="Votre commande a été remise au transporteur."></textarea>
+    <div style="display:flex;gap:12px;margin-top:16px"><button class="btn btn--ink" id="confirmStatus">Confirmer</button><button class="btn btn--ghost" id="cancelStatus">Annuler</button></div>
+  </div></div>
+  <!-- desktop-only: bottom nav removed -->
+  <div class="toast-zone" id="toastZone"></div>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const API=window.CLEO_API;
+    const $=s=>document.querySelector(s);
+    const fmt=m=> (m/1000).toFixed(3).replace(".",",")+" DT";
+    const map={pending:"Commande reçue",confirmed:"Commande confirmée",preparing:"En préparation",shipped:"Expédiée",delivered:"Livrée",cancelled:"Annulée"};
+    const flow=["pending","confirmed","preparing","shipped","delivered"];
+    let order=null, nextStatus=null;
+    function toast(m,t='info'){ const z=$("#toastZone"); const n=document.createElement('div'); n.className='toast '+t; n.textContent=m; z.appendChild(n); setTimeout(()=>{n.style.opacity='0';setTimeout(()=>n.remove(),300)},3000)}
+    async function guard(){ const me=await API.me(); if(!me.authenticated){ location.replace("login.html"); return; } if(me.user.role !== 'super_admin'){ document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--admin-bg)"><div style="max-width:520px;background:var(--admin-surface);border:1px solid var(--admin-line);border-radius:12px;padding:32px;text-align:center"><h2>Super Admin requis</h2><p style="color:var(--admin-muted)">Rôle '+me.user.role+' — accès Super Admin uniquement.</p><a class="btn btn--ink" href="../admin/index.html">Espace Produits</a></div></div>'; return; } load(); }
+    async function load(){
+      $("#logout").addEventListener("click",async e=>{e.preventDefault();await API.logout();location.href="login.html";});
+      /* desktop-only: navToggle removed */
+      const num=new URLSearchParams(location.search).get("order_number")||new URLSearchParams(location.search).get("id");
+      if(!num){ $("#content").innerHTML="<p>Numéro manquant.</p>"; return; }
+      try{
+        const res=await fetch(`../api/orders/detail.php?order_number=${encodeURIComponent(num)}`,{credentials:"same-origin"});
+        const data=await res.json();
+        if(!data.success) throw new Error(data.message);
+        order=data.data.order;
+        const items=data.data.items||[];
+        const tracking=data.data.tracking||[];
+        render(order, items, tracking);
+        loadInternalNotes(order.id);
+      }catch(e){
+        console.error("[admin/order] load failed", e);
+        const st=e.status||0;
+        let hint= st===404? "Commande introuvable — vérifiez le numéro." : st===401? "Session expirée — <a href='login.html'>Se reconnecter</a>" : st===403? "Droits insuffisants" : "Vérifiez /api/system/health.php et la connexion.";
+        $("#content").innerHTML=`<div style="padding:24px;text-align:center"><p style="color:#8A3A1F;font-weight:500">Erreur : ${e.message}</p><p style="color:var(--admin-muted);font-size:.84rem;margin-top:8px">${hint}</p><button class="btn btn--ghost btn--sm" onclick="location.reload()" style="margin-top:12px">Réessayer</button> <a class="btn btn--ghost btn--sm" href="orders.html">Retour</a></div>`;
+      }
+    }
+    function render(o, items, tracking){
+      $("#title").textContent=o.order_number;
+      $("#subtitle").innerHTML=`${o.first_name?o.first_name+" "+o.last_name : ""} · ${fmt(o.total)} · ${map[o.status]||o.status} ${o.user_id?`· <a href="customer.html?id=${o.user_id}" style="color:var(--admin-gold);text-decoration:underline">Voir client</a>`:""}`;
+      const next = nextInFlow(o.status);
+      const canAdvance = !!next;
+      $("#content").innerHTML=`
+        <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:16px">
+          <div>
+            <div class="card">
+              <div class="card-head"><h2>Client & adresse</h2><div style="display:flex;gap:6px"><a class="btn btn--ghost btn--sm" href="customer.html?id=${o.user_id}">Profil client ?</a><a class="btn btn--ghost btn--sm" href="mailto:${o.email}">Contacter</a></div></div>
+              <div style="padding:16px;display:grid;gap:8px;font-size:.9rem">
+                <b>${o.shipping_first_name||""} ${o.shipping_last_name||""}</b>
+                <span>${o.shipping_address||""}<br>${o.shipping_postal_code||""} ${o.shipping_city||""}<br>${o.shipping_phone||""}</span>
+                <span style="color:var(--admin-muted)">${o.shipping_additional||""}</span>
+                <hr style="border:0;height:1px;background:var(--admin-line)">
+                <div><b>Contact commande :</b> ${o.first_name?o.first_name+" "+o.last_name:""} · ${o.email||""} · ${o.phone||""}</div>
+                <div><b>Paiement :</b> ${o.payment_method} · <b>Livraison:</b> ${o.shipping===0?"Offerte":fmt(o.shipping)}</div>
+                ${o.customer_note?`<div style="padding:8px;background:var(--admin-bg);border-radius:8px"><b>Note client :</b> ${o.customer_note}</div>`:""}
+                ${o.promo_code?`<div><b>Code promo :</b> ${o.promo_code} (-${fmt(o.promo_discount||o.discount)})</div>`:""}
+                ${o.loyalty_points_used?`<div><b>Fidélité utilisée :</b> ${o.loyalty_points_used} pts (-${fmt(o.loyalty_discount)})</div>`:""}
+                ${o.loyalty_points_earned?`<div><b>Points gagnés :</b> ${o.loyalty_points_earned} pts</div>`:""}
+                ${o.carrier?`<div><b>Transporteur :</b> ${o.carrier} · <b>Tracking:</b> ${o.tracking_number||"—"}</div>`:""}
+              </div>
+            </div>
+            <div class="card" style="margin-top:16px">
+              <div class="card-head"><h2>Produits</h2><span>${items.length} articles</span></div>
+              <div class="table-wrap"><table><thead><tr><th>Produit</th><th>Qté</th><th>Prix</th><th>Total</th></tr></thead><tbody>
+                ${items.map(it=>`<tr><td><b>${it.product_name}</b><br><small style="color:var(--admin-muted)">${it.brand} · ${it.product_id}</small></td><td>${it.quantity}</td><td>${fmt(it.price)}</td><td>${fmt(it.price*it.quantity)}</td></tr>`).join("")}
+              </tbody></table></div>
+              <div style="padding:16px;display:grid;gap:6px;font-size:.9rem">
+                <div style="display:flex;justify-content:space-between"><span>Sous-total</span><b>${fmt(o.subtotal)}</b></div>
+                ${o.discount?`<div style="display:flex;justify-content:space-between;color:var(--admin-green)"><span>Réduction</span><b>-${fmt(o.discount)}</b></div>`:""}
+                ${o.loyalty_discount?`<div style="display:flex;justify-content:space-between;color:var(--admin-gold)"><span>Remise fidélité</span><b>-${fmt(o.loyalty_discount)}</b></div>`:""}
+                <div style="display:flex;justify-content:space-between"><span>Livraison</span><b>${o.shipping===0?"Offerte":fmt(o.shipping)}</b></div>
+                <div style="display:flex;justify-content:space-between;font-weight:500;border-top:1px solid var(--admin-line);padding-top:8px"><span>Total</span><b style="font-family:var(--serif);font-size:1.2rem">${fmt(o.total)}</b></div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:16px">
+              <div class="card-head"><h2>Notes internes (admin only)</h2></div>
+              <div style="padding:16px;display:grid;gap:10px">
+                <div id="internalNotes"><p style="color:var(--admin-muted)">Chargement…</p></div>
+                <div style="display:flex;gap:8px"><input id="newNote" placeholder="Ajouter une note interne…" style="flex:1;border:1px solid var(--admin-line);padding:10px;border-radius:8px"><button class="btn btn--ink btn--sm" id="addNote">Ajouter</button></div>
+                <small style="color:var(--admin-muted)">Notes visibles uniquement par l’administration.</small>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-head"><h2>Suivi & statut</h2>${canAdvance?`<button class="btn btn--ink btn--sm" id="nextBtn">Étape suivante ? ${map[next]||next}</button>`:`<span style="font-size:.78rem;color:var(--admin-muted)">Aucune étape suivante</span>`}</div>
+              <div style="padding:16px">
+                <div class="timeline" style="display:grid;gap:14px;position:relative;padding-left:22px">
+                  ${renderTimeline(o, tracking)}
+                </div>
+                <div style="display:grid;gap:8px;margin-top:16px">
+                  ${o.status!=="cancelled" && o.status!=="delivered"? `<button class="btn btn--ghost btn--sm" id="cancelBtn" style="color:#8A3A1F">Annuler la commande</button>`:""}
+                  <a class="btn btn--ghost btn--sm" href="customer.html?id=${o.user_id}">Voir fiche client ?</a>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:16px">
+              <div class="card-head"><h2>Historique complet</h2></div>
+              <div style="padding:16px;display:grid;gap:8px;font-size:.84rem">
+                ${tracking.map(t=>`<div style="padding:8px;border:1px solid var(--admin-line);border-radius:8px"><b>${map[t.status]||t.status}</b><br><small style="color:var(--admin-muted)">${new Date(t.created_at).toLocaleString("fr-TN")}${t.note?` · ${t.note}`:""}</small></div>`).join("") || "<p style='color:var(--admin-muted)'>Aucun historique</p>"}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      const nb=document.getElementById("nextBtn");
+      if(nb) nb.addEventListener("click",()=>openModal(next));
+      const cb=document.getElementById("cancelBtn");
+      if(cb) cb.addEventListener("click",()=>openModal("cancelled"));
+      document.getElementById("cancelStatus").onclick=()=>closeModal();
+      document.getElementById("confirmStatus").onclick=confirmChange;
+      document.getElementById("statusModal").addEventListener("click",e=>{ if(e.target.id==="statusModal") closeModal(); });
+      // internal notes add
+      setTimeout(()=>{
+        const addBtn=document.getElementById("addNote");
+        if(addBtn) addBtn.addEventListener("click", async()=>{
+          const note=document.getElementById("newNote").value.trim(); if(!note) return;
+          try{ await API.admin.addOrderNote(order.id, note); toast("Note ajoutée","ok"); document.getElementById("newNote").value=""; loadInternalNotes(order.id); }catch(e){ toast(e.message,"err")}
+        });
+      },100);
+    }
+    function nextInFlow(status){
+      if(status==="cancelled"||status==="delivered") return null;
+      const idx=flow.indexOf(status);
+      if(idx===-1) return null;
+      return flow[idx+1] || null;
+    }
+    function renderTimeline(o, tracking){
+      const by={}; tracking.forEach(t=>by[t.status]=t);
+      if(o.status==="cancelled"){
+        return tracking.map(t=>{
+          const d=new Date(t.created_at).toLocaleString("fr-TN");
+          return `<div style="position:relative"><b style="position:absolute;left:-18px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--admin-green)"></b><b>${map[t.status]||t.status}</b><br><small style="color:var(--admin-muted)">${d}${t.note?` · ${t.note}`:""}</small></div>`;
+        }).join("") || `<p style="color:var(--admin-muted)">Aucun suivi</p>`;
+      }
+      return flow.map((s,i)=>{
+        const t=by[s];
+        const done=flow.indexOf(o.status)>=i;
+        const cur=o.status===s;
+        const d=t? new Date(t.created_at).toLocaleString("fr-TN") : "—";
+        return `<div style="position:relative;opacity:${done?1:.45}"><b style="position:absolute;left:-18px;top:6px;width:8px;height:8px;border-radius:50%;background:${cur?"#A88F62":done?"#24301C":"transparent"};border:2px solid ${done?"#24301C":"var(--admin-muted)"}"></b><b>${map[s]}</b><br><small style="color:var(--admin-muted)">${done? d + (t&&t.note?` · ${t.note}`:"") : "En attente"}</small></div>`;
+      }).join("");
+    }
+    function openModal(status){ nextStatus=status; document.getElementById("statusModal").classList.add("is-on"); }
+    function closeModal(){ document.getElementById("statusModal").classList.remove("is-on"); nextStatus=null; document.getElementById("statusNote").value=""; }
+    async function confirmChange(){
+      const note=document.getElementById("statusNote").value.trim();
+      const btn=document.getElementById("confirmStatus");
+      btn.textContent="Traitement…"; btn.disabled=true;
+      try{ await API.admin.orderStatus(order.id, nextStatus, note); toast("Statut mis à jour","ok"); location.reload(); }catch(e){
+        console.warn("[admin/order] status change failed", e);
+        toast(e.message||"Erreur mise à jour", "err");
+      }
+      finally{ btn.textContent="Confirmer"; btn.disabled=false; }
+    }
+    async function loadInternalNotes(orderId){
+      try{
+        const res=await API.admin.orderNotes(orderId);
+        const notes=res.data.notes||[];
+        const el=document.getElementById("internalNotes");
+        if(!el) return;
+        if(!notes.length) el.innerHTML=`<p style="color:var(--admin-muted)">Aucune note interne.</p>`;
+        else el.innerHTML=notes.map(n=>`<div style="padding:10px;border:1px solid var(--admin-line);border-radius:8px;background:#FFF8E6"><small style="color:var(--admin-muted)">${new Date(n.created_at).toLocaleString("fr-TN")} · ${n.first_name||"Admin"} ${n.last_name||""}</small><div style="margin-top:4px">${n.note}</div></div>`).join("");
+      }catch(e){ console.warn("[admin/order] notes load failed", e); const el=document.getElementById("internalNotes"); if(el) el.innerHTML=`<p style="color:#8A3A1F">Impossible de charger les notes: ${e.message}</p>`; }
+    }
+    guard();
+  })();
+  </script>
+</body>
+</html>
+

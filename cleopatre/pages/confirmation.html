@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Commande confirmée — Cléopâtre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <meta name="description" content="Confirmation de votre commande Cléopâtre — merci pour votre confiance en notre parapharmacie de Tunis.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <section class="section container" style="text-align:center;max-width:640px;margin:0 auto">
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--green);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 18px">?</div>
+      <span class="eyebrow eyebrow--center" style="justify-content:center">Commande confirmée</span>
+      <h1 class="display-2" style="margin-top:12px">Merci pour votre<br><em class="serif-i">commande.</em></h1>
+      <p style="color:var(--muted);margin-top:12px;max-width:none" id="orderInfo">Chargement…</p>
+      <div id="orderSummary" style="text-align:left;margin-top:28px"></div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap">
+        <a class="btn btn--ink" id="viewOrder">Voir ma commande</a>
+        <a class="btn btn--ghost" href="shop.html">Continuer mes achats</a>
+      </div>
+    </section>
+  </main>
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+  (function(){
+    const C=window.CLEO, API=window.CLEO_API, $=C.$;
+    C.onReady(async ()=>{
+      const num=new URLSearchParams(location.search).get("order_number");
+      if(!num){ $("#orderInfo").textContent="Numéro de commande manquant."; return; }
+      $("#viewOrder").href=`order.html?order_number=${encodeURIComponent(num)}`;
+      try{
+        const res=await API.orders.detail(num);
+        const o=res.data.order;
+        $("#orderInfo").innerHTML=`Commande <b>${C.esc(o.order_number)}</b> · ${C.fmt(o.total)} · Paiement à la livraison<br>Adresse : ${C.esc(o.shipping_first_name)} ${C.esc(o.shipping_last_name)}, ${C.esc(o.shipping_address)}, ${C.esc(o.shipping_city)}`;
+        const items=res.data.items||[];
+        $("#orderSummary").innerHTML=`
+          <div style="background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Total</span><b style="font-family:var(--serif);font-size:1.6rem">${C.fmt(o.total)}</b></div>
+            <div style="margin-top:14px;display:grid;gap:10px">
+              ${items.map(it=>`<div style="display:flex;justify-content:space-between"><span>${C.esc(it.product_name)} × ${it.quantity}</span><b>${C.fmt(it.price*it.quantity)}</b></div>`).join("")}
+            </div>
+            <hr style="margin:14px 0;border:0;height:1px;background:var(--line)">
+            <div style="display:grid;gap:6px;font-size:.86rem;color:var(--soft)">
+              <div style="display:flex;justify-content:space-between"><span>Sous-total</span><b>${C.fmt(o.subtotal)}</b></div>
+              ${o.discount?`<div style="display:flex;justify-content:space-between;color:var(--green)"><span>Réduction</span><b>-${C.fmt(o.discount)}</b></div>`:""}
+              <div style="display:flex;justify-content:space-between"><span>Livraison</span><b>${o.shipping===0?"Offerte":C.fmt(o.shipping)}</b></div>
+            </div>
+          </div>
+        `;
+      }catch(e){ $("#orderInfo").textContent="Impossible de charger la commande."; }
+    });
+  })();
+  </script>
+</body>
+</html>
+

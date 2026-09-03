@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Votre Sélection — Favoris | Cléopâtre Parapharmacie</title>
+  <meta name="description" content="Votre liste de favoris Cléopâtre : les soins que vous avez repérés, prêts à rejoindre votre rituel.">
+  <link rel="canonical" href="https://para-cleopatre.tn/pages/wishlist.html">
+  <meta property="og:title" content="Vos favoris — Cléopâtre Parapharmacie">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%2329331F"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" font-style="italic" text-anchor="middle" fill="%23C4A97A">C</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/wishlist.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <main id="main">
+    <header class="page-head grain">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a><i>/</i><span aria-current="page">Favoris</span></nav>
+        <span class="eyebrow" data-reveal>Votre sélection</span>
+        <h1 class="display-1" data-reveal style="--d:1;margin-top:16px">Commencez à composer<br><em class="serif-i">votre rituel.</em></h1>
+      </div>
+    </header>
+
+    <section class="container wish-zone" id="wishZone" aria-label="Vos favoris"></section>
+
+    <!-- Inspirations quand vide -->
+    <section class="section container" id="inspoSection" aria-labelledby="inspoTitle">
+      <hr class="hr-fade">
+      <header class="sec-head">
+        <div class="sec-head__left">
+          <span class="num-label" data-reveal><i>?</i>En attendant</span>
+          <h2 class="display-2" id="inspoTitle" data-reveal style="--d:1">Trois classiques pour<br><em class="serif-i">ouvrir la collection.</em></h2>
+        </div>
+      </header>
+      <div class="grid-3" id="inspoGrid"></div>
+    </section>
+  </main>
+
+  <script src="../data/products.js"></script>
+  <script src="../data/brands.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../js/global.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/wishlist.js"></script>
+</body>
+</html>
+
